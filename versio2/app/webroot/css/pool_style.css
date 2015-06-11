@@ -1,0 +1,107 @@
+/*
+
+Darko Bunic
+http://www.redips.net/
+Oct, 2010.
+
+*/
+
+body{
+	font-family: arial;
+	margin: 0px; /* for IE6 / IE7 */
+}
+
+/* make drag container visible */
+#dragtable*,#dragtable*{
+	border: 2px dashed LightBlue;
+	display: table;
+}
+
+
+/* table */
+div#dragtable* table,div#dragtable* table{
+	background-color: #eee;
+	border-collapse: collapse;
+
+}
+
+/* table cells */
+div#dragtable* td,div#dragtable* td{
+	border: 1px solid navy;
+	height: 50px;
+	text-align: center;
+	font-size: 10pt;
+}
+
+/* drag object (DIV inside table cell) */
+.drag{
+	text-align: center;
+	vertical-align:middle;
+	border: 1px solid SteelBlue;
+	background-color: white;
+    min-width: 100px;
+	min-height: 100px;
+    display:block;
+    margin-top: auto !important;
+    margin-bottom:auto !important;
+}
+.PoolColGroup{
+    border: 2px solid SteelBlue;
+}
+#tabs,#tabs1 {
+   max-width: 50%;
+   background-color: #ffffff !important;
+   margin-right:auto;
+}
+#tabs1{
+   border-style: solid;
+   border-width: 1px;
+   text-align: center;
+}
+
+#tabul{
+   background-color: #eee;
+}
+.PlayerDataList{
+   list-style-type: none;
+   padding: 0px;
+   margin-top: auto !important;
+   margin-bottom:auto !important;
+}
+.PlayerDataList li{
+   cursor:move !important;
+   vertical-align:text-top;
+}
+.PlayerCell{
+    height: 10px;
+    width: 10px;
+}
+.PlayerName{
+    text-align:center;
+}
+.emptyCell{
+	
+}
+.ClassTable{
+    margin-right:auto;
+    margin-left: auto;
+}
+.PoolNames{
+    text-align:center;
+    font-size: 18px;
+}
+.ui-widget-header{
+   background-image: none !important;
+   border-color: #cccccc !important;
+}
+.ui-tabs-panel{
+   background-color: #ffffff !important;
+}
+.ui-state-active.ui-state-hover a,li{
+   cursor: default !important;
+}
+.ui-widget-content{
+   text-align: center;
+   background-color: #ffffff !important;
+   background-image: none !important;
+}

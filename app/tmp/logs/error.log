@@ -1,0 +1,249 @@
+2015-05-19 12:16:08 Error: [MissingTableException] Table access_objects for model AccessObject was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'access_objects',
+  'class' => 'AccessObject',
+  'ds' => 'default',
+)
+Request URL: /pingismaisteri/
+Stack Trace:
+#0 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(3310): Model->setSource('access_objects')
+#1 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(2750): Model->getDataSource()
+#2 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(2722): Model->_readDataSource('first', Array)
+#3 D:\xampp\htdocs\pingismaisteri\app\Controller\AppController.php(92): Model->find('first', Array)
+#4 [internal function]: AppController->checkAccess('Users', 'login')
+#5 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(AppController), Array)
+#6 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(187): Controller->invokeAction(Object(CakeRequest))
+#7 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(162): Dispatcher->_invoke(Object(AppController), Object(CakeRequest), Object(CakeResponse))
+#8 D:\xampp\htdocs\pingismaisteri\lib\Cake\Core\Object.php(106): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse), Array)
+#9 D:\xampp\htdocs\pingismaisteri\app\View\Elements\mainmenu.ctp(20): Object->requestAction('/app/checkAcces...')
+#10 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(931): include('D:\\xampp\\htdocs...')
+#11 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(893): View->_evaluate('D:\\xampp\\htdocs...', Array)
+#12 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(1191): View->_render('D:\\xampp\\htdocs...', Array)
+#13 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(408): View->_renderElement('D:\\xampp\\htdocs...', Array, Array)
+#14 D:\xampp\htdocs\pingismaisteri\app\View\Layouts\default.ctp(55): View->element('mainmenu')
+#15 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(931): include('D:\\xampp\\htdocs...')
+#16 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(893): View->_evaluate('D:\\xampp\\htdocs...', Array)
+#17 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(525): View->_render('D:\\xampp\\htdocs...')
+#18 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(470): View->renderLayout('', 'default')
+#19 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(952): View->render('home', NULL)
+#20 D:\xampp\htdocs\pingismaisteri\app\Controller\PagesController.php(63): Controller->render('home')
+#21 [internal function]: PagesController->display('home')
+#22 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(PagesController), Array)
+#23 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(187): Controller->invokeAction(Object(CakeRequest))
+#24 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(162): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#25 D:\xampp\htdocs\pingismaisteri\app\webroot\index.php(110): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#26 {main}
+2015-05-19 12:17:19 Error: [MissingTableException] Table access_objects for model AccessObject was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'access_objects',
+  'class' => 'AccessObject',
+  'ds' => 'default',
+)
+Request URL: /pingismaisteri/
+Stack Trace:
+#0 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(3310): Model->setSource('access_objects')
+#1 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(2750): Model->getDataSource()
+#2 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(2722): Model->_readDataSource('first', Array)
+#3 D:\xampp\htdocs\pingismaisteri\app\Controller\AppController.php(92): Model->find('first', Array)
+#4 [internal function]: AppController->checkAccess('Users', 'login')
+#5 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(AppController), Array)
+#6 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(187): Controller->invokeAction(Object(CakeRequest))
+#7 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(162): Dispatcher->_invoke(Object(AppController), Object(CakeRequest), Object(CakeResponse))
+#8 D:\xampp\htdocs\pingismaisteri\lib\Cake\Core\Object.php(106): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse), Array)
+#9 D:\xampp\htdocs\pingismaisteri\app\View\Elements\mainmenu.ctp(20): Object->requestAction('/app/checkAcces...')
+#10 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(931): include('D:\\xampp\\htdocs...')
+#11 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(893): View->_evaluate('D:\\xampp\\htdocs...', Array)
+#12 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(1191): View->_render('D:\\xampp\\htdocs...', Array)
+#13 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(408): View->_renderElement('D:\\xampp\\htdocs...', Array, Array)
+#14 D:\xampp\htdocs\pingismaisteri\app\View\Layouts\default.ctp(55): View->element('mainmenu')
+#15 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(931): include('D:\\xampp\\htdocs...')
+#16 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(893): View->_evaluate('D:\\xampp\\htdocs...', Array)
+#17 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(525): View->_render('D:\\xampp\\htdocs...')
+#18 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(470): View->renderLayout('', 'default')
+#19 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(952): View->render('home', NULL)
+#20 D:\xampp\htdocs\pingismaisteri\app\Controller\PagesController.php(63): Controller->render('home')
+#21 [internal function]: PagesController->display('home')
+#22 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(PagesController), Array)
+#23 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(187): Controller->invokeAction(Object(CakeRequest))
+#24 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(162): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#25 D:\xampp\htdocs\pingismaisteri\app\webroot\index.php(110): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#26 {main}
+2015-05-19 12:17:36 Error: [MissingTableException] Table access_objects for model AccessObject was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'access_objects',
+  'class' => 'AccessObject',
+  'ds' => 'default',
+)
+Request URL: /pingismaisteri/
+Stack Trace:
+#0 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(3310): Model->setSource('access_objects')
+#1 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(2750): Model->getDataSource()
+#2 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(2722): Model->_readDataSource('first', Array)
+#3 D:\xampp\htdocs\pingismaisteri\app\Controller\AppController.php(92): Model->find('first', Array)
+#4 [internal function]: AppController->checkAccess('Users', 'login')
+#5 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(AppController), Array)
+#6 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(187): Controller->invokeAction(Object(CakeRequest))
+#7 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(162): Dispatcher->_invoke(Object(AppController), Object(CakeRequest), Object(CakeResponse))
+#8 D:\xampp\htdocs\pingismaisteri\lib\Cake\Core\Object.php(106): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse), Array)
+#9 D:\xampp\htdocs\pingismaisteri\app\View\Elements\mainmenu.ctp(20): Object->requestAction('/app/checkAcces...')
+#10 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(931): include('D:\\xampp\\htdocs...')
+#11 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(893): View->_evaluate('D:\\xampp\\htdocs...', Array)
+#12 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(1191): View->_render('D:\\xampp\\htdocs...', Array)
+#13 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(408): View->_renderElement('D:\\xampp\\htdocs...', Array, Array)
+#14 D:\xampp\htdocs\pingismaisteri\app\View\Layouts\default.ctp(55): View->element('mainmenu')
+#15 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(931): include('D:\\xampp\\htdocs...')
+#16 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(893): View->_evaluate('D:\\xampp\\htdocs...', Array)
+#17 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(525): View->_render('D:\\xampp\\htdocs...')
+#18 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(470): View->renderLayout('', 'default')
+#19 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(952): View->render('home', NULL)
+#20 D:\xampp\htdocs\pingismaisteri\app\Controller\PagesController.php(63): Controller->render('home')
+#21 [internal function]: PagesController->display('home')
+#22 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(PagesController), Array)
+#23 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(187): Controller->invokeAction(Object(CakeRequest))
+#24 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(162): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#25 D:\xampp\htdocs\pingismaisteri\app\webroot\index.php(110): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#26 {main}
+2015-05-19 12:18:08 Error: [MissingTableException] Table access_objects for model AccessObject was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'access_objects',
+  'class' => 'AccessObject',
+  'ds' => 'default',
+)
+Request URL: /pingismaisteri/
+Stack Trace:
+#0 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(3310): Model->setSource('access_objects')
+#1 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(2750): Model->getDataSource()
+#2 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(2722): Model->_readDataSource('first', Array)
+#3 D:\xampp\htdocs\pingismaisteri\app\Controller\AppController.php(92): Model->find('first', Array)
+#4 [internal function]: AppController->checkAccess('Users', 'login')
+#5 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(AppController), Array)
+#6 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(187): Controller->invokeAction(Object(CakeRequest))
+#7 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(162): Dispatcher->_invoke(Object(AppController), Object(CakeRequest), Object(CakeResponse))
+#8 D:\xampp\htdocs\pingismaisteri\lib\Cake\Core\Object.php(106): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse), Array)
+#9 D:\xampp\htdocs\pingismaisteri\app\View\Elements\mainmenu.ctp(20): Object->requestAction('/app/checkAcces...')
+#10 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(931): include('D:\\xampp\\htdocs...')
+#11 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(893): View->_evaluate('D:\\xampp\\htdocs...', Array)
+#12 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(1191): View->_render('D:\\xampp\\htdocs...', Array)
+#13 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(408): View->_renderElement('D:\\xampp\\htdocs...', Array, Array)
+#14 D:\xampp\htdocs\pingismaisteri\app\View\Layouts\default.ctp(55): View->element('mainmenu')
+#15 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(931): include('D:\\xampp\\htdocs...')
+#16 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(893): View->_evaluate('D:\\xampp\\htdocs...', Array)
+#17 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(525): View->_render('D:\\xampp\\htdocs...')
+#18 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(470): View->renderLayout('', 'default')
+#19 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(952): View->render('home', NULL)
+#20 D:\xampp\htdocs\pingismaisteri\app\Controller\PagesController.php(63): Controller->render('home')
+#21 [internal function]: PagesController->display('home')
+#22 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(PagesController), Array)
+#23 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(187): Controller->invokeAction(Object(CakeRequest))
+#24 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(162): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#25 D:\xampp\htdocs\pingismaisteri\app\webroot\index.php(110): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#26 {main}
+2015-05-19 12:19:15 Error: [MissingTableException] Table access_objects for model AccessObject was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'access_objects',
+  'class' => 'AccessObject',
+  'ds' => 'default',
+)
+Request URL: /pingismaisteri/
+Stack Trace:
+#0 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(3310): Model->setSource('access_objects')
+#1 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(2750): Model->getDataSource()
+#2 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(2722): Model->_readDataSource('first', Array)
+#3 D:\xampp\htdocs\pingismaisteri\app\Controller\AppController.php(92): Model->find('first', Array)
+#4 [internal function]: AppController->checkAccess('Users', 'login')
+#5 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(AppController), Array)
+#6 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(187): Controller->invokeAction(Object(CakeRequest))
+#7 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(162): Dispatcher->_invoke(Object(AppController), Object(CakeRequest), Object(CakeResponse))
+#8 D:\xampp\htdocs\pingismaisteri\lib\Cake\Core\Object.php(106): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse), Array)
+#9 D:\xampp\htdocs\pingismaisteri\app\View\Elements\mainmenu.ctp(20): Object->requestAction('/app/checkAcces...')
+#10 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(931): include('D:\\xampp\\htdocs...')
+#11 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(893): View->_evaluate('D:\\xampp\\htdocs...', Array)
+#12 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(1191): View->_render('D:\\xampp\\htdocs...', Array)
+#13 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(408): View->_renderElement('D:\\xampp\\htdocs...', Array, Array)
+#14 D:\xampp\htdocs\pingismaisteri\app\View\Layouts\default.ctp(55): View->element('mainmenu')
+#15 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(931): include('D:\\xampp\\htdocs...')
+#16 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(893): View->_evaluate('D:\\xampp\\htdocs...', Array)
+#17 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(525): View->_render('D:\\xampp\\htdocs...')
+#18 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(470): View->renderLayout('', 'default')
+#19 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(952): View->render('home', NULL)
+#20 D:\xampp\htdocs\pingismaisteri\app\Controller\PagesController.php(63): Controller->render('home')
+#21 [internal function]: PagesController->display('home')
+#22 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(PagesController), Array)
+#23 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(187): Controller->invokeAction(Object(CakeRequest))
+#24 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(162): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#25 D:\xampp\htdocs\pingismaisteri\app\webroot\index.php(110): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#26 {main}
+2015-05-19 12:21:22 Error: [MissingTableException] Table access_objects for model AccessObject was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'access_objects',
+  'class' => 'AccessObject',
+  'ds' => 'default',
+)
+Request URL: /pingismaisteri/
+Stack Trace:
+#0 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(3310): Model->setSource('access_objects')
+#1 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(2750): Model->getDataSource()
+#2 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(2722): Model->_readDataSource('first', Array)
+#3 D:\xampp\htdocs\pingismaisteri\app\Controller\AppController.php(92): Model->find('first', Array)
+#4 [internal function]: AppController->checkAccess('Users', 'login')
+#5 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(AppController), Array)
+#6 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(187): Controller->invokeAction(Object(CakeRequest))
+#7 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(162): Dispatcher->_invoke(Object(AppController), Object(CakeRequest), Object(CakeResponse))
+#8 D:\xampp\htdocs\pingismaisteri\lib\Cake\Core\Object.php(106): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse), Array)
+#9 D:\xampp\htdocs\pingismaisteri\app\View\Elements\mainmenu.ctp(20): Object->requestAction('/app/checkAcces...')
+#10 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(931): include('D:\\xampp\\htdocs...')
+#11 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(893): View->_evaluate('D:\\xampp\\htdocs...', Array)
+#12 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(1191): View->_render('D:\\xampp\\htdocs...', Array)
+#13 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(408): View->_renderElement('D:\\xampp\\htdocs...', Array, Array)
+#14 D:\xampp\htdocs\pingismaisteri\app\View\Layouts\default.ctp(55): View->element('mainmenu')
+#15 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(931): include('D:\\xampp\\htdocs...')
+#16 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(893): View->_evaluate('D:\\xampp\\htdocs...', Array)
+#17 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(525): View->_render('D:\\xampp\\htdocs...')
+#18 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(470): View->renderLayout('', 'default')
+#19 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(952): View->render('home', NULL)
+#20 D:\xampp\htdocs\pingismaisteri\app\Controller\PagesController.php(63): Controller->render('home')
+#21 [internal function]: PagesController->display('home')
+#22 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(PagesController), Array)
+#23 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(187): Controller->invokeAction(Object(CakeRequest))
+#24 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(162): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#25 D:\xampp\htdocs\pingismaisteri\app\webroot\index.php(110): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#26 {main}
+ECHO 处于打开状态。
+ECHO 处于打开状态。
+ECHO 处于打开状态。
+2015-05-19 12:22:48 Error: [MissingTableException] Table access_objects for model AccessObject was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'access_objects',
+  'class' => 'AccessObject',
+  'ds' => 'default',
+)
+Request URL: /pingismaisteri/
+Stack Trace:
+#0 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(3310): Model->setSource('access_objects')
+#1 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(2750): Model->getDataSource()
+#2 D:\xampp\htdocs\pingismaisteri\lib\Cake\Model\Model.php(2722): Model->_readDataSource('first', Array)
+#3 D:\xampp\htdocs\pingismaisteri\app\Controller\AppController.php(92): Model->find('first', Array)
+#4 [internal function]: AppController->checkAccess('Users', 'login')
+#5 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(AppController), Array)
+#6 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(187): Controller->invokeAction(Object(CakeRequest))
+#7 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(162): Dispatcher->_invoke(Object(AppController), Object(CakeRequest), Object(CakeResponse))
+#8 D:\xampp\htdocs\pingismaisteri\lib\Cake\Core\Object.php(106): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse), Array)
+#9 D:\xampp\htdocs\pingismaisteri\app\View\Elements\mainmenu.ctp(20): Object->requestAction('/app/checkAcces...')
+#10 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(931): include('D:\\xampp\\htdocs...')
+#11 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(893): View->_evaluate('D:\\xampp\\htdocs...', Array)
+#12 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(1191): View->_render('D:\\xampp\\htdocs...', Array)
+#13 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(408): View->_renderElement('D:\\xampp\\htdocs...', Array, Array)
+#14 D:\xampp\htdocs\pingismaisteri\app\View\Layouts\default.ctp(55): View->element('mainmenu')
+#15 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(931): include('D:\\xampp\\htdocs...')
+#16 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(893): View->_evaluate('D:\\xampp\\htdocs...', Array)
+#17 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(525): View->_render('D:\\xampp\\htdocs...')
+#18 D:\xampp\htdocs\pingismaisteri\lib\Cake\View\View.php(470): View->renderLayout('', 'default')
+#19 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(952): View->render('home', NULL)
+#20 D:\xampp\htdocs\pingismaisteri\app\Controller\PagesController.php(63): Controller->render('home')
+#21 [internal function]: PagesController->display('home')
+#22 D:\xampp\htdocs\pingismaisteri\lib\Cake\Controller\Controller.php(490): ReflectionMethod->invokeArgs(Object(PagesController), Array)
+#23 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(187): Controller->invokeAction(Object(CakeRequest))
+#24 D:\xampp\htdocs\pingismaisteri\lib\Cake\Routing\Dispatcher.php(162): Dispatcher->_invoke(Object(PagesController), Object(CakeRequest), Object(CakeResponse))
+#25 D:\xampp\htdocs\pingismaisteri\app\webroot\index.php(110): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#26 {main}
+ECHO 处于打开状态。
