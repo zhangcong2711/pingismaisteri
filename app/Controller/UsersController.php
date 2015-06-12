@@ -163,7 +163,7 @@ class UsersController extends AppController {
          } else {
             
             // Login failed
-            $this->Session->setFlash(__('Kirjautuminen epäonnistui') );
+            $this->Session->setFlash(__('Login failed!...') );
          }
       }
       
