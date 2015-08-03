@@ -1,0 +1,17 @@
+msgid "Hello world"
+msgstr "Moi!"
+
+msgid "ti18n"
+msgstr "Tämä on Suomea versio"
+
+msgid "ti18n2"
+msgstr "Moi!"
+
+msgid "changeLanguage"
+msgstr "Vaihda kieli:"
+
+msgid "name"
+msgstr "Nimi"
+
+msgid "emailAddress"
+msgstr "Sähköpostiosoite"

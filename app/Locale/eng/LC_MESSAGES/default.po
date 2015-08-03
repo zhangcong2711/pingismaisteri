@@ -1,0 +1,17 @@
+msgid "Hello world"
+msgstr "Hello!"
+
+msgid "ti18n"
+msgstr "This is English version"
+
+msgid "ti18n2"
+msgstr "Hello!"
+
+msgid "changeLanguage"
+msgstr "Change language:"
+
+msgid "name"
+msgstr "Name"
+
+msgid "emailAddress"
+msgstr "Email Address"

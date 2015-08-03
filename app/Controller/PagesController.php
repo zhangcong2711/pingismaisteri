@@ -68,4 +68,12 @@ class PagesController extends AppController {
 			throw new NotFoundException();
 		}
 	}
+	
+	/*
+	public function changeLanguage($lng) { // Change language method
+		parent::setLang($lng); // call setLang() from AppController
+		$this->Session->setFlash(__('The language has been changed to %s', $lng)); // Send a success flash message
+		
+		$this->redirect($this->referer()); // redirect the user to the last page (referer)
+	}*/
 }

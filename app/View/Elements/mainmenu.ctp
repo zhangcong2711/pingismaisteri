@@ -32,10 +32,14 @@
 
 </ul>
 
-<?php if( $this->requestAction("/app/checkAccess/users/logout" ) ) { ?>
+
 
 <ul class="nav navbar-nav navbar-right">
+   <li><?php echo $this->Html->link('Eng', array('language'=>'en')); ?></li>
+   <li><?php echo $this->Html->link('Fin', array('language'=>'fin')); ?></li>
+               
+   <?php if( $this->requestAction("/app/checkAccess/users/logout" ) ) { ?>
    <li><?php echo $this->Html->link("Kirjaudu ulos", "/users/logout" ); ?></li>
+   <?php } ?>
 </ul> 
 
-<?php } ?>

@@ -43,20 +43,26 @@
 		echo $this->fetch('script');
 	?>
 </head>
+
+<!-- Put in evidence the selected language -->
+<style>
+	ul li a {text-decoration: none;}
+	ul li.selected a {text-decoration: underline;}
+</style>
+
 <body>
 	<div class="container body">
       <div class="row">
          <div class="col-md-12">
             <h1>PINGISMAISTERI</h1>
-         
             <div class="navbar navbar-default">
             <?php 
-            
+               
                echo $this->element("mainmenu");
-            
             ?>
             </div>
          </div>
+         
       </div>
       <div class="content">
          <div class="row">

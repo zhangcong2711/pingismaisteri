@@ -23,6 +23,8 @@
 
 App::uses('Controller', 'Controller');
 
+App::import('Core', 'l10n');
+
 class AppController extends Controller {
 
    public $uses = array('User', 'Role', 'AccessObject');
@@ -37,6 +39,7 @@ class AppController extends Controller {
         )
       ), 
       'Security',
+   	  'Cookie',
       'Session',
       'RequestHandler'
    );
@@ -50,7 +53,43 @@ class AppController extends Controller {
       $this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');
       $this->Auth->loginError = __("Käyttäjätunnuksesi tai salasanasi oli väärä");
       $this->Auth->authError = __("Käyttöoikeusvirhe: Et saa mennä sinne");
+      
+      
+      $this->_setLanguage();
    }
+   
+   
+   private function _setLanguage(){
+   	
+   	  if (isset($this->params->params['named']['language'])){
+   		  $this->Session->write('Config.language', $this->params->params['named']['language']);
+   		  $this->Cookie->write('lang', $this->params->params['named']['language'], false, '20 days');
+   	  }
+   	
+   	  if (isset($this->params['language'])){
+   		  $this->Session->write('Config.language', $this->params['language']);
+   		  $this->Cookie->write('lang', $this->params['language'], false, '20 days');
+   	  }
+   }
+   
+   
+   //override redirect
+   /*
+   public function redirect( $url, $status = NULL, $exit = true ) {
+	   	if (!isset($url['language']) && $this->Session->check('Config.language')) {
+	   		$url['language'] = $this->Session->read('Config.language');
+	   	}
+	   	parent::redirect($url,$status,$exit);
+   }*/
+    
+   
+   /*
+   protected function setLang($lang) { // protected method used to set the language
+   	$this->Session->write('Config.language', $lang); // write our language to session
+   	Configure::write('Config.language', $lang); // tell CakePHP that we're using this language
+   }*/
+   
+   
    
    // Used for role based access checks
    function isAuthorized()
@@ -129,6 +168,6 @@ class AppController extends Controller {
       return $access;
    }
    
-}
 
+}
 
