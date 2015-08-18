@@ -39,3 +39,7 @@ msgstr "Log out"
 
 msgid "password"
 msgstr "Password"
+
+msgid "editInfo"
+msgstr "(Eng)Muokkaa tietoja 不知道的就做个标记, 不用翻译"
+
