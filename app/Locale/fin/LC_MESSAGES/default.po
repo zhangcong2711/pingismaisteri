@@ -15,3 +15,28 @@ msgstr "Nimi"
 
 msgid "emailAddress"
 msgstr "Sähköpostiosoite"
+
+msgid "logIn"
+msgstr "Kirjaudu sisään"
+
+msgid "signUp"
+msgstr "Rekisteröidy"
+
+msgid "tournaments"
+msgstr "Turnaukset"
+
+msgid "tournamentCategory"
+msgstr "Turnausluokat"
+
+msgid "clubs"
+msgstr "Seurat"
+
+msgid "myAccount"
+msgstr "Oma tili"
+
+msgid "logOut"
+msgstr "Kirjaudu ulos"
+
+msgid "password"
+msgstr "Salasana"
+

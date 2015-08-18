@@ -90,7 +90,7 @@
                      'label' => "Arvo poolit", 
                      'controller' => 'tournaments', 
                      'action' => 'drawPools', 
-                     'params' => array($tournament['Tournament']['id']), 
+                     'params' => array($tournament['Tournament']['id'],10), 
                      'class' => 'btn btn-primary'
                   )
                );

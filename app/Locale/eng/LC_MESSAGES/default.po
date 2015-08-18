@@ -15,3 +15,27 @@ msgstr "Name"
 
 msgid "emailAddress"
 msgstr "Email Address"
+
+msgid "logIn"
+msgstr "Log in"
+
+msgid "signUp"
+msgstr "Sign up"
+
+msgid "tournaments"
+msgstr "Tournaments"
+
+msgid "tournamentCategory"
+msgstr "Tournament category"
+
+msgid "clubs"
+msgstr "Clubs"
+
+msgid "myAccount"
+msgstr "My account"
+
+msgid "logOut"
+msgstr "Log out"
+
+msgid "password"
+msgstr "Password"

@@ -43,13 +43,18 @@ class Player extends AppModel {
       )
    );
    
-   public $hasMany = array(
-      'Registration' => array(
-         'className' => 'Registration',
-         'foreignKey' => 'player_id',
-         'dependent' => true
-      )
-   );
+	public $hasMany = array (
+			'Registration' => array (
+					'className' => 'Registration',
+					'foreignKey' => 'player_id',
+					'dependent' => true 
+			),
+			'PlayerInPool' => array (
+					'className' => 'PlayerInPool',
+					'foreignKey' => 'player_id',
+					'dependent' => true 
+			) 
+	);
    
 	public $hasAndBelongsToMany = array(
 		'User' => array(
@@ -59,6 +64,14 @@ class Player extends AppModel {
 			'dependent' => false,
 			'fields' => 'User.id, User.email, User.created, User.name'
 		)
+		/*
+		'Pool' => array(
+				'className' => 'Pool',
+				'joinTable' => 'player_in_pools',
+				'foreignKey' => 'player_id',
+				'associationForeignKey' => 'pool_id',
+				'dependent' => false
+		)*/
 	);
    
    var $virtualFields = array(

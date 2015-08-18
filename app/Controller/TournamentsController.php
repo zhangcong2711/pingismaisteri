@@ -5,7 +5,7 @@ class TournamentsController extends AppController {
 
    public $helpers = array('Html', 'Form');
    
-   public $uses = array( 'Tournament', 'TournamentClass', 'Registration', 'TournamentClasses', 'ClassInTournament', 'Rating', 'RatingRow', 'Player' );
+   public $uses = array( 'Tournament', 'TournamentClass', 'Registration', 'TournamentClasses', 'ClassInTournament', 'Rating', 'RatingRow', 'Player', 'Pool', 'PlayerInPool', 'Stage' );
    
    public function beforeFilter(){
       $this->Security->unlockedFields = array('TournamentClass');
@@ -406,14 +406,126 @@ class TournamentsController extends AppController {
 		$registeredPlayers = $this->Registration->find("count",
 		array(
 			'conditions' => array(
-			'Registration.tournament_id =' => $tournament_id,
 			'Registration.tournament_class_id ='=> $tournament_class_id
 			)));
 		$this->set('regs', $registeredPlayers);
+		
+		
+		
+		$playerList = $this->Player->find("all",array(
+												'joins' => array(
+											        array(
+												        'table' => 'registrations',
+												        'alias' => 'Registration',
+												        'type' => 'INNER',
+												        'conditions' => array(
+												            'Registration.player_id = Player.id'
+												        )
+												    ),
+												    array(
+												        'table' => 'class_in_tournaments',
+												        'alias' => 'CIT',
+												        'type' => 'INNER',
+												        'conditions' => array(
+												        	'CIT.id = Registration.tournament_class_id'
+												        )
+												    )
+											    ),
+											    'conditions' => array(
+											        'CIT.id = ' => $tournament_class_id
+											    ),
+											    'fields' => array('CIT.*', 'Registration.*')));
+		
 
 		// poolien asetukset
 		if ($this->request->is('post'))
 		{
+			
+			//delete all pools and associations with players
+			
+			
+			//query tournament
+			$tournament=$this->Tournament->find('first', array(
+		        'conditions' => array('Tournament.id' => $tournament_id)
+		    ));
+			
+			//query stages, select p stage where add pools
+			$stages=$tournament['Stage'];
+			foreach ($stages as &$st) {
+				if($st['type']=='P'){
+					
+					//delete all pools associated with the stage
+					$this->Pool->deleteAll(array('Stage.id' => $st['id']), true);
+					
+					
+					//add pools
+					
+					$this->Pool->create();
+					$pdata = array('name' => 'A', 'type' => 'P', 'stage_id' => $st['id']);
+					$this->Pool->save($pdata);
+					
+					//add players in pools
+					
+					$this->PlayerInPool->create();
+					$pipdata = array('player_id' => $playerList[0]['Player']['id'], 'pool_id' => $this->Pool->id);
+					$this->PlayerInPool->save($pipdata);
+					$this->PlayerInPool->clear();
+					
+					$this->PlayerInPool->create();
+					$pipdata = array('player_id' => $playerList[1]['Player']['id'], 'pool_id' => $this->Pool->id);
+					$this->PlayerInPool->save($pipdata);
+					$this->PlayerInPool->clear();
+					
+					$this->PlayerInPool->create();
+					$pipdata = array('player_id' => $playerList[2]['Player']['id'], 'pool_id' => $this->Pool->id);
+					$this->PlayerInPool->save($pipdata);
+					$this->PlayerInPool->clear();
+					
+					$this->Pool->clear();
+					
+					
+					$this->Pool->create();
+					$pdata = array('name' => 'B', 'type' => 'P', 'stage_id' => $st['id']);
+					$this->Pool->save($pdata);
+					
+					//add players in pools
+						
+					$this->PlayerInPool->create();
+					$pipdata = array('player_id' => $playerList[3]['Player']['id'], 'pool_id' => $this->Pool->id);
+					$this->PlayerInPool->save($pipdata);
+					$this->PlayerInPool->clear();
+						
+					$this->PlayerInPool->create();
+					$pipdata = array('player_id' => $playerList[4]['Player']['id'], 'pool_id' => $this->Pool->id);
+					$this->PlayerInPool->save($pipdata);
+					$this->PlayerInPool->clear();
+						
+					$this->PlayerInPool->create();
+					$pipdata = array('player_id' => $playerList[5]['Player']['id'], 'pool_id' => $this->Pool->id);
+					$this->PlayerInPool->save($pipdata);
+					$this->PlayerInPool->clear();
+					
+					$this->Pool->clear();
+					
+					$this->Pool->create();
+					$pdata = array('name' => 'C', 'type' => 'P', 'stage_id' => $st['id']);
+					$this->Pool->save($pdata);
+					$this->Pool->clear();
+						
+					
+				}
+			}
+			// $arr is now array(2, 4, 6, 8)
+			unset($st); 
+			
+			
+			
+			
+			
+			
+			
+			
+			/*
 		        $formData['PoolForm'] = $this->request->data['PoolForm'];
 				$numberOfPools = $formData['PoolForm']['numberOfPools'];
 				$placedPlayers = $formData['PoolForm']['placedPlayers'];
@@ -449,6 +561,7 @@ class TournamentsController extends AppController {
 				{
 					debug (${"pool" . $i});
 				}
+			*/
 		}
    }
    

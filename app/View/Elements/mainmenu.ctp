@@ -1,12 +1,12 @@
 <?php
 
    $menuitems = array(
-      array('label' => "Kirjaudu sisään", 'controller' => 'Users', 'action' => 'login'),
-      array('label' => "Rekisteröidy", 'controller' => 'Users', 'action' => 'register'),
-      array('label' => "Turnaukset", 'controller' => 'Tournaments', 'action' => 'view'),
-      array('label' => "Turnausluokat", 'controller' => 'TournamentClasses', 'action' => 'view'),
-      array('label' => "Seurat", 'controller' => 'Clubs', 'action' => 'view'),
-      array('label' => "Oma tili", 'controller' => 'Users', 'action' => 'MyAccount')
+      array('label' => __("logIn"), 'controller' => 'Users', 'action' => 'login'),
+      array('label' => __("signUp"), 'controller' => 'Users', 'action' => 'register'),
+      array('label' => __("tournaments"), 'controller' => 'Tournaments', 'action' => 'view'),
+      array('label' => __("tournamentCategory"), 'controller' => 'TournamentClasses', 'action' => 'view'),
+      array('label' => __("clubs"), 'controller' => 'Clubs', 'action' => 'view'),
+      array('label' => __("myAccount"), 'controller' => 'Users', 'action' => 'MyAccount')
    );
    
 ?>
@@ -39,7 +39,7 @@
    <li><?php echo $this->Html->link('Fin', array('language'=>'fin')); ?></li>
                
    <?php if( $this->requestAction("/app/checkAccess/users/logout" ) ) { ?>
-   <li><?php echo $this->Html->link("Kirjaudu ulos", "/users/logout" ); ?></li>
+   <li><?php echo $this->Html->link(__("logOut"), "/users/logout" ); ?></li>
    <?php } ?>
 </ul> 
 
