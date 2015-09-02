@@ -411,6 +411,11 @@ class TournamentsController extends AppController {
 		$this->set('regs', $registeredPlayers);
 		
 		
+		//find all stages of this tournament
+		$all_stages=$this->Stage->find("all",array(
+									'conditions' => array('Tournament.id = ' => $tournament_id)
+		));
+		
 		
 		$playerList = $this->Player->find("all",array(
 												'joins' => array(
@@ -563,6 +568,8 @@ class TournamentsController extends AppController {
 				}
 			*/
 		}
+		
+		$this->set("all_stages", $all_stages);
    }
    
    public function sendEmail($id)

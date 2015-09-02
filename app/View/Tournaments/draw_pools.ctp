@@ -22,6 +22,22 @@
              "class" => "form-control"
          ));
 		 ?>
+		<br/>
+		<?php 
+		
+		$options = array();
+		
+		foreach ($all_stages as &$st) {
+			$options[$st['Stage']['id']]=$st['Stage']['name'].'_'.$st['Stage']['type'];
+		}
+		
+		echo $this->Form->input('stage_select', array(
+		    'type'    => 'select',
+		    'options' => $options,
+		    'empty'   => false
+		));
+		
+		?>
 
 		</div>
 	</div>
