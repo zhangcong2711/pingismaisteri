@@ -43,3 +43,28 @@ msgstr "Salasana"
 msgid "editInfo"
 msgstr "Muokkaa tietoja"
 
+msgid "stage_select"
+msgstr "(NT)Please select stage"
+
+msgid "pool_opt_select"
+msgstr "(NT)Please select pool option"
+
+msgid "num_registered_player"
+msgstr "Rekisteröityneitä pelaajia"
+
+msgid "fp_size"
+msgstr "(NT)First pool size"
+
+msgid "np_size"
+msgstr "(NT)Normal pool size"
+
+msgid "pool_num"
+msgstr "Poolien lukumäärä"
+
+msgid "minimize_same_club"
+msgstr "(NT)Minimize games between players from the same club"
+
+msgid "minimize_same_player"
+msgstr "(NT)Minimize games between same players"
+
+

@@ -41,5 +41,30 @@ msgid "password"
 msgstr "Password"
 
 msgid "editInfo"
-msgstr "(Eng)Muokkaa tietoja 不知道的就做个标记, 不用翻译"
+msgstr "(NT)Muokkaa tietoja"
+
+msgid "stage_select"
+msgstr "Please select stage"
+
+msgid "pool_opt_select"
+msgstr "Please select pool option"
+
+msgid "num_registered_player"
+msgstr "(NT)Rekisteröityneitä pelaajia"
+
+msgid "fp_size"
+msgstr "First pool size"
+
+msgid "np_size"
+msgstr "Normal pool size"
+
+msgid "pool_num"
+msgstr "Number of pool"
+
+msgid "minimize_same_club"
+msgstr "Minimize games between players from the same club"
+
+msgid "minimize_same_player"
+msgstr "Minimize games between same players"
+
 

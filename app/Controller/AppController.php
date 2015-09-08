@@ -21,9 +21,12 @@
  *
  */
 
+
+
 App::uses('Controller', 'Controller');
 
 App::import('Core', 'l10n');
+App::import('Config', 'app_const');
 
 class AppController extends Controller {
 
@@ -38,7 +41,7 @@ class AppController extends Controller {
          )
         )
       ), 
-      'Security',
+      //'Security',
    	  'Cookie',
       'Session',
       'RequestHandler'
@@ -47,6 +50,7 @@ class AppController extends Controller {
    
    /* Let's put those components to good use */
    function beforeFilter() { 
+   	
       $this->Auth->allow('display', 'checkAccess');
       $this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'myAccount');
       $this->Auth->logoutRedirect = '/';
@@ -56,6 +60,9 @@ class AppController extends Controller {
       
       
       $this->_setLanguage();
+      
+      
+      
    }
    
    

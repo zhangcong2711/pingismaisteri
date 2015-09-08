@@ -37,10 +37,14 @@
       echo $this->Html->script("bootstrap");
       echo $this->Html->script("plugins");
       echo $this->Html->script("ui");
-
+      echo $this->Html->script('util');
+      
+      
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
+		
+		
 	?>
 </head>
 

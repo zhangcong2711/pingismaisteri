@@ -8,7 +8,7 @@ class TournamentsController extends AppController {
    public $uses = array( 'Tournament', 'TournamentClass', 'Registration', 'TournamentClasses', 'ClassInTournament', 'Rating', 'RatingRow', 'Player', 'Pool', 'PlayerInPool', 'Stage' );
    
    public function beforeFilter(){
-      $this->Security->unlockedFields = array('TournamentClass');
+      //$this->Security->unlockedFields = array('TournamentClass');
    }
    
    
@@ -402,6 +402,9 @@ class TournamentsController extends AppController {
    // Poolien arvontaan 
    public function drawPools($tournament_id, $tournament_class_id)
    {
+   	
+   		
+   	
 		// luokkaan rekisteröityjen pelaajien lukumäärä
 		$registeredPlayers = $this->Registration->find("count",
 		array(
@@ -434,19 +437,29 @@ class TournamentsController extends AppController {
 												        'conditions' => array(
 												        	'CIT.id = Registration.tournament_class_id'
 												        )
-												    )
+												    ),
+													array(
+														'table' => 'rating_rows',
+														'alias' => 'RatingRow',
+														'type' => 'INNER',
+														'conditions' => array(
+															'Player.id = RatingRow.player_id',
+															'RatingRow.rating_id=1'
+														)
+													)
 											    ),
 											    'conditions' => array(
 											        'CIT.id = ' => $tournament_class_id
 											    ),
-											    'fields' => array('CIT.*', 'Registration.*')));
+											    'fields' => array('Player.*', 'CIT.*', 'Registration.*', 'RatingRow.rating')));
 		
 
 		// poolien asetukset
 		if ($this->request->is('post'))
 		{
 			
-			//delete all pools and associations with players
+			//get parameters
+			$pool_num=$this->request->data['PoolForm']['pool_num'];
 			
 			
 			//query tournament
@@ -523,50 +536,6 @@ class TournamentsController extends AppController {
 			// $arr is now array(2, 4, 6, 8)
 			unset($st); 
 			
-			
-			
-			
-			
-			
-			
-			
-			/*
-		        $formData['PoolForm'] = $this->request->data['PoolForm'];
-				$numberOfPools = $formData['PoolForm']['numberOfPools'];
-				$placedPlayers = $formData['PoolForm']['placedPlayers'];
-				
-				// määritä pelaajien arvonta-asetukset
-				// ...
-				
-				// luo poolitaulut asetusten perusteella
-				
-				for ($i = 0; $i < $numberOfPools; $i++)
-				{
-					${"pool" . $i} = array();
-				}
-				
-				// sijotetaan tarvittava määrä korkeitten reitattuja pelaajia
-				
-				// korkeimmalle reitattu pelaaja?
-				//....
-				
-				for ($i = 0; $i < $placedPlayers; $i++)
-				{
-					// korkeimmaan ratingin omaavan pelaajan sijottaminen
-					
-					${"pool" . $i}[] = "testi";
-				}				
-				
-				
-				// sekoita loput pelaajat
-				
-				
-				//debug
-				for ($i = 0; $i < $numberOfPools; $i++)
-				{
-					debug (${"pool" . $i});
-				}
-			*/
 		}
 		
 		$this->set("all_stages", $all_stages);
