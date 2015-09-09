@@ -67,4 +67,7 @@ msgstr "(NT)Minimize games between players from the same club"
 msgid "minimize_same_player"
 msgstr "(NT)Minimize games between same players"
 
+msgid "signUp2"
+msgstr "Ilmoittaudu"
+
 

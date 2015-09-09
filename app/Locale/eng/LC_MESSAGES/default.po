@@ -67,4 +67,8 @@ msgstr "Minimize games between players from the same club"
 msgid "minimize_same_player"
 msgstr "Minimize games between same players"
 
+msgid "signUp2"
+msgstr "SignUp"
+
+
 

@@ -44,7 +44,7 @@
             echo $this->element(
                "buttonlink", 
                array(
-                  'label' => "Ilmoittaudu", 
+                  'label' => __("signUp2"), 
                   'controller' => 'tournaments', 
                   'action' => 'register', 
                   'params' => array($tournament['Tournament']['id']), 
