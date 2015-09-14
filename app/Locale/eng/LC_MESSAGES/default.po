@@ -70,5 +70,43 @@ msgstr "Minimize games between same players"
 msgid "signUp2"
 msgstr "SignUp"
 
+msgid "lastname"
+msgstr "Lastname"
+
+msgid "birthday"
+msgstr "Birthday"
+
+msgid "address"
+msgstr "Address"
+
+msgid "postalcode"
+msgstr "Postalcode"
+
+msgid "postarea"
+msgstr "Postarea"
+
+msgid "club_id"
+msgstr "Club"
+
+msgid "email"
+msgstr "Email"
+
+msgid "phone"
+msgstr "Phone"
+
+msgid "address"
+msgstr "Osoite"
+
+msgid "address"
+msgstr "Osoite"
+
+msgid "address"
+msgstr "Osoite"
+
+msgid "address"
+msgstr "Osoite"
+
+msgid "address"
+msgstr "Osoite"
 
 

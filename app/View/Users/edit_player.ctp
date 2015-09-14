@@ -13,14 +13,14 @@
 
    echo $this->Form->input("lastname",
       array( 
-         "label" => "Sukunimi",
+         "label" => __("lastname"),
          "class" => "form-control"
       )
    );
 
    echo $this->Form->input("birthday", 
       array( 
-         "label" => "Syntymäpäivä",
+         "label" => __("birthday"),
          "type" => "text",
          "class" => "form-control datepicker",
          "data-date-format" => "dd.mm.yyyy",
@@ -29,28 +29,28 @@
 
    echo $this->Form->input("address", 
       array( 
-         "label" => "Osoite",
+         "label" => __("address"),
          "class" => "form-control"
       )
    );
 
    echo $this->Form->input("postalcode", 
       array( 
-         "label" => "Postinumero",
+         "label" => __("postalcode"),
          "class" => "form-control"
       )
    );
    
    echo $this->Form->input("postarea", 
       array( 
-         "label" => "Postitoimipaikka",
+         "label" => __("postarea"),
          "class" => "form-control"
       )
    );
 
    echo $this->Form->input("club_id", 
       array( 
-         "label" => "Seura",
+         "label" => __("club_id"),
          "class" => "form-control",
          'options' => $clubs,
          "empty" => "Valitse seura"
@@ -59,14 +59,14 @@
 
    echo $this->Form->input("email", 
       array( 
-         "label" => "Sähköposti",
+         "label" => __("email"),
          "class" => "form-control"
       )
    );
 
    echo $this->Form->input("phone", 
       array( 
-         "label" => "Puhelin",
+         "label" => __("phone"),
          "class" => "form-control"
       )
    );

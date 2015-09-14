@@ -70,4 +70,35 @@ msgstr "(NT)Minimize games between same players"
 msgid "signUp2"
 msgstr "Ilmoittaudu"
 
+msgid "lastname"
+msgstr "Sukunimi"
 
+msgid "birthday"
+msgstr "Syntymäpäivä"
+
+msgid "address"
+msgstr "Osoite"
+
+msgid "postalcode"
+msgstr "Postinumero"
+
+msgid "postarea"
+msgstr "Postitoimipaikka"
+
+msgid "club_id"
+msgstr "Seura"
+
+msgid "email"
+msgstr "Sähköposti"
+
+msgid "phone"
+msgstr "Puhelin"
+
+msgid "birthday"
+msgstr "Syntymäpäivä"
+
+msgid "birthday"
+msgstr "Syntymäpäivä"
+
+msgid "birthday"
+msgstr "Syntymäpäivä"
