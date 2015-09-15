@@ -1,6 +1,4 @@
-<?php 
-require APP . 'Config' . DS . 'app_const.php';
-?>
+
 
 
 <h1>Poolien arvonta</h1>
@@ -27,8 +25,9 @@ require APP . 'Config' . DS . 'app_const.php';
 			$options[$st['Stage']['id']]=$st['Stage']['name'].'_'.$st['Stage']['type'];
 		}
 		
-		echo $this->Form->input(__('stage_select'), array(
+		echo $this->Form->input('stage_select', array(
 			'id' => 'stage_select',
+			'label' => __('stage_select'),
 		    'type'    => 'select',
 		    'options' => $options,
 		    'empty'   => true,
@@ -58,8 +57,9 @@ require APP . 'Config' . DS . 'app_const.php';
 		<?php 
 		
 		$setting_opts=array('1'=>'Option 1', '2'=>'Option 2');
-		echo $this->Form->input(__('pool_opt_select'), array(
+		echo $this->Form->input('pool_opt_select', array(
 			'id' => 'pool_opt_select',
+			'label' => __('pool_opt_select'),
 		    'type'    => 'select',
 		    'options' => $setting_opts,
 		    'empty'   => true,

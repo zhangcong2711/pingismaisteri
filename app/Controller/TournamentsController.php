@@ -1,9 +1,13 @@
 <?php
 App::uses('CakeEmail', 'Network/Email');
 
+
+App::import('Config', 'app_const');
+App::import('Vendor', 'PHPExcel/Classes/PHPExcel');
+
 class TournamentsController extends AppController {
 
-   public $helpers = array('Html', 'Form');
+   public $helpers = array('Html', 'Form', 'PHPExcel');
    
    public $uses = array( 'Tournament', 'TournamentClass', 'Registration', 'TournamentClasses', 'ClassInTournament', 'Rating', 'RatingRow', 'Player', 'Pool', 'PlayerInPool', 'Stage' );
    
@@ -400,7 +404,7 @@ class TournamentsController extends AppController {
    } 
    
    // Poolien arvontaan 
-   public function drawPools($tournament_id, $tournament_class_id)
+   public function drawPools($tournament_id, $class_in_tournament_id)
    {
    	
    		
@@ -409,7 +413,7 @@ class TournamentsController extends AppController {
 		$registeredPlayers = $this->Registration->find("count",
 		array(
 			'conditions' => array(
-			'Registration.tournament_class_id ='=> $tournament_class_id
+			'Registration.tournament_class_id ='=> $class_in_tournament_id
 			)));
 		$this->set('regs', $registeredPlayers);
 		
@@ -449,97 +453,356 @@ class TournamentsController extends AppController {
 													)
 											    ),
 											    'conditions' => array(
-											        'CIT.id = ' => $tournament_class_id
+											        'CIT.id = ' => $class_in_tournament_id
 											    ),
 											    'fields' => array('Player.*', 'CIT.*', 'Registration.*', 'RatingRow.rating')));
 		
 
-		// poolien asetukset
+		$this->set("all_stages", $all_stages);
+		
+		
+		
+		// draw pool
 		if ($this->request->is('post'))
 		{
 			
 			//get parameters
-			$pool_num=$this->request->data['PoolForm']['pool_num'];
+			$pool_num=Detect::issetValueNull($this->request->data['PoolForm']['pool_num']);
+			$stage_select_id=Detect::issetValueNull($this->request->data['PoolForm']['stage_select']);
+			$pool_opt_select=Detect::issetValueNull($this->request->data['PoolForm']['pool_opt_select']);
+			$minimize_same_club=Detect::issetValueNull($this->request->data['PoolForm']['minimize_same_club']);
+			$minimize_same_player=Detect::issetValueNull($this->request->data['PoolForm']['minimize_same_player']);
+			$fp_size=Detect::issetValueNull($this->request->data['PoolForm']['fp_size']);
+			$np_size=Detect::issetValueNull($this->request->data['PoolForm']['np_size']);
 			
 			
-			//query tournament
-			$tournament=$this->Tournament->find('first', array(
-		        'conditions' => array('Tournament.id' => $tournament_id)
-		    ));
+			$t_stage=$this->Stage->find('first',
+						array(
+								'conditions' => array(
+										'Stage.id' => $stage_select_id
+								)
+						)
+					);
 			
-			//query stages, select p stage where add pools
-			$stages=$tournament['Stage'];
-			foreach ($stages as &$st) {
-				if($st['type']=='P'){
+			
+			if($t_stage['Stage']['type']==constant('STAGE_TYPE_POOL')){
 					
-					//delete all pools associated with the stage
-					$this->Pool->deleteAll(array('Stage.id' => $st['id']), true);
+				$this->Pool->savePoolAgenda($playerList,
+				   						$t_stage,
+				   						$pool_opt_select,
+										$pool_num,
+										$minimize_same_club,
+										$minimize_same_player,
+										$fp_size,
+										$np_size);
 					
-					
-					//add pools
-					
-					$this->Pool->create();
-					$pdata = array('name' => 'A', 'type' => 'P', 'stage_id' => $st['id']);
-					$this->Pool->save($pdata);
-					
-					//add players in pools
-					
-					$this->PlayerInPool->create();
-					$pipdata = array('player_id' => $playerList[0]['Player']['id'], 'pool_id' => $this->Pool->id);
-					$this->PlayerInPool->save($pipdata);
-					$this->PlayerInPool->clear();
-					
-					$this->PlayerInPool->create();
-					$pipdata = array('player_id' => $playerList[1]['Player']['id'], 'pool_id' => $this->Pool->id);
-					$this->PlayerInPool->save($pipdata);
-					$this->PlayerInPool->clear();
-					
-					$this->PlayerInPool->create();
-					$pipdata = array('player_id' => $playerList[2]['Player']['id'], 'pool_id' => $this->Pool->id);
-					$this->PlayerInPool->save($pipdata);
-					$this->PlayerInPool->clear();
-					
-					$this->Pool->clear();
-					
-					
-					$this->Pool->create();
-					$pdata = array('name' => 'B', 'type' => 'P', 'stage_id' => $st['id']);
-					$this->Pool->save($pdata);
-					
-					//add players in pools
-						
-					$this->PlayerInPool->create();
-					$pipdata = array('player_id' => $playerList[3]['Player']['id'], 'pool_id' => $this->Pool->id);
-					$this->PlayerInPool->save($pipdata);
-					$this->PlayerInPool->clear();
-						
-					$this->PlayerInPool->create();
-					$pipdata = array('player_id' => $playerList[4]['Player']['id'], 'pool_id' => $this->Pool->id);
-					$this->PlayerInPool->save($pipdata);
-					$this->PlayerInPool->clear();
-						
-					$this->PlayerInPool->create();
-					$pipdata = array('player_id' => $playerList[5]['Player']['id'], 'pool_id' => $this->Pool->id);
-					$this->PlayerInPool->save($pipdata);
-					$this->PlayerInPool->clear();
-					
-					$this->Pool->clear();
-					
-					$this->Pool->create();
-					$pdata = array('name' => 'C', 'type' => 'P', 'stage_id' => $st['id']);
-					$this->Pool->save($pdata);
-					$this->Pool->clear();
-						
-					
-				}
+			}elseif ($t_stage['Stage']['type']==constant('STAGE_TYPE_CUP')){
+				
+				
+				
+				
+			}else{
+				
+				
+				
 			}
-			// $arr is now array(2, 4, 6, 8)
-			unset($st); 
+			
+			
+			
+			
+			
+			//return download excel
+			$this->exportAgendaExcel($tournament_id,$t_stage,$class_in_tournament_id);
+			
 			
 		}
 		
-		$this->set("all_stages", $all_stages);
+		
    }
+   
+   protected function exportAgendaExcel($tournament_id, $t_stage, $class_in_tournament_id){
+   		
+   	
+   		$t_tournament=$this->Tournament->find('first',
+				   				array(
+				   						'conditions' => array(
+				   								'Tournament.id' => $tournament_id
+				   						)
+				   				)
+   				);
+   		
+   		
+   		$cit=$this->ClassInTournament->find('first',
+				   				array(
+				   						
+				   						'conditions' => array(
+				   								'ClassInTournament.id' => $class_in_tournament_id
+				   						),
+				   						'fields' => array('ClassInTournament.*')
+				   				)
+   				);
+   		
+   		$tournament_class=$this->TournamentClass->find('first',
+				   				array(
+				   						'conditions' => array(
+				   								'TournamentClass.id' => $cit['ClassInTournament']['tournament_class_id']
+				   						)
+				   				)
+   				);
+   		
+   		$pool_list=$this->Pool->find('all',
+		   				
+		   				array(
+		   					'conditions' => array('Stage.id' => $t_stage['Stage']['id']),
+		   					'order' => array('Pool.name'),
+		   					'field' => array('Pool.*', 'PlayerInPool.*')
+		   				)
+   				
+   				);
+   		
+   		
+   		
+   		$pool_capacity=0;
+   		foreach($pool_list as &$each_pool){
+   			if(count($each_pool['PlayerInPool'])>$pool_capacity){
+   				$pool_capacity=count($each_pool['PlayerInPool']);
+   			}
+   		}
+   		
+   	
+   		if($t_stage['Stage']['type']==constant('STAGE_TYPE_POOL')){
+   			
+   			$objPHPExcel = new PHPExcel();
+   			
+   			$objPHPExcel->getProperties()->setCreator("Pingismaisteri")
+   			->setLastModifiedBy("Pingismaisteri")   
+   			->setTitle("AgendaExport")
+   			->setSubject("AgendaExport")
+   			->setDescription("AgendaExport")
+   			->setKeywords("excel")
+   			->setCategory("result file");
+   			
+   			$objPHPExcel->setActiveSheetIndex(0);
+   			
+   			
+   			$this->writeTitleInExcel($objPHPExcel,$t_tournament,$tournament_class,$t_stage,2,'B');
+   			
+   			$height_index=6;
+   			foreach ($pool_list as &$pool_data){
+   				
+   				$delta_height=$this->writePoolInExcel($objPHPExcel,$pool_data,$pool_capacity, $height_index,'A');
+   				$height_index+=$delta_height+3;
+   			}
+   			
+   			header('Content-Type:application/download');
+   			header('Content-Type:application/force-download');
+   			header('Content-Type: application/vnd.ms-excel');
+   			header('Content-Disposition: attachment;filename="Agenda_'.$t_stage['Stage']['id'].'_'.$t_stage['Stage']['type'].'_'.date("h-i-sa").'.xls"');
+   			header('Cache-Control: max-age=0');
+   			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+   			$objWriter->save('php://output');
+   			exit;
+   			
+   			
+   		}elseif($t_stage['Stage']['type']==constant('STAGE_TYPE_CUP')){
+				
+				
+				
+				
+		}
+   	
+   	
+   }
+   
+   protected function writeTitleInExcel($objPHPExcel,$t_tournament,$tournament_class, $t_stage,$start_x_index,$start_y_index){
+   		
+   		foreach(range('A','Z') as $letter) {
+   			$objPHPExcel -> getActiveSheet() -> getColumnDimension($letter) -> setAutoSize(true);
+    		
+		}
+		
+		//$this->writeCell($objPHPExcel,$t_tournament['Tournament']['name'],'setTitleStyle',$start_x_index,$start_y_index);
+		$objPHPExcel->getActiveSheet()->setCellValue(strval($start_y_index).strval($start_x_index), $t_tournament['Tournament']['name']);
+		$this->setTitleStyle($objPHPExcel,$start_x_index,$start_y_index);
+		//$this->writeCell($objPHPExcel,$tournament_class['TournamentClass']['name'],'setSubTitleStyle',$start_x_index+1,$start_y_index);
+		$objPHPExcel->getActiveSheet()->setCellValue(strval($start_y_index).strval($start_x_index+1), $tournament_class['TournamentClass']['name']);
+		$this->setSubTitleStyle($objPHPExcel,$start_x_index+1,$start_y_index);
+   }
+   
+   protected function writePoolInExcel($objPHPExcel,$pool_data,$pool_capacity, $start_x_index,$start_y_index){
+   	
+   	
+   		$this->writeCell($objPHPExcel,'RN','setTextCellStyle',$start_x_index,chr(ord(strval($start_y_index))+1));
+   		$this->writeCell($objPHPExcel,__('pool_xls_col_p').' '.$pool_data['Pool']['name'],'setTextCellStyle',$start_x_index,chr(ord(strval($start_y_index))+2));
+   		$this->writeCell($objPHPExcel,__('pool_xls_col_s'),'setTextCellStyle',$start_x_index,chr(ord(strval($start_y_index))+3));
+   		$this->writeCell($objPHPExcel,__('pool_xls_col_v'),'setTextCellStyle',$start_x_index,chr(ord(strval($start_y_index))+4));
+   		$this->writeCell($objPHPExcel,__('pool_xls_col_e'),'setTextCellStyle',$start_x_index,chr(ord(strval($start_y_index))+5));
+   		$this->writeCell($objPHPExcel,__('pool_xls_col_pi'),'setTextCellStyle',$start_x_index,chr(ord(strval($start_y_index))+6));
+   		$this->writeCell($objPHPExcel,__('pool_xls_col_si'),'setTextCellStyle',$start_x_index,chr(ord(strval($start_y_index))+7));
+   		
+   		
+   		//modify styles of cell by range
+   		$style_array = array(
+   				'borders' => array(
+   						'top' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+   						'left' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+   						'bottom' => array('style' => PHPExcel_Style_Border::BORDER_THIN),
+   						'right' => array('style' => PHPExcel_Style_Border::BORDER_THIN)
+   				),
+   				'font' => array(
+   						'name' => 'Arial',
+   						'size' => '11'
+   				)
+   				
+   		);
+   		$highestColumn = chr(ord(strval($start_y_index))+7);
+   		$highestRow = $start_x_index+$pool_capacity;
+   		$objPHPExcel->getActiveSheet()->getStyle($start_y_index.$start_x_index.':' . $highestColumn . $highestRow)->applyFromArray($style_array,false);
+   		
+   		
+   		for($i=0;$i<$pool_capacity;$i++){
+   			$this->writeCell($objPHPExcel,$i+1,'setTextCellStyle',$start_x_index+$i+1,$start_y_index);
+   		}
+   	
+   		
+   		$player_ids=array();
+   		foreach($pool_data['PlayerInPool'] as &$t_pip){
+   			array_push($player_ids,$t_pip['player_id']);
+   		}
+   		
+   		
+   		$pool_players = $this->Player->find("all",array(
+   				'joins' => array(
+   						
+   						array(
+   								'table' => 'rating_rows',
+   								'alias' => 'RatingRow',
+   								'type' => 'INNER',
+   								'conditions' => array(
+   										'Player.id = RatingRow.player_id',
+   										'RatingRow.rating_id=1'
+   								)
+   						),
+   						array(
+   								'table' => 'player_in_pools',
+   								'alias' => 'PIP',
+   								'type' => 'LEFT',
+   								'conditions' => array(
+   										'Player.id = PIP.player_id',
+   										'PIP.pool_id' => $pool_data['Pool']['id']
+   								)
+   						)
+   				),
+   				'conditions' => array(
+   						'Player.id = ' => $player_ids
+   						
+   				),
+   				'fields' => array('Player.*', 'RatingRow.rating', 'Club.*', 'PIP.*')));
+   		
+   		
+   		
+   	
+   		
+   		for($i=0;$i<$pool_capacity;$i++){
+   			
+   			$t_pp=array_shift($pool_players);
+   			if(isset($t_pp)){
+   				$this->writeCell($objPHPExcel,$t_pp['RatingRow']['rating'],'setTextCellStyle',$start_x_index+$i+1,chr(ord(strval($start_y_index))+1));
+   				$this->writeCell($objPHPExcel,$t_pp['Player']['firstname'].' '.$t_pp['Player']['lastname'],'setTextCellStyle',$start_x_index+$i+1,chr(ord(strval($start_y_index))+2));
+   				$this->writeCell($objPHPExcel,$t_pp['Club']['name'],'setTextCellStyle',$start_x_index+$i+1,chr(ord(strval($start_y_index))+3));
+   			}else{
+   				$this->writeCell($objPHPExcel,'','setTextCellStyle',$start_x_index+$i+1,chr(ord(strval($start_y_index))+1));
+   				$this->writeCell($objPHPExcel,'','setTextCellStyle',$start_x_index+$i+1,chr(ord(strval($start_y_index))+2));
+   				$this->writeCell($objPHPExcel,'','setTextCellStyle',$start_x_index+$i+1,chr(ord(strval($start_y_index))+3));
+   			}
+   		}
+   		
+   		return $pool_capacity+1;
+   }
+   
+   
+   protected function writeCupInExcel(){
+   		
+   		
+   		
+   }
+   
+   protected function writeCell($objPHPExcel,$value,$styleFunc,$start_x_index,$start_y_index){
+   	 
+   		$objPHPExcel->getActiveSheet()->setCellValue(strval($start_y_index).strval($start_x_index), $value);
+   		//call_user_func(array($this, $styleFunc), $objPHPExcel, $start_x_index, $start_y_index);
+   	 
+   }
+   
+   protected function setTitleStyle($objActSheet,$start_x_index,$start_y_index){
+   		
+   		//get the style of this cell
+	   	$objStyle= $objActSheet->getActiveSheet()->getStyle(strval($start_y_index).strval($start_x_index));
+	   	
+	   	$objFont= $objStyle->getFont();
+	   	$objFont->setName('Arial');
+	   	$objFont->setSize(14);
+		$objFont->setBold(true);
+	   	/*
+	   	$objFontA5->setUnderline(PHPExcel_Style_Font::UNDERLINE_SINGLE);
+	   	$objFontA5->getColor()->setARGB('FF999999');
+	   	$objAlignA5 = $objStyleA5->getAlignment();
+	   	$objAlignA5->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+	   	$objAlignA5->setVertical(PHPExcel_Style_Alignment::VERTIER);
+	   	*/
+	   	/*
+	   	// set border
+	   	$objBorderA5 = $objStyleA5->getBorders();
+	   	$objBorderA5->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	   	$objBorderA5->getTop()->getColor()->setARGB('FF000000');// color
+	   	$objBorderA5->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	   	$objBorderA5->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	   	$objBorderA5->getRight()->setBorderStyle(PHPExcel_Style_BORDER_THIN);
+	   	*/
+	   	/*
+	   	//set color
+	   	$objFillA5 = $objStyleA5->getFill();
+	   	$objFillA5->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
+	   	$objFillA5->getStartColor()->setARGB('FFEEEEEE');
+	   	*/
+   	
+   }
+   
+   protected function setSubTitleStyle($objActSheet,$start_x_index,$start_y_index){
+   	
+	   	//get the style of this cell
+	   	$objStyle = $objActSheet->getActiveSheet()->getStyle(strval($start_y_index).strval($start_x_index));
+	   	 
+	   	$objFont = $objStyle->getFont();
+	   	$objFont->setName('Arial');
+	   	$objFont->setSize(12);
+	   	
+   }
+   
+   protected function setTextCellStyle($objPHPExcel,$start_x_index,$start_y_index){
+   	 
+	   	//get the style of this cell
+	   	$objStyle= $objPHPExcel->getActiveSheet()->getStyle(strval($start_y_index).strval($start_x_index));
+	   	 
+	   	$objFont= $objStyle->getFont();
+	   	$objFont->setName('Arial');
+	   	$objFont->setSize(11);
+	   	
+	   	 // set border
+	   	 $objBorder = $objStyle->getBorders();
+	   	 $objBorder->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	   	 $objBorder->getTop()->getColor()->setARGB('FF000000');
+	   	 $objBorder->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	   	 $objBorder->getBottom()->getColor()->setARGB('FF000000');
+	   	 $objBorder->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	   	 $objBorder->getLeft()->getColor()->setARGB('FF000000');
+	   	 $objBorder->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+	   	 $objBorder->getRight()->getColor()->setARGB('FF000000');
+   
+   }
+   
+   
+   
    
    public function sendEmail($id)
    {

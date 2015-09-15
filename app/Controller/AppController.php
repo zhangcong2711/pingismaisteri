@@ -21,12 +21,15 @@
  *
  */
 
+require APP . 'Config' . DS . 'app_const.php';
+
 
 
 App::uses('Controller', 'Controller');
 
 App::import('Core', 'l10n');
-App::import('Config', 'app_const');
+App::import('Util','Detect');
+App::import('Util','AppUtil');
 
 class AppController extends Controller {
 
