@@ -67,6 +67,24 @@ msgstr "(NT)Minimize games between players from the same club"
 msgid "minimize_same_player"
 msgstr "(NT)Minimize games between same players"
 
+msgid "pool_xls_col_p"
+msgstr "Pooli"
+
+msgid "pool_xls_col_s"
+msgstr "Seura"
+
+msgid "pool_xls_col_v"
+msgstr "Voitot"
+
+msgid "pool_xls_col_e"
+msgstr "Erät"
+
+msgid "pool_xls_col_pi"
+msgstr "Pisteet"
+
+msgid "pool_xls_col_si"
+msgstr "Sija"
+
 msgid "signUp2"
 msgstr "Ilmoittaudu"
 
