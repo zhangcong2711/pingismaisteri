@@ -671,37 +671,37 @@ class TournamentsController extends AppController {
    		}
    		
    		
-   		$pool_players = $this->Player->find("all",array(
-   				'joins' => array(
-   						
-   						array(
-   								'table' => 'rating_rows',
-   								'alias' => 'RatingRow',
-   								'type' => 'INNER',
-   								'conditions' => array(
-   										'Player.id = RatingRow.player_id',
-   										'RatingRow.rating_id=1'
-   								)
-   						),
-   						array(
-   								'table' => 'player_in_pools',
-   								'alias' => 'PIP',
-   								'type' => 'LEFT',
-   								'conditions' => array(
-   										'Player.id = PIP.player_id',
-   										'PIP.pool_id' => $pool_data['Pool']['id']
-   								)
-   						)
-   				),
-   				'conditions' => array(
-   						'Player.id = ' => $player_ids
-   						
-   				),
-   				'fields' => array('Player.*', 'RatingRow.rating', 'Club.*', 'PIP.*')));
+   		$query_sql=<<<EOF
+SELECT 
+    `Player`.*,
+    `RatingRow`.*,
+    `Club`.*,
+    `PlayerInPool`.*,
+    (DATE_FORMAT(NOW(), '%Y') - DATE_FORMAT(birthday, '%Y') - (DATE_FORMAT(NOW(), '00-%m-%d') < DATE_FORMAT(birthday, '00-%m-%d'))) AS `Player__age`
+FROM
+    `pingismaisteri`.`pingis2_players` AS `Player`
+        INNER JOIN
+    `pingismaisteri`.`pingis2_rating_rows` AS `RatingRow` ON (`Player`.`id` = `RatingRow`.`player_id`
+        AND `RatingRow`.`rating_id` = 1)
+        LEFT JOIN
+    `pingismaisteri`.`pingis2_player_in_pools` AS `PlayerInPool` ON (`Player`.`id` = `PlayerInPool`.`player_id`
+        AND `PlayerInPool`.`pool_id` = ?)
+        LEFT JOIN
+    `pingismaisteri`.`pingis2_clubs` AS `Club` ON (`Player`.`club_id` = `Club`.`id`)
+WHERE
+    `Player`.`id` IN (
+EOF;
    		
+   		$query_sql=$query_sql.implode(',', $player_ids).')';
    		
-   		
+   		$db = ConnectionManager::getDataSource('default');
+   		$pool_players=$db->fetchAll(
+   				$query_sql,
+   				array($pool_data['Pool']['id'])
+   		);
    	
+   		//resort the player array by pool order
+		usort($pool_players,array($this, "pool_order_sort"));
    		
    		for($i=0;$i<$pool_capacity;$i++){
    			
@@ -718,6 +718,14 @@ class TournamentsController extends AppController {
    		}
    		
    		return $pool_capacity+1;
+   }
+   
+   private function pool_order_sort($a_player, $b_player)
+   {
+	   	$a_order=intval($a_player['PlayerInPool']['order']);
+	   	$b_order=intval($b_player['PlayerInPool']['order']);
+	   	if ( $a_order == $b_order) return 0;
+	   	return ($a_order > $b_order) ? 1 : -1;
    }
    
    
