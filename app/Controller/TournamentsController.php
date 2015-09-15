@@ -460,7 +460,7 @@ class TournamentsController extends AppController {
 
 		$this->set("all_stages", $all_stages);
 		
-		
+		   
 		
 		// draw pool
 		if ($this->request->is('post'))
