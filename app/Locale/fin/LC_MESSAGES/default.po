@@ -85,6 +85,21 @@ msgstr "Pisteet"
 msgid "pool_xls_col_si"
 msgstr "Sija"
 
+msgid "pool_xls_col_s"
+msgstr "Seura"
+
+msgid "pool_xls_col_v"
+msgstr "Voitot"
+
+msgid "pool_xls_col_e"
+msgstr "Erät"
+
+msgid "pool_xls_col_pi"
+msgstr "Pisteet"
+
+msgid "pool_xls_col_si"
+msgstr "Sija"
+
 msgid "signUp2"
 msgstr "Ilmoittaudu"
 
