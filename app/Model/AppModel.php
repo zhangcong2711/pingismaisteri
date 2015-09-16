@@ -23,6 +23,11 @@
 
 App::uses('Model', 'Model');
 
+
+
+App::import('Util','Detect');
+App::import('Util','AppUtil');
+
 /**
  * Application model for Cake.
  *
