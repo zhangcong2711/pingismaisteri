@@ -6,7 +6,7 @@
 
    echo $this->Form->input("firstname", 
       array( 
-         "label" => "Etunimi",
+         "label" => __("firstname"),
          "class" => "form-control"
       )
    );
@@ -74,7 +74,7 @@
 
 <div class="input selection">
 <?php
-echo $this->Form->label( __("Sukupuoli") );
+echo $this->Form->label( __("sex") );
 
 echo "<br />";
 
@@ -89,7 +89,7 @@ echo $this->Form->input('Player.sex', array(
     "before" => '<label class="btn btn-default">',
     'separator' => '</label><label class="btn btn-default">',
     'after' => '</label>',
-    'options' => array("M" => __("Mies"), "F" => __("Nainen") ),
+    'options' => array("M" => __("male"), "F" => __("female") ),
     "default" => "x"
 ));
 ?>
@@ -98,7 +98,7 @@ echo $this->Form->input('Player.sex', array(
 
 <?php
 
-   echo $this->Form->submit( __("Tallenna pelaaja"), array("class" => "btn btn-primary") );
+   echo $this->Form->submit( __("record_player"), array("class" => "btn btn-primary") );
 
    echo $this->Form->end();
 

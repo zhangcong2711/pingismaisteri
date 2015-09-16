@@ -144,7 +144,7 @@ require APP . 'Config' . DS . 'app_const.php';
 </script>
 <?php
 
-   echo $this->Form->submit( "Suorita arvonta",
+   echo $this->Form->submit( __("go_draw"),
    array("class" => "btn btn-primary") );
    
    echo $this->Form->end();

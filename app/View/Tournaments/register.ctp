@@ -66,7 +66,7 @@
             if( in_array( $cit['id'], $registrations ) )
             {
             ?>
-               <td><span class="badge"><?php echo __("Ilmoittautunut"); ?></span></td>
+               <td><span class="badge"><?php echo __("registered"); ?></span></td>
             <?php
             }
             else
@@ -121,7 +121,7 @@
 
 <?php
 
-   echo $this->Form->submit( "Ilmoittaudu", array( "class" => "btn btn-primary") );
+   echo $this->Form->submit( __("signUp2"), array( "class" => "btn btn-primary") );
 
    echo $this->Form->end();
 ?>

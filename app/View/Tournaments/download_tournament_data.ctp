@@ -1,4 +1,4 @@
-<h1>Turnaukset</h1>
+<h1><?php echo __('tournaments')?></h1>
 
 
 <?php

@@ -70,6 +70,21 @@ msgstr "(NT)Minimize games between same players"
 msgid "signUp2"
 msgstr "Ilmoittaudu"
 
+msgid "sex"
+msgstr "Sukupuoli"
+
+msgid "male"
+msgstr "Mies"
+
+msgid "female"
+msgstr "Female"
+
+msgid "age"
+msgstr "Ikä"
+
+msgid "firstname"
+msgstr "Etunimi"
+
 msgid "lastname"
 msgstr "Sukunimi"
 
@@ -94,11 +109,146 @@ msgstr "Sähköposti"
 msgid "phone"
 msgstr "Puhelin"
 
-msgid "birthday"
-msgstr "Syntymäpäivä"
+msgid "tournament"
+msgstr "Turnaus"
 
-msgid "birthday"
-msgstr "Syntymäpäivä"
+msgid "time"
+msgstr "Aika"
 
-msgid "birthday"
-msgstr "Syntymäpäivä"
+msgid "categories"
+msgstr "Luokat"
+
+msgid "no_registrations"
+msgstr "Ei ilmoittautumisia"
+
+msgid "add_new"
+msgstr "Lisää uusi pelaaja"
+
+msgid "record_player"
+msgstr "Tallenna pelaaja"
+
+msgid "t_name"
+msgstr "Turnauksen nimi"
+
+msgid "t_organizer"
+msgstr "Turnauksen järjestävä organisaatio"
+
+msgid "contact"
+msgstr "Yhteyshenkilö"
+
+msgid "contactphone"
+msgstr "Yhteyshenkilön puhelinnumero"
+
+msgid "contactemail"
+msgstr "Yhteyshenkilön sähköpostiosoite"
+
+msgid "startdate"
+msgstr "Alkamispäivä"
+
+msgid "enddate"
+msgstr "Päättymispäivä"
+
+msgid "location"
+msgstr "Sijainti"
+
+msgid "registration_ends"
+msgstr "Viimeinen rekisteröitymispäivä"
+
+msgid "cuttingdate"
+msgstr "Leikkauspäivä"
+
+msgid "additionalinfo"
+msgstr "Lisätietoa"
+
+msgid "date"
+msgstr "Päivämäärä"
+
+msgid "price"
+msgstr "Hinta"
+
+msgid "remove"
+msgstr "Poista"
+
+msgid "create_t"
+msgstr "Luo turnaus"
+
+msgid "tournaments"
+msgstr "Turnaukset"
+
+msgid "go_draw"
+msgstr "Suorita arvonta"
+
+msgid "update_t"
+msgstr "Päivitä turnauksen tiedot"
+
+msgid "add_category"
+msgstr "Lisää luokka"
+
+msgid "registered"
+msgstr "Ilmoittautunut"
+
+msgid "edit_info"
+msgstr "Muokkaa tietoja"
+
+msgid "download_info"
+msgstr "Lataa tiedot"
+
+msgid "value_po"
+msgstr "Arvo poolit"
+
+msgid "no_reg"
+msgstr "Ei ilmoittautuneita"
+
+msgid "more_info"
+msgstr "Lisätietoja"
+
+msgid "create_nt"
+msgstr "Luo uusi turnaus"
+
+msgid "create_ntc"
+msgstr "Luo uusi turnausluokka"
+
+msgid "constraints"
+msgstr "Rajoitteet"
+
+msgid "age_lim"
+msgstr "Ikärajat"
+
+msgid "rating_lim"
+msgstr "Ratingrajat"
+
+msgid "unlim"
+msgstr "Ei rajoitusta"
+
+msgid "creat_cat"
+msgstr "Luo luokka"
+
+msgid "sav"
+msgstr "Tallenna"
+
+msgid "savd_cat"
+msgstr "Tallennetut turnausluokat"
+
+msgid "cat_name"
+msgstr "Luokan nimi"
+
+msgid "act"
+msgstr "Toiminnot"
+
+msgid "custom"
+msgstr "Muokkaa"
+
+msgid "creat_nclub"
+msgstr "Luo uusi seura"
+
+msgid "members"
+msgstr "Jäseniä"
+
+msgid "view_memb"
+msgstr "Näytä jäsenet"
+
+msgid "del_club"
+msgstr "Poista seura"
+
+msgid "dl_file"
+msgstr "Lataa tiedosto"

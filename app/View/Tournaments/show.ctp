@@ -61,7 +61,7 @@
                echo $this->element(
                   "buttonlink", 
                   array(
-                     'label' => "Muokkaa tietoja", 
+                     'label' => __("edit_info"), 
                      'controller' => 'tournaments', 
                      'action' => 'edit', 
                      'params' => array($tournament['Tournament']['id']), 
@@ -74,7 +74,7 @@
                echo $this->element(
                   "buttonlink", 
                   array(
-                     'label' => "Lataa tiedot", 
+                     'label' => __("download_info"), 
                      'controller' => 'tournaments', 
                      'action' => 'collectTournamentData', 
                      'params' => array($tournament['Tournament']['id']), 
@@ -87,7 +87,7 @@
                echo $this->element(
                   "buttonlink", 
                   array(
-                     'label' => "Arvo poolit", 
+                     'label' => __("value_po"), 
                      'controller' => 'tournaments', 
                      'action' => 'drawPools', 
                      'params' => array($tournament['Tournament']['id'],10), 
@@ -139,7 +139,7 @@
             
             if( count( $class['Registration'] ) == 0 )
             {
-               echo '<li>Ei ilmoittautuneita</li>';
+               echo __('<li>no_reg</li>');
             }
             
             ?>
@@ -151,7 +151,7 @@
             echo $this->element(
                "buttonlink", 
                array(
-                  'label' => "Ilmoittaudu", 
+                  'label' => __("signUp2"), 
                   'controller' => 'tournaments', 
                   'action' => 'register', 
                   'params' => array($tournament['Tournament']['id']), 

@@ -4,16 +4,16 @@
 echo $this->Form->create('TournamentClass');
 
 echo $this->Form->input('TournamentClass.name', array(
-    'label' => 'Nimi',
+    'label' => __('name'),
     "class" => "form-control"
 ));
 
 echo $this->Form->input('TournamentClass.description', array(
-    'label' => __('Lisätiedot'),
+    'label' => __('additionalinfo'),
     "class" => "form-control"
 ));
 
-echo "<h3>".__("Rajoitteet")."</h3>";
+echo "<h3>".__("constraints")."</h3>";
 
 ?>
 
@@ -33,7 +33,7 @@ if( isset($this->request->data['TournamentClass']['maxage']))
    $maxage = $this->request->data['TournamentClass']['maxage'];
 }
 
-echo $this->Form->label( __("Ikärajat") );
+echo $this->Form->label( __("age_lim") );
 
 echo "<br />";
 
@@ -70,7 +70,7 @@ if( isset($this->request->data['TournamentClass']['maxrating']) )
    $maxrating = $this->request->data['TournamentClass']['maxrating'];
 }
 
-echo $this->Form->label( __("Ratingrajat") );
+echo $this->Form->label( __("rating_lim") );
 
 echo "<br />";
 
@@ -88,7 +88,7 @@ echo $this->Form->input('TournamentClass.ratingSlider', array(
 
 <div class="input selection">
 <?php
-echo $this->Form->label( __("Sukupuoli") );
+echo $this->Form->label( __("sex") );
 
 echo "<br />";
 
@@ -103,7 +103,7 @@ echo $this->Form->input('TournamentClass.sex', array(
     "before" => '<label class="btn btn-default">',
     'separator' => '</label><label class="btn btn-default">',
     'after' => '</label>',
-    'options' => array("M" => __("Mies"), "F" => __("Nainen"), "x" => __("Ei rajoitusta") ),
+    'options' => array("M" => __("male"), "F" => __("female"), "x" => __("unlim") ),
     "default" => "x"
 ));
 ?>
@@ -115,7 +115,7 @@ $this->Form->unlockField('TournamentClass.sex');
 $this->Form->unlockField('TournamentClass.ageSlider');
 $this->Form->unlockField('TournamentClass.ratingSlider');
 
-echo $this->Form->submit( __("Tallenna"), array("class" => "btn btn-primary") );
+echo $this->Form->submit( __("sav"), array("class" => "btn btn-primary") );
 
 echo $this->Form->end();
 ?>

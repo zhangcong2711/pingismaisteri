@@ -1,4 +1,4 @@
-<h1><?php echo __("Luo uusi seura"); ?></h1>
+<h1><?php echo __("creat_nclub"); ?></h1>
 <?php
    echo $this->Form->create("Club");
    
@@ -6,7 +6,7 @@
    
    echo "<br />";
    
-   echo $this->Form->submit( __("Tallenna"), array("class" => "btn btn-primary") );
+   echo $this->Form->submit( __("sav"), array("class" => "btn btn-primary") );
    
    echo $this->Form->end( );
 ?>

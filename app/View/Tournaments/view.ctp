@@ -57,7 +57,7 @@
             echo $this->element(
                "buttonlink", 
                array(
-                  'label' => "Lisätietoja", 
+                  'label' => __("more_info"), 
                   'controller' => 'tournaments', 
                   'action' => 'show', 
                   'params' => array($tournament['Tournament']['id']), 
@@ -70,7 +70,7 @@
             echo $this->element(
                "buttonlink", 
                array(
-                  'label' => "Muokkaa tietoja", 
+                  'label' => __("edit_info"), 
                   'controller' => 'tournaments', 
                   'action' => 'edit', 
                   'params' => array($tournament['Tournament']['id']), 
@@ -83,7 +83,7 @@
             echo $this->element(
                "buttonlink", 
                array(
-                  'label' => "Poista", 
+                  'label' => __("remove"), 
                   'controller' => 'tournaments', 
                   'action' => 'deleteTournament', 
                   'params' => array($tournament['Tournament']['id']), 
@@ -110,7 +110,7 @@
    echo $this->element(
       "buttonlink", 
       array(
-         'label' => "Luo uusi turnaus", 
+         'label' => __("create_nt"), 
          'controller' => 'tournaments', 
          'action' => 'add', 
          'params' => array(), 

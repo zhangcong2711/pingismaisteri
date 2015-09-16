@@ -14,62 +14,62 @@
          ));
 
          echo $this->Form->input('name', array(
-             'label' => 'Turnauksen nimi',
+             'label' => __('t_name'),
              "class" => "form-control"
          ));
 
          echo $this->Form->input('organizer', array(
-             'label' => 'Turnauksen järjestävä organisaatio',
+             'label' => __('t_organizer'),
              "class" => "form-control"
          ));
          echo $this->Form->input('contact', array(
-             'label' => 'Yhteyshenkilö',
+             'label' => __('contact'),
              "class" => "form-control"
          ));
          echo $this->Form->input('contactphone', array(
-             'label' => 'Yhteyshenkilön puhelinnumero',
+             'label' => __('contactphone'),
              "class" => "form-control"
          ));
          echo $this->Form->input('contactemail', array(
-             'label' => 'Yhteyshenkilön sähköpostiosoite',
+             'label' => __('contactemail'),
              "class" => "form-control"
          ));
 
          echo $this->Form->input('startdate', array(
             "type" => "text",
-             'label' => 'Alkamispäivä',
+             'label' => __('startdate'),
              "class" => "form-control datepicker",
              "data-date-format" => "dd.mm.yyyy"
          ));
 
          echo $this->Form->input('enddate', array(
             "type" => "text",
-             'label' => 'Päättymispäivä',
+             'label' => __('enddate'),
              "class" => "form-control datepicker",
              "data-date-format" => "dd.mm.yyyy"
          ));
 
          echo $this->Form->input('location', array(
-             'label' => 'Sijainti',
+             'label' => __('location'),
              "class" => "form-control"
          ));
 
          echo $this->Form->input('registration_ends', array(
             "type" => "text",
-             'label' => 'Viimeinen rekisteröitymispäivä',
+             'label' => __('registration_ends'),
              "class" => "form-control datepicker",
              "data-date-format" => "dd.mm.yyyy"
          ));
 
          echo $this->Form->input('cuttingdate', array(
             "type" => "text",
-             'label' => 'Leikkauspäivä',
+             'label' => __('cuttingdate'),
              "class" => "form-control datepicker",
              "data-date-format" => "dd.mm.yyyy"
          ));
 
          echo $this->Form->input('additionalinfo', array(
-            'label' => 'Lisätietoa',
+            'label' => __('additionalinfo'),
             'rows' => '4',
             "class" => "form-control"
          ));
@@ -89,10 +89,10 @@
          <table class="table" id="tournamentClasses">
             <thead>
                <tr>
-                  <th>Nimi</th>
-                 <th>Päivämäärä</th>
-                 <th>Hinta</th>
-                 <th>Poista</th>
+                  <th><?php echo __('name')?></th>
+                 <th><?php echo __('date')?></th>
+                 <th><?php echo __('price')?></th>
+                 <th><?php echo __('remove')?></th>
                </tr>
             </thead>
             <tbody>
@@ -117,7 +117,7 @@
                   </td>
                   <td>
                      <?php 
-                     echo $this->Html->link("Poista", "#", 
+                     echo $this->Html->link(__("remove"), "#", 
                         array(
                            "class" => "delete-row btn btn-primary",
                            "data-class" => "ClassInTournament",
@@ -137,7 +137,7 @@
                <tr class="newClassRow">
                   <td colspan="4">
                      <?php echo $this->Html->link(
-                        "Lisää luokka", 
+                        __("add_category"), 
                         "/ajax/newTournamentClassRow", 
                         array(
                            "class" => "new-row-link btn btn-primary", 
@@ -158,7 +158,7 @@
    <br />
 <?php
    
-   echo $this->Form->submit( "Päivitä turnauksen tiedot", array("class" => "btn btn-primary") );
+   echo $this->Form->submit( __("update_t"), array("class" => "btn btn-primary") );
 
    echo $this->Form->end();
 ?>

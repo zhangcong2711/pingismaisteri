@@ -67,10 +67,10 @@
             <td colspan="5">
                <table>
                   <tr>
-                     <th>Turnaus</th>
-                     <th>Aika</th>
-                     <th>Luokat</th>
-                     <th>Peru ilmoittautuminen</th>
+                     <th><?php echo __('tournament')?></th>
+                     <th><?php echo __('time')?></th>
+                     <th><?php echo __('categories')?></th>
+                     <th><?php echo __('cancel_registration')?></th>
                   </tr>
    <?php
             
@@ -116,7 +116,7 @@
       ?>
          <tr class="hidden-row" id="registrations<?php echo $player['id']; ?>">
             <td></td>
-            <td colspan="6"><?php echo __("Ei ilmoittautumisia"); ?></td>
+            <td colspan="6"><?php echo __("no_registrations"); ?></td>
          </tr>
       <?php
          }
@@ -125,7 +125,7 @@
    </table>
    
    <?php echo $this->Html->link(
-			'Lisää uusi pelaaja',
+			__('add_new'),
 			array('controller' => 'users', 'action' => 'addPlayer'),
          array(
             'class' => 'btn btn-primary'

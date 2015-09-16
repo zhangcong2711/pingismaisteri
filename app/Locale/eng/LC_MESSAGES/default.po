@@ -68,7 +68,22 @@ msgid "minimize_same_player"
 msgstr "Minimize games between same players"
 
 msgid "signUp2"
-msgstr "SignUp"
+msgstr "Register"
+
+msgid "sex"
+msgstr "Sex"
+
+msgid "male"
+msgstr "Male"
+
+msgid "female"
+msgstr "Nainen"
+
+msgid "age"
+msgstr "Age"
+
+msgid "firstname"
+msgstr "Firstname"
 
 msgid "lastname"
 msgstr "Lastname"
@@ -94,19 +109,146 @@ msgstr "Email"
 msgid "phone"
 msgstr "Phone"
 
-msgid "address"
-msgstr "Osoite"
+msgid "tournament"
+msgstr "Tournament"
 
-msgid "address"
-msgstr "Osoite"
+msgid "categories"
+msgstr "Categories"
 
-msgid "address"
-msgstr "Osoite"
+msgid "cancel_registration"
+msgstr "Cancel registration"
 
-msgid "address"
-msgstr "Osoite"
+msgid "no_registrations"
+msgstr "No registrations"
 
-msgid "address"
-msgstr "Osoite"
+msgid "add_new"
+msgstr "Add a new player"
 
+msgid "record_player"
+msgstr "Record player"
 
+msgid "t_name"
+msgstr "Tournament name"
+
+msgid "t_organizer"
+msgstr "Tournament organizing organization"
+
+msgid "contact"
+msgstr "Contact"
+
+msgid "contactphone"
+msgstr "Contact phone"
+
+msgid "contactemail"
+msgstr "Contact email"
+
+msgid "startdate"
+msgstr "Start date"
+
+msgid "enddate"
+msgstr "End date"
+
+msgid "location"
+msgstr "Location"
+
+msgid "registration_ends"
+msgstr "Registration deadline"
+
+msgid "cuttingdate"
+msgstr "Cutting date"
+
+msgid "additionalinfo"
+msgstr "Additional info"
+
+msgid "date"
+msgstr "Date"
+
+msgid "price"
+msgstr "Price"
+
+msgid "remove"
+msgstr "Delete"
+
+msgid "create_t"
+msgstr "Create tournament"
+
+msgid "tournaments"
+msgstr "Tournaments"
+
+msgid "go_draw"
+msgstr "Run the draw"
+
+msgid "update_t"
+msgstr "Update tournament details "
+
+msgid "add_category"
+msgstr "Add category"
+.
+msgid "registered"
+msgstr "Registered"
+
+msgid "edit_info"
+msgstr "Edit infomation"
+
+msgid "download_info"
+msgstr "Download infomation"
+
+msgid "value_po"
+msgstr "Value pools"
+
+msgid "no_reg"
+msgstr "No registration"
+
+msgid "more_info"
+msgstr "More infomation"
+
+msgid "create_nt"
+msgstr "Create new tournament"
+
+msgid "create_ntc"
+msgstr "Create new tournament class"
+
+msgid "constraints"
+msgstr "Constraints"
+
+msgid "age_lim"
+msgstr "Age limit"
+
+msgid "rating_lim"
+msgstr "Rating limit"
+
+msgid "unlim"
+msgstr "Unlimited"
+
+msgid "creat_cat"
+msgstr "Creat new category"
+
+msgid "sav"
+msgstr "Save"
+
+msgid "savd_cat"
+msgstr "Saved tournament categories"
+
+msgid "cat_name"
+msgstr "Category name"
+
+msgid "act"
+msgstr "Actions"
+
+msgid "custom"
+msgstr "Customize"
+
+msgid "creat_nclub"
+msgstr "Creat new club"
+
+msgid "members"
+msgstr "Members"
+
+msgid "view_memb"
+msgstr "View members"
+
+msgid "del_club"
+msgstr "Delete club"
+
+msgid "dl_file"
+msgstr "Download file"

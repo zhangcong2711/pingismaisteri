@@ -1,4 +1,4 @@
-<h1><?php echo __("Tallennetut turnausluokat"); ?></h1>
+<h1><?php echo __("savd_cat"); ?></h1>
 
 
 <table class="table">
@@ -19,26 +19,26 @@
          <?php 
             if( $order != "name asc" )
             {
-               echo $this->Html->link(  __("Luokan nimi"), "/tournament_classes/view/order:name,asc"); 
+               echo $this->Html->link(  __("cat_name"), "/tournament_classes/view/order:name,asc"); 
             }
             else
             {
-               echo $this->Html->link(  __("Luokan nimi"), "/tournament_classes/view/order:name,desc"); 
+               echo $this->Html->link(  __("cat_name"), "/tournament_classes/view/order:name,desc"); 
             }
          ?>
       </th>
       <th>
          <?php 
          
-            echo __("Rajoitteet") ;
+            echo __("constraints") ;
             
          ?>
       </th>
       <th>
-         <?php echo __("Lisätiedot"); ?>
+         <?php echo __("additionalinfo"); ?>
       </th>
       <th>
-         <?php echo __("Toiminnot"); ?>
+         <?php echo __("act"); ?>
       </th>
    </tr>
 
@@ -54,7 +54,7 @@
          <td><?php 
             if( $class['minage'] != ""  ||  $class['maxage'] != "" )
             {
-               echo __("Ikä") . ": " . $class['minage'] . " - " . $class['maxage'] . "<br />";
+               echo __("age") . ": " . $class['minage'] . " - " . $class['maxage'] . "<br />";
             }
             
             if( $class['maxrating'] != "" || $class['minrating'] != "" )
@@ -68,15 +68,15 @@
                switch( strtoupper($class['sex']) )
                {
                   case 'F':
-                      $sex = __("Nainen");
+                      $sex = __("female");
                       break;
                   case 'M':
-                     $sex = __("Mies");
+                     $sex = __("male");
                      break;
                   default:
                }
             
-               echo __("Sukupuoli") . ": " . $sex;
+               echo __("sex") . ": " . $sex;
             }
             
          ?></td>
@@ -87,7 +87,7 @@
             echo $this->element(
                   "buttonlink", 
                   array(
-                     'label' => "Muokkaa", 
+                     'label' => __("custom"), 
                      'controller' => 'tournamentClasses', 
                      'action' => 'edit', 
                      'params' => array($class['id']), 
@@ -102,7 +102,7 @@
                echo $this->element(
                   "buttonlink", 
                   array(
-                     'label' => "Poista", 
+                     'label' => __("remove"), 
                      'controller' => 'tournamentClasses', 
                      'action' => 'delete', 
                      'params' => array($class['id']), 
@@ -126,7 +126,7 @@
 </table>
 
 <?php echo $this->Html->link(
-			'Luo uusi luokka',
+			__('create_ntc'),
 			array('controller' => 'tournamentClasses', 'action' => 'add'),
          array(
             'class' => 'btn btn-primary'
