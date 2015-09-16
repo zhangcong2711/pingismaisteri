@@ -114,8 +114,80 @@
 
          </table>
       </div>
+      
+      
+      <div class="col-md-8">
+   
+         <h3>Stage</h3>
+
+         <table class="table" id="stageTypes">
+            <thead>
+               <tr>
+                 <th>Name</th>
+                 <th>Type</th>
+               </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+            <tfoot>
+               <tr class="newTypeRow">
+                  <td colspan="4">
+                  	
+                     <?php echo $this->Html->link(
+                        "Add stage", 
+                        "/ajax/newStageTypeRow", 
+                        array(
+                           "class" => "new-row-link btn btn-primary", 
+                           "data-url" => $this->Html->url("/ajax/newStageTypeRow"),
+                           "data-target" => "#stageTypes tbody",
+                           "data-count" => "#stageTypes tbody tr"
+                        ) 
+                     ); ?>
+                  </td>
+               </tr>
+            </tfoot>
+
+         </table>
+      </div>
+      
+      
    </div>
    <br />
+   
+<script type="text/javascript">
+
+
+	function addStage(obj){
+		//$( "#stageTypes tbody" ).load("<?php echo $this->Html->url( '/', true ).'ajax/newStageTypeRow';?>" );
+		/*
+		$.ajax({
+            url: "<?php echo $this->Html->url( '/', true ).'ajax/newStageTypeRow';?>",
+            data: {ttt:1},
+            type: "POST",
+            dataType : "html",
+            success: function( data ) {
+                //$('#showresults').replaceWith($('#showresults').html(data));
+            },
+            error: function( xhr, status ) {
+            	alert( "Sorry, there was a problem!" );
+            },
+            complete: function( xhr, status ) {
+                //$('#showresults').slideDown('slow')
+            }
+        });*/
+
+        
+
+	}
+
+
+	function removeStage(obj){
+		
+	}
+
+</script>
+   
 <?php
    
    echo $this->Form->submit( __("creat_t"), array("class" => "btn btn-primary") );

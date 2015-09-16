@@ -33,7 +33,7 @@
 		echo $this->Html->css('bootstrap');
 		echo $this->Html->css('styles');
       
-      echo $this->Html->script("jquery");
+      echo $this->Html->script("jquery-1.10.2_uncompressed");
       echo $this->Html->script("bootstrap");
       echo $this->Html->script("plugins");
       echo $this->Html->script("ui");

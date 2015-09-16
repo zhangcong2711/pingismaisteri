@@ -62,6 +62,12 @@ class AppController extends Controller {
       $this->Auth->authError = __("Käyttöoikeusvirhe: Et saa mennä sinne");
       
       
+      // Security
+      if(isset($this->Security) ) {
+      	$this->Components->disable('Security');
+      }
+      
+      
       $this->_setLanguage();
       
       
