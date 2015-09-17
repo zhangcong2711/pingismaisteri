@@ -340,7 +340,7 @@ class TournamentsController extends AppController {
       $tournament = $this->Tournament->find("first",
          array(
             'conditions' => array(
-               'Tournament.id' => (int)$tournament_id
+               'Tournament.id' => (int)$tournament_id,
             ),
             'contain' => array(
                'ClassInTournament' => array(
@@ -351,12 +351,23 @@ class TournamentsController extends AppController {
                      )
                   ),
                   'order' => 'ClassInTournament.date ASC'
+               	  
                )
             )
          )
       );
       
+      $stages=$this->Stage->find('all',
+      		
+      		array(
+      				'conditions' => array(
+      						'Stage.tournament_id' => (int)$tournament_id,
+      				)
+      		)
+      );
+      
       $this->set("tournament", $tournament);
+      $this->set("stages", $stages);
    }
    
    

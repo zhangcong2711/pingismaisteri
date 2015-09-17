@@ -14,7 +14,17 @@
 
             <hr />
             
-            <strong class="data-label"><?php echo __('time1')?></strong> <?php 
+            <strong class="data-label">Stage</strong><br/>
+            <?php 
+            
+            	foreach($stages as &$t_stage){
+            		echo $t_stage['Stage']['name'].'      Type: '.$t_stage['Stage']['type'].'<br/>';
+            	}
+            ?>
+           
+            <hr/> 
+            
+            <strong class="data-label">Ajankohta</strong> <?php 
                
                $start = DateTime::createFromFormat( 'Y-m-d', $tournament['Tournament']['startdate'] );
                echo $start->format("d.m.Y");
