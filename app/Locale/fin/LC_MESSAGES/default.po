@@ -34,6 +34,12 @@ msgstr "Seurat"
 msgid "myAccount"
 msgstr "Oma tili"
 
+msgid "myInfo"
+msgstr "Omat tiedot"
+
+msgid "added_account"
+msgstr "Tiliin lisätyt pelaajat"
+
 msgid "logOut"
 msgstr "Kirjaudu ulos"
 
@@ -270,3 +276,72 @@ msgstr "Poista seura"
 
 msgid "dl_file"
 msgstr "Lataa tiedosto"
+
+msgid "updated_cainfo"
+msgstr "Luokan tiedot päivitetty"
+
+msgid "ca_error"
+msgstr "Luokan tietojen päivityksessä tapahtui virhe."
+
+msgid "ncacreated"
+msgstr "Uusi luokka luotu."
+
+msgid "ncafail"
+msgstr "Uuden luokan luominen epäonnistui."
+
+msgid "reg_managed"
+msgstr "Rekisteröityminen onnistui"
+
+msgid "reg_fail"
+msgstr "Rekisteröityminen epäonnistui"
+
+msgid "player_added"
+msgstr "Pelaaja lisätty"
+
+msgid "player_fail"
+msgstr "Pelaajat ei voitu lisätä"
+
+msgid "player_sav"
+msgstr "Pelaajan tiedot tallennettu"
+
+msgid "player_error"
+msgstr "Tietojen tallennuksessa tapahtui virhe"
+
+msgid "psd_change"
+msgstr "Salasana vaihdettu onnistuneesti"
+
+msgid "psd_fail"
+msgstr "Salasanan vaihto epäonnistui"
+
+msgid "oldpsd_fail"
+msgstr "Salasanan vaihto epäonnistui: Vanha salasana ei täsmää"
+
+msgid "club_sav"
+msgstr "Seura on tallennettu."
+
+msgid "club_savfail"
+msgstr "Seuran tallennus epäonnistui."
+
+msgid "club_del"
+msgstr "Seura poistettu"
+
+msgid "club_delfail"
+msgstr "Seuran poisto epäonnistui"
+
+msgid "registrations"
+msgstr "Ilmoittautumiset"
+
+msgid "add_player"
+msgstr "Lisää pelaaja"
+
+msgid "show_all"
+msgstr "Näytä ilmoittautumiset"
+
+msgid "tinfo_update"
+msgstr "Turnauksen tiedot päivitetty."
+
+msgid "reg_recorded"
+msgstr "Ilmoittautumiset on kirjattu"
+
+msgid "received_reg"
+msgstr "Vastaanotetut ilmoittautumiset: "

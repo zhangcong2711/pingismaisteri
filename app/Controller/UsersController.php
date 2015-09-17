@@ -130,7 +130,7 @@ class UsersController extends AppController {
                ); 
                
                // Set Flash
-               $this->Session->setFlash( __('Rekisteröityminen onnistui'));
+               $this->Session->setFlash( __('reg_managed'));
                
                if( $this->Auth->login() )
                {
@@ -142,7 +142,7 @@ class UsersController extends AppController {
             else
             {
                // User Creation failed
-               $this->Session->setFlash( __('Rekisteröityminen epäonnistui'));
+               $this->Session->setFlash( __('reg_fail'));
             }
 
          }
@@ -205,7 +205,7 @@ class UsersController extends AppController {
          }
          else
          {
-            $this->Session->setFlash(__('Pelaajaa ei voitu lisätä'));
+            $this->Session->setFlash(__('player_fail'));
          }              
       }
       
@@ -232,11 +232,11 @@ class UsersController extends AppController {
       
          if($this->Player->save($dataArray))
          {
-            $this->Session->setFlash(__('Pelaajan tiedot tallennettu'));
+            $this->Session->setFlash(__('player_sav'));
          }
          else
          {
-            $this->Session->setFlash(__('Tietojen tallennuksessa tapahtui virhe'));
+            $this->Session->setFlash(__('player_error'));
          }              
       }
       else
@@ -289,14 +289,14 @@ class UsersController extends AppController {
             if( $this->User->save($this->request->data) )
             {
                // Success
-               $this->Session->setFlash( __("Salasana vaihdettu onnistuneesti") );
+               $this->Session->setFlash( __("psd_change") );
                
                $this->redirect( array("controller" => "profiles", "action" => "settings" ) );
             }
             else
             {
                // Failed for some reason
-               $this->Session->setFlash( __("Salasanan vaihto epäonnistui") );
+               $this->Session->setFlash( __("psd_fail") );
                
                $this->redirect( array("controller" => "profiles", "action" => "settings" ) );
             }
@@ -305,7 +305,7 @@ class UsersController extends AppController {
          else
          {
             // Password was wrong
-            $this->Session->setFlash( __("Salasanan vaihto epäonnistui: Vanha salasana ei täsmää") );
+            $this->Session->setFlash( __("oldpsd_fail") );
             
             $this->redirect( array("controller" => "profiles", "action" => "settings" ) );
          }  

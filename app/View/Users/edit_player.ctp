@@ -1,4 +1,4 @@
-<h1><?php __("Lisää pelaaja"); ?></h1>
+<h1><?php __("add_player"); ?></h1>
 
 <?php
 

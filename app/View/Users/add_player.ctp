@@ -1,4 +1,4 @@
-<h1><?php __("Lisää pelaaja"); ?></h1>
+<h1><?php __("add_player"); ?></h1>
 
 <?php
 
@@ -98,7 +98,7 @@ echo $this->Form->input('Player.sex', array(
 
 <?php
 
-   echo $this->Form->submit( __("Tallenna pelaaja"), array("class" => "btn btn-primary") );
+   echo $this->Form->submit( __("record_player"), array("class" => "btn btn-primary") );
 
    echo $this->Form->end();
 

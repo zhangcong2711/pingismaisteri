@@ -1,6 +1,6 @@
-<h1>Oma tili</h1>
+<h1><?php echo __('myAccount')?></h1>
 
-   <h2>Omat tiedot</h2>
+   <h2><?php echo __('myInfo')?></h2>
    
    <div class="personal-data">
       <strong class="personal-data-label">Nimi</strong>
@@ -17,17 +17,17 @@
       <span class="personal-data-value"><?php echo $user['User']['phone']; ?></span>
    </div>
 
-   <h2>Tiliin lisätyt pelaajat</h2>
+   <h2><?php echo  __('added_account')?></h2>
    
    <table class="personal-players table">
       <tr>
-         <th>Nimi</th>
-         <th>Osoite</th>
-         <th>Ikä</th>
-         <th>Sukup.</th>
-         <th>Seura</th>
-         <th>Yhteystiedot</th>
-         <th>Ilmoittautumiset</th>
+         <th><?php echo __('name')?></th>
+         <th><?php echo __('address')?></th>
+         <th><?php echo __('age')?></th>
+         <th><?php echo __('sex')?></th>
+         <th><?php echo __('club_id')?></th>
+         <th><?php echo __('contact')?></th>
+         <th><?php echo __('registrations')?></th>
       </tr>
 
    <?php
@@ -53,7 +53,7 @@
                }
                else
                {
-                  echo $this->Html->link('Näytä ilmoittautumiset ('.count($player['Registration']).') <span class="caret"></span>', "/users/listRegistrations/".$player['id'], array("data-target" => "#registrations".$player['id'] ,"class" => "btn btn-primary show-table-rows", "escape" => false) ); ?></td>
+                  echo $this->Html->link('show_all'.' ('.count($player['Registration']).') <span class="caret"></span>', "/users/listRegistrations/".$player['id'], array("data-target" => "#registrations".$player['id'] ,"class" => "btn btn-primary show-table-rows", "escape" => false) ); ?></td>
             <?php
                }
             ?>

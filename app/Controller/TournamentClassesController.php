@@ -111,12 +111,12 @@ class TournamentClassesController extends AppController {
             
             if ($this->TournamentClass->save($this->request->data))
             {
-               $this->Session->setFlash(__('Luokan tiedot päivitetty.'));
+               $this->Session->setFlash( __('updated_cainfo'));
                $this->redirect( "/tournamentClasses/view" );
             }
             else
             {
-               $this->Session->setFlash(__('Luokan tietojen päivityksessä tapahtui virhe.'));
+               $this->Session->setFlash( __('ca_error'));
             }
             
             
@@ -181,11 +181,11 @@ class TournamentClassesController extends AppController {
             
             if( $this->TournamentClass->save( $this->request->data ) )
             {
-                $this->Session->setFlash(__('Uusi luokka luotu.'));
+                $this->Session->setFlash(__('ncacreated'));
             }
             else
             {
-                $this->Session->setFlash(__('Uuden luokan luominen epäonnistui.'));
+                $this->Session->setFlash(__('ncafail'));
             }
             
             $this->redirect( "/tournament_classes/view" );

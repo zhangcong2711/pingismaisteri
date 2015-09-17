@@ -34,6 +34,12 @@ msgstr "Clubs"
 msgid "myAccount"
 msgstr "My account"
 
+msgid "myInfo"
+msgstr "My profile"
+
+msgid "added_account"
+msgstr "Added account players"
+
 msgid "logOut"
 msgstr "Log out"
 
@@ -143,7 +149,7 @@ msgid "add_new"
 msgstr "Add a new player"
 
 msgid "record_player"
-msgstr "Record player"
+msgstr "Save player"
 
 msgid "t_name"
 msgstr "Tournament name"
@@ -270,3 +276,72 @@ msgstr "Delete club"
 
 msgid "dl_file"
 msgstr "Download file"
+
+msgid "updated_cainfo"
+msgstr "Category infomation updated."
+
+msgid "ca_error"
+msgstr "An error occurred while updating category information."
+
+msgid "ncacreated"
+msgstr "The new category created."
+
+msgid "ncafail"
+msgstr "Creating a new category failed."
+
+msgid "reg_managed"
+msgstr "Registration managed"
+
+msgid "reg_fail"
+msgstr "Registration failed"
+
+msgid "player_added"
+msgstr "Player added"
+
+msgid "player_fail"
+msgstr "Players could not be added"
+
+msgid "player_sav"
+msgstr "Details of the player saved"
+
+msgid "player_error"
+msgstr "An error occurred while recording data"
+
+msgid "psd_change"
+msgstr "Password changed successfully"
+
+msgid "psd_fail"
+msgstr "Change password failed"
+
+msgid "oldpsd_fail"
+msgstr "Changing password failed: the Old password does not match"
+
+msgid "club_sav"
+msgstr "Club has been saved."
+
+msgid "club_savfail"
+msgstr "Saving club failed."
+
+msgid "club_del"
+msgstr "Club deleted"
+
+msgid "club_delfail"
+msgstr "The club failed to delete"
+
+msgid "registrations"
+msgstr "Registrations"
+
+msgid "add_player"
+msgstr "Add a player"
+
+msgid "show_all"
+msgstr "Show all"
+
+msgid "tinfo_update"
+msgstr "Tournament information updated."
+
+msgid "reg_recorded"
+msgstr "Registrations are recorded"
+
+msgid "received_reg"
+msgstr "Received registration: "

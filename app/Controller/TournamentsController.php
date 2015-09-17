@@ -75,7 +75,7 @@ class TournamentsController extends AppController {
             }
          }
          
-         $this->Session->setFlash(__('Turnauksen tiedot päivitetty.')); 
+         $this->Session->setFlash(__('tinfo_update')); 
       }
       
 
@@ -219,7 +219,7 @@ class TournamentsController extends AppController {
             
             if( $registered )
             {
-               $this->Session->setFlash( __("Ilmoittautumiset on kirjattu") );
+               $this->Session->setFlash( __("reg_recorded") );
                
                $email = $this->Auth->user("email");
                $start = DateTime::createFromFormat("Y-m-d", $tournament['Tournament']['startdate']);
@@ -236,7 +236,7 @@ class TournamentsController extends AppController {
                
                $message .= "\r\n"."\r\n";
                
-               $message .= "Vastaanotetut ilmoittautumiset: \r\n";
+               $message .= __("received_reg")."\r\n";
                
                foreach( $data['Player'] as $player )
                {

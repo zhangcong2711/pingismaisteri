@@ -25,12 +25,12 @@ class ClubsController extends AppController {
             $this->Club->create();
             if ($this->Club->save($this->request->data)) {
             
-                $this->Session->setFlash(__('Seura on tallennettu.'));
+                $this->Session->setFlash(__('club_sav.'));
                 $this->redirect( "/clubs/view" );
                 
             } else
 			{
-				$this->Session->setFlash(__('Seuran tallennus epäonnistui.'));
+				$this->Session->setFlash(__('club_savfail'));
 			}
          
       }
@@ -60,11 +60,11 @@ class ClubsController extends AppController {
                )
             );
          
-            $this->Session->setFlash( __("Seura poistettu") );
+            $this->Session->setFlash( __("club_del") );
          }
          else
          {
-            $this->Session->setFlash( __("Seuran poisto epäonnistui") );
+            $this->Session->setFlash( __("club_delfail") );
          }
          
          $this->redirect( "/clubs/view");
