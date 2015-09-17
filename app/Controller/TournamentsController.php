@@ -122,42 +122,78 @@ class TournamentsController extends AppController {
          $dataArray['Tournament']['cuttingdate'] = $cuttingdate->format("Y-m-d");
          $dataArray['Tournament']['registration_ends'] = $registration_ends->format("Y-m-d");
 		
-         if ($this->Tournament->save($dataArray)) {
-      
-            $tournament_id = $this->Tournament->getLastInsertID();
-            
-            if( isset( $this->request->data['TournamentClass'] ) )
-            {
          
-               foreach ($this->request->data['TournamentClass'] AS $i => $class )
-               {
-               
-                  if( $class['tournament_class_id'] != 0 )
-                  {
-                     $this->Tournament->ClassInTournament->create();
-                              
-                     $dataArray['ClassInTournament'] = array ( 
-                        "tournament_class_id" => $class['tournament_class_id'],
-                        "tournament_id" => $tournament_id,
-                        "date" => $class['date'],
-                        "price" => $class['price'],
-                     );
-                     
-                     $dataArray['ClassInTournament']['date'] = DateTime::createFromFormat( "d.m.Y",  $dataArray['ClassInTournament']['date'] )->format("Y-m-d");
-                     $dataArray['ClassInTournament']['price'] = floatval(str_replace(',', '.', str_replace('.', '', $dataArray['ClassInTournament']['price'])));
-                     
-                     $this->Tournament->ClassInTournament->save($dataArray);
-                  }
-               }
-            }
-            
-             $this->Session->setFlash(__('Uusi turnaus tehty.'));
-             $this->redirect( "/Tournaments/edit/".$tournament_id);
-         } 
-         else
-			{
-				$this->Session->setFlash(__('Uuden turnauksen luominen epäonnistui.'));
-			}
+         
+         //transaction start
+         $dataSource = ConnectionManager::getDataSource('default');
+         $dataSource->begin();
+         
+         try {
+         	if ($this->Tournament->save($dataArray)) {
+         	
+         		$tournament_id = $this->Tournament->getLastInsertID();
+         	
+         		if( isset( $this->request->data['TournamentClass'] ) )
+         		{
+         			 
+         			foreach ($this->request->data['TournamentClass'] AS $i => $class )
+         			{
+         				 
+         				if( $class['tournament_class_id'] != 0 )
+         				{
+         					$this->Tournament->ClassInTournament->create();
+         	
+         					$dataArray['ClassInTournament'] = array (
+         							"tournament_class_id" => $class['tournament_class_id'],
+         							"tournament_id" => $tournament_id,
+         							"date" => $class['date'],
+         							"price" => $class['price'],
+         					);
+         					
+         					$dataArray['ClassInTournament']['date'] = DateTime::createFromFormat( "d.m.Y",  $dataArray['ClassInTournament']['date'] )->format("Y-m-d");
+         					$dataArray['ClassInTournament']['price'] = floatval(str_replace(',', '.', str_replace('.', '', $dataArray['ClassInTournament']['price'])));
+         					 
+         					$this->Tournament->ClassInTournament->save($dataArray);
+         				}
+         			}
+         		}
+         	
+         		if( isset( $this->request->data['Stage'] ) )
+         		{
+         	
+         			foreach ($this->request->data['Stage'] AS $i => $t_stage )
+         			{
+         	
+         				$this->Tournament->Stage->create();
+         				$dataArray['Stage'] = array (
+         						"tournament_id" => $tournament_id,
+         						"name" => $t_stage['name'],
+         						"type" => $t_stage['type'],
+         				);
+         	
+         				$this->Tournament->Stage->save($dataArray);
+         			}
+         		}
+         	
+         		$dataSource->commit();
+         		
+         		$this->Session->setFlash(__('Uusi turnaus tehty.'));
+         		$this->redirect( "/Tournaments/edit/".$tournament_id);
+         	}
+         	else
+         	{
+         		$this->Session->setFlash(__('Uuden turnauksen luominen epäonnistui.'));
+         	}
+         	
+         	
+         } catch (Exception $e) {
+         	
+         	//log Exception...
+         	$dataSource->rollback();
+         	$this->Session->setFlash(__('Uuden turnauksen luominen epäonnistui.'));
+         }
+         
+         
       }
    }
    
@@ -460,7 +496,6 @@ class TournamentsController extends AppController {
 
 		$this->set("all_stages", $all_stages);
 		
-		   
 		
 		// draw pool
 		if ($this->request->is('post'))
@@ -809,7 +844,16 @@ EOF;
    
    }
    
+   public function newStageTypeRow($i)
+   {
+   	$types=array(
+   			constant("STAGE_TYPE_POOL")=>'POOL_STAGE',
+   			constant("STAGE_TYPE_CUP")=>'CUP_STAGE'
+   	);
    
+   	$this->set("types", $types);
+   	//$this->set("iterator", $i);
+   }
    
    
    public function sendEmail($id)
