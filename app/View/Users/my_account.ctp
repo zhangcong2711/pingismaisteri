@@ -3,17 +3,17 @@
    <h2><?php echo __('myInfo')?></h2>
    
    <div class="personal-data">
-      <strong class="personal-data-label">Nimi</strong>
+      <strong class="personal-data-label"><?php echo __('name')?></strong>
       <span class="personal-data-value"><?php echo $user['User']['name']; ?></span>
    </div>
    
    <div class="personal-data">
-      <strong class="personal-data-label">Sähköpostiosoite</strong>
+      <strong class="personal-data-label"><?php echo __('email')?></strong>
       <span class="personal-data-value"><?php echo $user['User']['email']; ?></span>
    </div>
    
    <div class="personal-data">
-      <strong class="personal-data-label">Puhelinnumero</strong>
+      <strong class="personal-data-label"><?php echo __('phone')?></strong>
       <span class="personal-data-value"><?php echo $user['User']['phone']; ?></span>
    </div>
 

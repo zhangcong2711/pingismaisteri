@@ -1,4 +1,4 @@
-   <h1>Luo uusi turnaus</h1>
+   <h1><?php echo __('create_nt')?></h1>
    
    <?php echo $this->Form->create('Tournament'); ?>
 
@@ -190,7 +190,7 @@
    
 <?php
    
-   echo $this->Form->submit( __("creat_t"), array("class" => "btn btn-primary") );
+   echo $this->Form->submit( __("create_t"), array("class" => "btn btn-primary") );
    
   // echo $this->Security->unlockedFields = array('TournamentClass');
 

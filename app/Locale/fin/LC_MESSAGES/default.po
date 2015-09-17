@@ -248,6 +248,9 @@ msgid "create_ntc"
 msgstr "Luo uusi turnausluokka"
 
 msgid "constraints"
+msgstr "Turnauksen tiedot"
+
+msgid "constraints"
 msgstr "Rajoitteet"
 
 msgid "age_lim"
