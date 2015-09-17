@@ -157,6 +157,9 @@ msgstr "Aika"
 msgid "categories"
 msgstr "Luokat"
 
+msgid "cate"
+msgstr "Luokkia"
+
 msgid "no_registrations"
 msgstr "Ei ilmoittautumisia"
 
@@ -247,8 +250,14 @@ msgstr "Luo uusi turnaus"
 msgid "create_ntc"
 msgstr "Luo uusi turnausluokka"
 
-msgid "constraints"
+msgid "t_info"
 msgstr "Turnauksen tiedot"
+
+msgid "orgn"
+msgstr "Järjestäjä"
+
+msgid "time1"
+msgstr "Ajankohta"
 
 msgid "constraints"
 msgstr "Rajoitteet"

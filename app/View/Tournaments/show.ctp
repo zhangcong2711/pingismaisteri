@@ -4,17 +4,17 @@
    <div class="col-md-6">
       <div class="panel panel-default">
          <div class="panel-heading">
-            Turnauksen tiedot
+            <?php echo __('t_info')?>
          </div>
          <div class="panel-body">
-            <strong class="data-label">Turnauksen nimi</strong> <?php echo $tournament['Tournament']['name']; ?><br />
-            <strong class="data-label">Järjestäjä</strong> <?php echo $tournament['Tournament']['organizer']; ?><br />
+            <strong class="data-label"><?php echo __('t_name')?></strong> <?php echo $tournament['Tournament']['name']; ?><br />
+            <strong class="data-label"><?php echo __('orgn')?></strong> <?php echo $tournament['Tournament']['organizer']; ?><br />
             
             <p><?php echo $tournament['Tournament']['additionalinfo']; ?></p>
 
             <hr />
             
-            <strong class="data-label">Ajankohta</strong> <?php 
+            <strong class="data-label"><?php echo __('time1')?></strong> <?php 
                
                $start = DateTime::createFromFormat( 'Y-m-d', $tournament['Tournament']['startdate'] );
                echo $start->format("d.m.Y");
@@ -27,11 +27,11 @@
                echo $end->format("d.m.Y");
                
             ?><br />
-            <strong class="data-label">Sijainti</strong> <?php echo $tournament['Tournament']['location']; ?>
+            <strong class="data-label"><?php echo __('location')?></strong> <?php echo $tournament['Tournament']['location']; ?>
             
             <hr />
             
-            <strong class="data-label">Leikkuripäivä</strong>
+            <strong class="data-label"><?php echo __('cuttingdate')?></strong>
             <?php 
             
                $cutter = DateTime::createFromFormat( 'Y-m-d', $tournament['Tournament']['cuttingdate'] );
@@ -41,7 +41,7 @@
             
             <hr />
             
-            <strong class="data-label">Lisätiedot</strong><br />
+            <strong class="data-label"><?php echo __('additionalinfo')?></strong><br />
             <?php
                echo $tournament['Tournament']['contact'] ."<br />";
                echo $tournament['Tournament']['contactphone'] ."<br />";
@@ -52,7 +52,7 @@
             
             <hr />
             
-            <strong class="data-label">Toiminnot</strong><br /><br />
+            <strong class="data-label"><?php echo __('act')?></strong><br /><br />
             
             <?php } ?>
             
@@ -103,7 +103,7 @@
    <div class="col-md-6">
       <div class="panel panel-default">
          <div class="panel-heading">
-            Ilmoittautuneet
+            <?php echo __('registered')?>
          </div>
          <div class="panel-body">
          <?php
@@ -139,7 +139,7 @@
             
             if( count( $class['Registration'] ) == 0 )
             {
-               echo __('<li>no_reg</li>');
+               echo '<li>'.__('no_reg').'</li>';
             }
             
             ?>

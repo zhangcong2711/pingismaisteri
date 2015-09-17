@@ -1,11 +1,11 @@
-<h1>Turnaukset</h1>
+<h1><?php echo __('tournaments')?></h1>
 
 <table class="table">
    <tr>
       <th>#</th>
-      <th>Nimi</th>
-      <th>Luokkia</th>
-      <th>Toiminnot</th>
+      <th><?php echo __('name')?></th>
+      <th><?php echo __('cate')?></th>
+      <th><?php echo __('act')?></th>
    </tr>
    <?php foreach( $tournaments as $tournament )
    {

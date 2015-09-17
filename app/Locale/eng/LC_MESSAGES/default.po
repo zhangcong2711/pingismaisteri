@@ -139,6 +139,9 @@ msgstr "Tournament"
 msgid "categories"
 msgstr "Categories"
 
+msgid "cate"
+msgstr "Categories"
+
 msgid "cancel_registration"
 msgstr "Cancel registration"
 
@@ -234,6 +237,15 @@ msgstr "Create new tournament class"
 
 msgid "constraints"
 msgstr "Constraints"
+
+msgid "t_info"
+msgstr "Tournament information"
+
+msgid "orgn"
+msgstr "Organizer"
+
+msgid "time1"
+msgstr "Time"
 
 msgid "age_lim"
 msgstr "Age limit"
