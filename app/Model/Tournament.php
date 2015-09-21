@@ -24,13 +24,7 @@ class Tournament extends AppModel {
          'className' => 'ClassInTournament',
          'foreignKey' => 'tournament_id',
          'dependent' => true
-      ),
-   		
-   	  'Stage' => array(
-   		  'className' => 'Stage',
-   		  'foreignKey' => 'tournament_id',
-   		  'dependent' => true
-   	  )
+      )
    );
 
 }

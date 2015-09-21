@@ -28,6 +28,9 @@ msgstr "Turnaukset"
 msgid "tournamentCategory"
 msgstr "Turnausluokat"
 
+msgid "gameResult"
+msgstr "Peli tulos"
+
 msgid "clubs"
 msgstr "Seurat"
 

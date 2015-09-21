@@ -28,6 +28,9 @@ msgstr "Tournaments"
 msgid "tournamentCategory"
 msgstr "Tournament category"
 
+msgid "gameResult"
+msgstr "Game Result"
+
 msgid "clubs"
 msgstr "Clubs"
 

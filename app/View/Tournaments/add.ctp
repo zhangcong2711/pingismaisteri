@@ -116,7 +116,7 @@
       </div>
       
       
-      <div class="col-md-8">
+      <!-- div class="col-md-8">
    
          <h3>Stage</h3>
 
@@ -149,7 +149,7 @@
             </tfoot>
 
          </table>
-      </div>
+      </div -->
       
       
    </div>

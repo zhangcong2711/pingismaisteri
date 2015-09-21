@@ -9,7 +9,7 @@ class TournamentsController extends AppController {
 
    public $helpers = array('Html', 'Form', 'PHPExcel');
    
-   public $uses = array( 'Tournament', 'TournamentClass', 'Registration', 'TournamentClasses', 'ClassInTournament', 'Rating', 'RatingRow', 'Player', 'Pool', 'PlayerInPool', 'Stage' );
+   public $uses = array( 'Tournament', 'TournamentClass', 'Registration', 'TournamentClasses', 'ClassInTournament', 'Rating', 'RatingRow', 'Player', 'Pool', 'PlayerInPool', 'Stage' ,'Game', 'Set');
    
    public function beforeFilter(){
       //$this->Security->unlockedFields = array('TournamentClass');
@@ -357,6 +357,7 @@ class TournamentsController extends AppController {
          )
       );
       
+      /*
       $stages=$this->Stage->find('all',
       		
       		array(
@@ -364,10 +365,10 @@ class TournamentsController extends AppController {
       						'Stage.tournament_id' => (int)$tournament_id,
       				)
       		)
-      );
+      );*/
       
       $this->set("tournament", $tournament);
-      $this->set("stages", $stages);
+      //$this->set("stages", $stages);
    }
    
    

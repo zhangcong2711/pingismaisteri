@@ -6,9 +6,9 @@ App::uses('AppModel', 'Model');
 class Stage extends AppModel {
 	
 	public $belongsTo = array(
-			'Tournament' => array(
-					'className' => 'Tournament',
-					'foreignKey' => 'tournament_id',
+			'ClassInTournament' => array(
+					'className' => 'ClassInTournament',
+					'foreignKey' => 'class_in_tournament_id',
 					'dependent' => false
 			)
 	);

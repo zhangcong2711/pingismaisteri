@@ -22,6 +22,13 @@ class Pool extends AppModel {
 					'className' => 'PlayerInPool',
 					'foreignKey' => 'pool_id',
 					'dependent' => true
+			),
+			
+			'Game' => array(
+					'className' => 'Game',
+					'foreignKey' => 'pool_id',
+					'dependent' => true,
+					'order' => 'Game.seq_no'
 			)
 	);
 	
