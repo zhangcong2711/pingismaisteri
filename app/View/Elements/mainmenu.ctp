@@ -36,8 +36,9 @@
 
 
 <ul class="nav navbar-nav navbar-right">
-   <li><?php echo $this->Html->link('Eng', array('language'=>'en')); ?></li>
-   <li><?php echo $this->Html->link('Fin', array('language'=>'fin')); ?></li>
+
+   <li><?php echo $this->Html->link('Eng', '/changeLanguage/en'); ?></li>
+   <li><?php echo $this->Html->link('Fin', '/changeLanguage/fin'); ?></li>
                
    <?php if( $this->requestAction("/app/checkAccess/users/logout" ) ) { ?>
    <li><?php echo $this->Html->link(__("logOut"), "/users/logout" ); ?></li>

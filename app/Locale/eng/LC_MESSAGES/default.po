@@ -360,3 +360,9 @@ msgstr "Registrations are recorded"
 
 msgid "received_reg"
 msgstr "Received registration: "
+
+msgid "stage_type"
+msgstr "Stage type"
+
+msgid "pool_num"
+msgstr "Pool num"

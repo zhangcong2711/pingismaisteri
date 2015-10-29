@@ -69,6 +69,19 @@ class PagesController extends AppController {
 		}
 	}
 	
+	public function changeLanguage($lang){
+		if(!empty($lang)){
+			
+			if($lang == 'fin' || $lang == 'en'){
+				$this->Session->write('Config.language', $lang);
+				$this->Cookie->write('lang', $lang, false, '20 days');
+			}
+			 
+			//in order to redirect the user to the page from which it was called
+			$this->redirect($this->referer());
+		}
+	}
+	
 	/*
 	public function changeLanguage($lng) { // Change language method
 		parent::setLang($lng); // call setLang() from AppController

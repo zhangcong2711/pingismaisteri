@@ -89,6 +89,8 @@
                   <th><?php echo __('name')?></th>
                  <th><?php echo __('date')?></th>
                  <th><?php echo __('price')?></th>
+                 <th><?php echo __('stage_type')?></th>
+                 <th><?php echo __('pool_num')?></th>
                  <th><?php echo __('remove')?></th>
                </tr>
             </thead>

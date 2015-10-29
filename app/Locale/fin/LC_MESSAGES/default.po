@@ -375,3 +375,9 @@ msgstr "Ilmoittautumiset on kirjattu"
 
 msgid "received_reg"
 msgstr "Vastaanotetut ilmoittautumiset: "
+
+msgid "stage_type"
+msgstr "(NT)Stage type"
+
+msgid "pool_num"
+msgstr "(NT)Pool num"

@@ -3,7 +3,7 @@
    <?php echo $this->Form->create('Tournament'); ?>
 
    <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-3">
       
          <h3>Turnauksen tiedot</h3>
 
@@ -82,7 +82,7 @@
 
       </div>
       
-      <div class="col-md-8">
+      <div class="col-md-9">
    
          <h3>Turnauksen luokat</h3>
 
@@ -92,16 +92,35 @@
                   <th><?php echo __('name')?></th>
                  <th><?php echo __('date')?></th>
                  <th><?php echo __('price')?></th>
+                 <th><?php echo __('stage_type')?></th>
+                 <th><?php echo __('pool_num')?></th>
                  <th><?php echo __('remove')?></th>
                </tr>
             </thead>
             <tbody>
 
-            <?php foreach( $this->request->data['ClassInTournament'] as $i => $class )
+            <?php 
+            
+            $stage_type_opts = array();
+            $stage_type_opts[constant('STAGE_TYPE_POOLS_CUP')]='POOLS -> CUP';
+            $stage_type_opts[constant('STAGE_TYPE_POOLS_POOLS')]='POOLS -> POOLS';
+            $stage_type_opts[constant('STAGE_TYPE_POOLS')]='POOLS';
+            $stage_type_opts[constant('STAGE_TYPE_CUP')]='CUP';
+            
+            foreach( $this->request->data['ClassInTournament'] as $i => $class )
             {
             
                $date = DateTime::createFromFormat("Y-m-d", $class['date']);
                $price = str_replace(".", ",", $class['price']);
+               $pool_num = $class['pool_num'];
+               $stage_type = $class['stage_type'];
+               
+               /*
+               $stage_name_arr=array();
+               foreach($class['Stage'] as &$t_stage){
+               		array_push($stage_name_arr, $t_stage['name']);
+               }*/
+               
             
                echo $this->Form->input("TournamentClass.".$i.".id", array("type" => "hidden", "value" => $class['id']));
             ?>
@@ -114,6 +133,21 @@
                   </td>
                   <td>
                      <?php echo $this->Form->input("TournamentClass.".$i.".price", array("type" => "text", "class" => "form-control", "label" => false, "value" => $price)); ?>
+                  </td>
+                  <td>
+				     <?php echo $this->Form->input("TournamentClass.".$i.".stage_type", array(
+							'id' => 'stage_type_select',
+				      		'label' => false,
+				     		'disabled' => true,
+						    'type'    => 'select',
+						    'options' => $stage_type_opts,
+						    'empty'   => false,
+				     		'value'	=> $stage_type,
+							'class' => 'form-control'
+						)) ?>
+				  </td>
+                  <td>
+                     <?php echo $this->Form->input("TournamentClass.".$i.".pool_num", array("type" => "text", "class" => "form-control", "label" => false, "value" => $pool_num)); ?>
                   </td>
                   <td>
                      <?php 

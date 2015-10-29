@@ -50,14 +50,25 @@ class TournamentsController extends AppController {
       
             foreach ($this->request->data['TournamentClass'] AS $i => $class )
             {
-
+				//add flag
+               $new_create=false;
+               
                if( isset($class['id']) )
                {
-                  $this->Tournament->ClassInTournament->id = $class['id'];
+	               	//get rid of deleted tournamentclass
+	               	$d_count = $this->Tournament->ClassInTournament->find('count',
+	               			array(
+	               					'conditions' => array('ClassInTournament.id' => $class['id'])
+	               			));
+	               	if($d_count==0){
+	               		continue;
+	               	}
+                  	$this->Tournament->ClassInTournament->id = $class['id'];
                }
                else
                {
                   $this->Tournament->ClassInTournament->create();
+                  $new_create=true;
                }
                
                $dataArray['ClassInTournament'] = array ( 
@@ -67,15 +78,49 @@ class TournamentsController extends AppController {
                   "price" => $class['price'],
                );
                
-               $dataArray['ClassInTournament']['date'] = DateTime::createFromFormat( "d.m.Y",  $dataArray['ClassInTournament']['date'] )->format("Y-m-d");
+               $dataArray['ClassInTournament']['date'] = isset($dataArray['ClassInTournament']['date']) ? DateTime::createFromFormat( "d.m.Y",  $dataArray['ClassInTournament']['date'] )->format("Y-m-d") : '';
                $dataArray['ClassInTournament']['price'] = floatval(str_replace(',', '.', str_replace('.', '', $dataArray['ClassInTournament']['price'])));
+               $dataArray['ClassInTournament']['pool_num'] = intval(trim($class['pool_num']));
+               
+               if($new_create)
+               {
+               	$dataArray['ClassInTournament']['stage_type'] = trim($class['stage_type']);
+               }
                
                $this->Tournament->ClassInTournament->save($dataArray);
+               
+               if($new_create){
+               	if( isset( $dataArray['ClassInTournament']['stage_type']) )
+               	{
+               	
+               		$class_in_tournament_id=$this->Tournament->ClassInTournament->getLastInsertID();
+               		$stage_type=$dataArray['ClassInTournament']['stage_type'];
+               		if($stage_type== constant('STAGE_TYPE_POOLS_CUP')){
+               	
+               			$this->createStage($class_in_tournament_id,'Pools',constant('STAGE_POOL'));
+               			$this->createStage($class_in_tournament_id,'Cup',constant('STAGE_CUP'));
+               	
+               		}elseif ($stage_type== constant('STAGE_TYPE_POOLS_POOLS')){
+               	
+               			$this->createStage($class_in_tournament_id,'Pools',constant('STAGE_POOL'));
+               			$this->createStage($class_in_tournament_id,'Pools',constant('STAGE_POOL'));
+               	
+               		}elseif ($stage_type == constant('STAGE_TYPE_POOLS')){
+               			$this->createStage($class_in_tournament_id,'Pools',constant('STAGE_POOL'));
+               	
+               		}elseif ($stage_type == constant('STAGE_TYPE_CUP')){
+               			$this->createStage($class_in_tournament_id,'Cup',constant('STAGE_CUP'));
+               		}
+               		 
+               		 
+               	}
+               }
                
             }
          }
          
          $this->Session->setFlash(__('tinfo_update')); 
+         $this->redirect( "/Tournaments/show/".$tournament_id);
       }
       
 
@@ -86,7 +131,8 @@ class TournamentsController extends AppController {
             ),
             'contain' => array(
                'ClassInTournament' => array(
-                  'TournamentClass'
+                  'TournamentClass',
+               	  'Stage'
                )
             )
          )
@@ -148,37 +194,51 @@ class TournamentsController extends AppController {
          							"tournament_id" => $tournament_id,
          							"date" => $class['date'],
          							"price" => $class['price'],
+         							"stage_type" => $class['stage_type']
          					);
          					
          					$dataArray['ClassInTournament']['date'] = DateTime::createFromFormat( "d.m.Y",  $dataArray['ClassInTournament']['date'] )->format("Y-m-d");
          					$dataArray['ClassInTournament']['price'] = floatval(str_replace(',', '.', str_replace('.', '', $dataArray['ClassInTournament']['price'])));
-         					 
+         					$dataArray['ClassInTournament']['pool_num'] = intval(trim($class['pool_num']));
+         					$dataArray['ClassInTournament']['stage_type'] = trim($class['stage_type']);
+         					
          					$this->Tournament->ClassInTournament->save($dataArray);
+         					
+         					
+         					if( isset( $dataArray['ClassInTournament']['stage_type']) )
+         					{
+         					
+         						$class_in_tournament_id=$this->Tournament->ClassInTournament->getLastInsertID();
+         						$stage_type=$dataArray['ClassInTournament']['stage_type'];
+         						if($stage_type== constant('STAGE_TYPE_POOLS_CUP')){
+         							
+         							$this->createStage($class_in_tournament_id,'Pools',constant('STAGE_POOL'));
+         							$this->createStage($class_in_tournament_id,'Cup',constant('STAGE_CUP'));
+         							
+         						}elseif ($stage_type== constant('STAGE_TYPE_POOLS_POOLS')){
+         							
+         							$this->createStage($class_in_tournament_id,'Pools',constant('STAGE_POOL'));
+         							$this->createStage($class_in_tournament_id,'Pools',constant('STAGE_POOL'));
+         							
+         						}elseif ($stage_type == constant('STAGE_TYPE_POOLS')){
+         							$this->createStage($class_in_tournament_id,'Pools',constant('STAGE_POOL'));
+         							
+         						}elseif ($stage_type == constant('STAGE_TYPE_CUP')){
+         							$this->createStage($class_in_tournament_id,'Cup',constant('STAGE_CUP'));
+         						}
+         						
+         						
+         					}
          				}
          			}
          		}
          	
-         		if( isset( $this->request->data['Stage'] ) )
-         		{
-         	
-         			foreach ($this->request->data['Stage'] AS $i => $t_stage )
-         			{
-         	
-         				$this->Tournament->Stage->create();
-         				$dataArray['Stage'] = array (
-         						"tournament_id" => $tournament_id,
-         						"name" => $t_stage['name'],
-         						"type" => $t_stage['type'],
-         				);
-         	
-         				$this->Tournament->Stage->save($dataArray);
-         			}
-         		}
+         		
          	
          		$dataSource->commit();
          		
          		$this->Session->setFlash(__('Uusi turnaus tehty.'));
-         		$this->redirect( "/Tournaments/edit/".$tournament_id);
+         		$this->redirect( "/Tournaments/show/".$tournament_id);
          	}
          	else
          	{
@@ -195,6 +255,18 @@ class TournamentsController extends AppController {
          
          
       }
+   }
+   
+   private function createStage($class_in_tournament_id,$name,$type){
+   	
+	   	$this->Tournament->ClassInTournament->Stage->create();
+	   	$dataArray['Stage'] = array (
+	   			"class_in_tournament_id" => $class_in_tournament_id,
+	   			"name" => $name,
+	   			"type" => $type,
+	   	);
+	   	
+	   	$this->Tournament->ClassInTournament->Stage->save($dataArray);
    }
    
    public function register($tournament_id)
@@ -468,7 +540,7 @@ class TournamentsController extends AppController {
 		
 		//find all stages of this tournament
 		$all_stages=$this->Stage->find("all",array(
-									'conditions' => array('Tournament.id = ' => $tournament_id)
+									'conditions' => array('ClassInTournament.id = ' => $class_in_tournament_id)
 		));
 		
 		

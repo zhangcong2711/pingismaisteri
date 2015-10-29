@@ -12,13 +12,13 @@ class AjaxController extends AppController {
    public function beforeFilter() {
       parent::beforeFilter();
     
-      /*
+      
       // Security
       if(isset($this->Security) ) {
          $this->Components->disable('Security');
       }
 
-      
+      /*
       // Not ajax
       if ( !$this->request->is('ajax') ) {
 
@@ -26,7 +26,7 @@ class AjaxController extends AppController {
       } 
       */
       
-      $this->Auth->allow('newStageTypeRow', 'newTournamentClassRow');
+//       $this->Auth->allow('newStageTypeRow', 'newTournamentClassRow');
    }
    
    public function newTournamentClassRow($i)

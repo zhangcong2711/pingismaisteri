@@ -35,9 +35,13 @@
 /**
  * language change
  */	
-	Router::connect('/:language/:controller/:action/*', array(), array('language' => 'en|fin'));
+	Router::connect(
+			'/changeLanguage/*',
+			array('controller' => 'pages', 'action' => 'changeLanguage')
+	);
 	
-
+	
+	
 /**
  * Load all plugin routes. See the CakePlugin documentation on
  * how to customize the loading of plugin routes.
