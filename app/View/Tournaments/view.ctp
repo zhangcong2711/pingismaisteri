@@ -81,6 +81,19 @@
             echo " ";
             
             echo $this->element(
+            		"buttonlink",
+            		array(
+            				'label' => __("game_result"),
+            				'controller' => 'games',
+            				'action' => 'show',
+            				'params' => array($tournament['Tournament']['id']),
+            				'class' => 'btn btn-primary'
+            		)
+            );
+            
+            echo " ";
+            
+            echo $this->element(
                "buttonlink", 
                array(
                   'label' => __("remove"), 

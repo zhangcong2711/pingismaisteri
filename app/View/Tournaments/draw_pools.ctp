@@ -16,6 +16,7 @@ echo $this->Form->create('PoolForm');
 		<table class="table" id="tournamentClasses">
 			<thead>
 			<tr>
+				<th></th>
 				<th><?php echo __('name') ?></th>
 				<th><?php echo __('date') ?></th>
 				<th><?php echo __('price') ?></th>
@@ -31,58 +32,94 @@ echo $this->Form->create('PoolForm');
 
 			<?php
 
+			
 			$stage_type_opts = array();
 			$stage_type_opts[constant('STAGE_TYPE_POOLS_CUP')] = 'POOLS -> CUP';
 			$stage_type_opts[constant('STAGE_TYPE_POOLS_POOLS')] = 'POOLS -> POOLS';
 			$stage_type_opts[constant('STAGE_TYPE_POOLS')] = 'POOLS';
 			$stage_type_opts[constant('STAGE_TYPE_CUP')] = 'CUP';
+			
 
-			foreach ($this->request->data['ClassInTournament'] as $i => $class) {
+			foreach ($tournament['ClassInTournament'] as $i => $class) {
 
 				$date = DateTime::createFromFormat("Y-m-d", $class['date']);
 				$price = str_replace(".", ",", $class['price']);
+				$cname = $class['TournamentClass']['name'];
 				$pool_num = $class['pool_num'];
 				$stage_type = $class['stage_type'];
+				$registeredNum=999;
+				
+				$is_drawed=false;
+				$is_result_input=true;
+				
+				if(isset($class['Stage']) && count($class['Stage'])>0){
+					
+					$pools=$class['Stage'][0]['Pool'];
+					if($pool_num==count($pools)){
+						$is_drawed=true;
+					}
+					
+					foreach($pools as &$p){
+						if(!isset($p['Game']) || count($p['Game'])<=0){
+							$is_result_input=false;
+							break;
+						}
+					}
+				}
+				
+				if(!$is_drawed){
+					$is_result_input=false;
+				}
 
 
-				echo $this->Form->input("TournamentClass." . $i . ".id", array("type" => "hidden", "value" => $class['id']));
+				echo $this->Form->input("ClassInTournament." . $i . ".id", array("type" => "hidden", "value" => $class['id']));
 				?>
 				<tr>
 					<td>
-						<?php echo $this->Form->input("TournamentClass." . $i . ".tournament_class_id", array("options" => $tournamentclasses, "class" => "form-control", "label" => false, "default" => $class['tournament_class_id'])); ?>
+						<?php echo $this->Form->checkbox("ClassInTournament." . $i . ".is_to_draw", array('hiddenField' => false));?>
 					</td>
 					<td>
-						<?php echo $this->Form->input("TournamentClass." . $i . ".date", array("type" => "text", "class" => "form-control", "label" => false, "value" => $date->format("d.m.Y"))); ?>
+						<?php echo $this->Form->input("ClassInTournament." . $i . ".name", array("type" => "text", "readonly" => true, "class" => "form-control", "label" => false, "value" => $cname)); ?>
 					</td>
 					<td>
-						<?php echo $this->Form->input("TournamentClass." . $i . ".price", array("type" => "text", "class" => "form-control", "label" => false, "value" => $price)); ?>
+						<?php echo $this->Form->input("ClassInTournament." . $i . ".date", array("type" => "text", "readonly" => true,  "class" => "form-control", "label" => false, "value" => $date->format("d.m.Y"))); ?>
 					</td>
 					<td>
-						<?php echo $this->Form->input("TournamentClass." . $i . ".stage_type", array(
-							'id' => 'stage_type_select',
-							'label' => false,
-							'disabled' => true,
-							'type' => 'select',
-							'options' => $stage_type_opts,
-							'empty' => false,
-							'value' => $stage_type,
-							'class' => 'form-control'
-						)) ?>
+						<?php echo $this->Form->input("ClassInTournament." . $i . ".price", array("type" => "text", "readonly" => true,  "class" => "form-control", "label" => false, "value" => $price)); ?>
 					</td>
 					<td>
-						<?php echo $this->Form->input("TournamentClass." . $i . ".pool_num", array("type" => "text", "class" => "form-control", "label" => false, "value" => $pool_num)); ?>
+						<?php echo $this->Form->input("ClassInTournament." . $i . ".stage_type", array("type" => "text", "readonly" => true,  "class" => "form-control", "label" => false, "value" => $stage_type_opts[$stage_type])) ?>
 					</td>
 					<td>
-						<?php
-						echo $this->Html->link(__("remove"), "#",
-							array(
-								"class" => "delete-row btn btn-primary",
-								"data-class" => "ClassInTournament",
-								"data-id" => $class['id'],
-								"data-url" => $this->Html->url("/ajax/removeRowFromClass")
-							)
-						);
+						<?php echo $this->Form->input("ClassInTournament." . $i . ".registerdPlayerNum", array("type" => "text", "readonly" => true, "class" => "form-control", "label" => false, "value" => $registeredNum)) ?>
+					</td>
+					<td>
+						<?php echo $this->Form->input("ClassInTournament." . $i . ".pool_num", array("type" => "text", "class" => "form-control", "label" => false, "value" => $pool_num)); ?>
+					</td>
+					<td>
+						<?php 
+						if($is_result_input){
+						
+							echo $this->Html->image('yes_32px.png', array('alt' => 'Yes'));
+						}else{
+						
+							echo $this->Html->image('no_32px.png', array('alt' => 'No'));
+						}
 						?>
+					</td>
+					<td>
+						<?php 
+						if($is_drawed){
+						
+							echo $this->Html->image('yes_32px.png', array('alt' => 'Yes'));
+						}else{
+						
+							echo $this->Html->image('no_32px.png', array('alt' => 'No'));
+						}
+						?>
+					</td>
+					<td>
+						
 					</td>
 				</tr>
 
@@ -91,20 +128,6 @@ echo $this->Form->create('PoolForm');
 			?>
 			</tbody>
 			<tfoot>
-			<tr class="newClassRow">
-				<td colspan="4">
-					<?php echo $this->Html->link(
-						__("add_category"),
-						"/ajax/newTournamentClassRow",
-						array(
-							"class" => "new-row-link btn btn-primary",
-							"data-url" => $this->Html->url("/ajax/newTournamentClassRow"),
-							"data-target" => "#tournamentClasses tbody",
-							"data-count" => "#tournamentClasses tbody tr"
-						)
-					); ?>
-				</td>
-			</tr>
 			</tfoot>
 
 		</table>
@@ -112,32 +135,14 @@ echo $this->Form->create('PoolForm');
 
 		<br/><br/>
 
-		<?php
-
-		$options = array();
-		//$options['-1']='Select a stage';
-
-		foreach ($all_stages as &$st) {
-			$options[$st['Stage']['id']] = $st['Stage']['name'] . '_' . $st['Stage']['type'];
-		}
-
-		echo $this->Form->input('stage_select', array(
-			'id' => 'stage_select',
-			'label' => __('stage_select'),
-			'type' => 'select',
-			'options' => $options,
-			'empty' => true,
-			'class' => 'form-control',
-			'onchange' => 'on_stage_select(this);'
-		));
-
+		<?php 
+		echo $this->Form->input('minimize_same_club', array(
+				'label' => __('minimize_same_club'),
+				'type' => 'checkbox'));
+		echo $this->Form->input('minimize_same_player', array(
+				'label' => __('minimize_same_player'),
+				'type' => 'checkbox'));
 		?>
-
-		<div id="draw_setting" class="col-md-12">
-			<br>
-
-
-		</div>
 	</div>
 
 </div>

@@ -150,7 +150,7 @@ class TournamentsController extends AppController {
 	
    public function add() {
    
-         $this->set("tournaments", $this->Tournament->find("all")); 
+         //$this->set("tournaments", $this->Tournament->find("all")); 
          
          $this->set( "tournamentclasses", $this->TournamentClass->find("list") );
 
@@ -528,22 +528,50 @@ class TournamentsController extends AppController {
    {
    	
    		
+	   	$tournament = $this->Tournament->find("first",
+	   			array(
+	   					'conditions' => array(
+	   							'Tournament.id' => $tournament_id
+	   					),
+	   					'contain' => array(
+	   							'ClassInTournament' => array(
+	   									'TournamentClass',
+	   									'Stage' => array(
+	   										'Pool' => array(
+	   											'Game'
+	   										)
+	   									)
+	   							)
+	   					)
+	   			)
+	   	);
+	   	
+	   	/*
+	   	foreach ($tournament['ClassInTournament'] as $i => $class){
+	   		
+	   	}*/
+	   	
+	   	$this->set('tournament', $tournament);
+   	
    	
 		// luokkaan rekisteröityjen pelaajien lukumäärä
+		/*
 		$registeredPlayers = $this->Registration->find("count",
 		array(
 			'conditions' => array(
 			'Registration.tournament_class_id ='=> $class_in_tournament_id
 			)));
 		$this->set('regs', $registeredPlayers);
+		*/
 		
-		
+   		/*
 		//find all stages of this tournament
 		$all_stages=$this->Stage->find("all",array(
 									'conditions' => array('ClassInTournament.id = ' => $class_in_tournament_id)
 		));
+		*/
 		
-		
+   		/*
 		$playerList = $this->Player->find("all",array(
 												'joins' => array(
 											        array(
@@ -579,22 +607,26 @@ class TournamentsController extends AppController {
 		
 
 		$this->set("all_stages", $all_stages);
-		
+		*/
 		
 		// draw pool
 		if ($this->request->is('post'))
 		{
 			
+			
+			
 			//get parameters
-			$pool_num=Detect::issetValueNull($this->request->data['PoolForm']['pool_num']);
-			$stage_select_id=Detect::issetValueNull($this->request->data['PoolForm']['stage_select']);
-			$pool_opt_select=Detect::issetValueNull($this->request->data['PoolForm']['pool_opt_select']);
+			//$pool_num=Detect::issetValueNull($this->request->data['PoolForm']['pool_num']);
+			//$stage_select_id=Detect::issetValueNull($this->request->data['PoolForm']['stage_select']);
+			//$pool_opt_select=Detect::issetValueNull($this->request->data['PoolForm']['pool_opt_select']);
 			$minimize_same_club=Detect::issetValueNull($this->request->data['PoolForm']['minimize_same_club']);
 			$minimize_same_player=Detect::issetValueNull($this->request->data['PoolForm']['minimize_same_player']);
-			$fp_size=Detect::issetValueNull($this->request->data['PoolForm']['fp_size']);
-			$np_size=Detect::issetValueNull($this->request->data['PoolForm']['np_size']);
+			//$fp_size=Detect::issetValueNull($this->request->data['PoolForm']['fp_size']);
+			//$np_size=Detect::issetValueNull($this->request->data['PoolForm']['np_size']);
 			
+			$abc=1+1;
 			
+			/*
 			$t_stage=$this->Stage->find('first',
 						array(
 								'conditions' => array(
@@ -626,13 +658,9 @@ class TournamentsController extends AppController {
 				
 			}
 			
-			
-			
-			
-			
 			//return download excel
 			$this->exportAgendaExcel($tournament_id,$t_stage,$class_in_tournament_id);
-			
+			*/
 			
 		}
 		

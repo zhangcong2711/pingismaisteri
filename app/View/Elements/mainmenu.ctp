@@ -5,7 +5,7 @@
       array('label' => __("signUp"), 'controller' => 'Users', 'action' => 'register'),
       array('label' => __("tournaments"), 'controller' => 'Tournaments', 'action' => 'view'),
       array('label' => __("tournamentCategory"), 'controller' => 'TournamentClasses', 'action' => 'view'),
-   	  array('label' => __("gameResult"), 'controller' => 'Games', 'action' => 'view'),
+   	  //array('label' => __("gameResult"), 'controller' => 'Games', 'action' => 'view'),
       array('label' => __("clubs"), 'controller' => 'Clubs', 'action' => 'view'),
       array('label' => __("myAccount"), 'controller' => 'Users', 'action' => 'MyAccount')
    );

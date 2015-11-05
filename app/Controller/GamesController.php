@@ -11,7 +11,7 @@ class GamesController extends AppController {
 	public function view() {
 		
 		
-		
+		/*
 		$pools=$this->Pool->find('all',
 				
 				array(
@@ -75,13 +75,49 @@ class GamesController extends AppController {
 		$this->set("pools", $new_pools);
 		
 		
-		
+		*/
 	}
 	
+	public function show($tournament_id) {
+		 
+		
+		$tournament = $this->Tournament->find("first",
+				array(
+						'conditions' => array(
+								'Tournament.id' => $tournament_id
+						),
+						'contain' => array(
+								'ClassInTournament' => array(
+										'TournamentClass',
+										'Stage' => array(
+												'Pool' => array(
+														'PlayerInPool' => array(
+																'Player'
+														)
+												)
+										)
+								)
+						)
+				)
+		);
+		
+		$this->set('tournament', $tournament);
+	
+	
+	}
+	
+	public function result($pool_id) {
+		
+		//.....................
+	}
+	
+	
+	
+	
    public function add() {
-   
-      
-      
+   		
+      	
+      	
    }
    
    public function delete()

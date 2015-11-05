@@ -366,3 +366,6 @@ msgstr "Stage type"
 
 msgid "pool_num"
 msgstr "Pool num"
+
+msgid "game_result"
+msgstr "Game result"
