@@ -12,6 +12,17 @@ class Game extends AppModel {
 					'className' => 'Pool',
 					'foreignKey' => 'pool_id',
 					'dependent' => false
+			),
+			
+			'A_Player' => array(
+					'className' => 'Player',
+					'foreignKey' => 'a_player_id',
+					'dependent' => false
+			),
+			'B_Player' => array(
+					'className' => 'Player',
+					'foreignKey' => 'b_player_id',
+					'dependent' => false
 			)
 	);
 	

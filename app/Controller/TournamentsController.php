@@ -524,7 +524,7 @@ class TournamentsController extends AppController {
    } 
    
    // Poolien arvontaan 
-   public function drawPools($tournament_id, $class_in_tournament_id)
+   public function drawPools($tournament_id)
    {
    	
    		
@@ -538,76 +538,29 @@ class TournamentsController extends AppController {
 	   									'TournamentClass',
 	   									'Stage' => array(
 	   										'Pool' => array(
-	   											'Game'
+	   											'Game' => array(
+	   												'A_Player' => array(
+	   													'Game'
+	   												),
+	   												'B_Player' => array(
+	   													'Game'
+	   												)
+	   											)
 	   										)
+	   									),
+	   									'Registration' => array(
+	   										'Player'
 	   									)
+	   							
 	   							)
 	   					)
 	   			)
 	   	);
 	   	
-	   	/*
-	   	foreach ($tournament['ClassInTournament'] as $i => $class){
-	   		
-	   	}*/
 	   	
 	   	$this->set('tournament', $tournament);
    	
    	
-		// luokkaan rekisteröityjen pelaajien lukumäärä
-		/*
-		$registeredPlayers = $this->Registration->find("count",
-		array(
-			'conditions' => array(
-			'Registration.tournament_class_id ='=> $class_in_tournament_id
-			)));
-		$this->set('regs', $registeredPlayers);
-		*/
-		
-   		/*
-		//find all stages of this tournament
-		$all_stages=$this->Stage->find("all",array(
-									'conditions' => array('ClassInTournament.id = ' => $class_in_tournament_id)
-		));
-		*/
-		
-   		/*
-		$playerList = $this->Player->find("all",array(
-												'joins' => array(
-											        array(
-												        'table' => 'registrations',
-												        'alias' => 'Registration',
-												        'type' => 'INNER',
-												        'conditions' => array(
-												            'Registration.player_id = Player.id'
-												        )
-												    ),
-												    array(
-												        'table' => 'class_in_tournaments',
-												        'alias' => 'CIT',
-												        'type' => 'INNER',
-												        'conditions' => array(
-												        	'CIT.id = Registration.tournament_class_id'
-												        )
-												    ),
-													array(
-														'table' => 'rating_rows',
-														'alias' => 'RatingRow',
-														'type' => 'INNER',
-														'conditions' => array(
-															'Player.id = RatingRow.player_id',
-															'RatingRow.rating_id=1'
-														)
-													)
-											    ),
-											    'conditions' => array(
-											        'CIT.id = ' => $class_in_tournament_id
-											    ),
-											    'fields' => array('Player.*', 'CIT.*', 'Registration.*', 'RatingRow.rating')));
-		
-
-		$this->set("all_stages", $all_stages);
-		*/
 		
 		// draw pool
 		if ($this->request->is('post'))
@@ -616,15 +569,32 @@ class TournamentsController extends AppController {
 			
 			
 			//get parameters
-			//$pool_num=Detect::issetValueNull($this->request->data['PoolForm']['pool_num']);
-			//$stage_select_id=Detect::issetValueNull($this->request->data['PoolForm']['stage_select']);
-			//$pool_opt_select=Detect::issetValueNull($this->request->data['PoolForm']['pool_opt_select']);
 			$minimize_same_club=Detect::issetValueNull($this->request->data['PoolForm']['minimize_same_club']);
 			$minimize_same_player=Detect::issetValueNull($this->request->data['PoolForm']['minimize_same_player']);
-			//$fp_size=Detect::issetValueNull($this->request->data['PoolForm']['fp_size']);
-			//$np_size=Detect::issetValueNull($this->request->data['PoolForm']['np_size']);
+
+			//get selected class
+			$selected_class=array_filter($this->request->data['ClassInTournament'], function ($class)
+							{
+							   	if(array_key_exists('is_to_draw', $class) && $class['is_to_draw']==1){
+							   		return true;
+							   	}else{
+							   		return false;	
+							   	}
+							});
 			
-			$abc=1+1;
+			//update pool num
+			foreach($selected_class as &$t_class){
+				$class_data=array();
+				$class_data['ClassInTournament']=array();
+				$class_data['ClassInTournament']['id']=$t_class['id'];
+				$class_data['ClassInTournament']['pool_num']=$t_class['pool_num'];
+				$this->Tournament->ClassInTournament->save($class_data);
+			}
+			
+			//do draw pools
+			$class_id_arr=AppUtil::extractNewArray($selected_class,['id']);
+			$groups_of_pools=$this->Pool->drawPools($class_id_arr,$minimize_same_club,$minimize_same_player);
+			
 			
 			/*
 			$t_stage=$this->Stage->find('first',

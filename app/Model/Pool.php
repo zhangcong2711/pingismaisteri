@@ -32,6 +32,102 @@ class Pool extends AppModel {
 			)
 	);
 	
+	
+	public function drawPools($list_of_class_id,$minimize_same_club,$minimize_same_player){
+		
+		
+		$group_of_cit=array();
+		
+		
+		foreach($list_of_class_id as &$class_id){
+			$cit = $this->Stage->ClassInTournament->find("first",
+					array(
+							'conditions' => array(
+									'ClassInTournament.id' => $class_id
+							),
+							'contain' => array(
+									'Stage',
+									'Registration' => array(
+										'Player'
+									)
+							)
+					)
+			);
+			
+			$player_list = $this->Stage->ClassInTournament->Registration->Player->find("all",array(
+					'joins' => array(
+							array(
+									'table' => 'registrations',
+									'alias' => 'Registration',
+									'type' => 'INNER',
+									'conditions' => array(
+											'Registration.player_id = Player.id'
+									)
+							),
+							array(
+									'table' => 'class_in_tournaments',
+									'alias' => 'CIT',
+									'type' => 'INNER',
+									'conditions' => array(
+											'CIT.id = Registration.tournament_class_id'
+									)
+							),
+							array(
+									'table' => 'rating_rows',
+									'alias' => 'RatingRow',
+									'type' => 'INNER',
+									'conditions' => array(
+											'Player.id = RatingRow.player_id',
+											'RatingRow.rating_id=1'
+									)
+							)
+					),
+					'conditions' => array(
+							'CIT.id = ' => $class_id
+					),
+					'fields' => array('Player.*', 'CIT.*', 'Registration.*', 'RatingRow.rating')));
+			
+			if(isset($cit['Stage']) && count($cit['Stage'])>0){
+				
+				//$first_stage=$cit['Stage'][0];
+				
+				
+				
+				if($cit['Stage'][0]['type']==constant('STAGE_POOL')){
+					
+					$new_pools=$this->generatePoolAgenda($player_list,
+							$cit['Stage'][0],
+							constant('POOL_OPTION_ONE'),
+							$cit['ClassInTournament']['pool_num'],
+							$minimize_same_club,
+							$minimize_same_player,
+							0,0);
+					$cit['Stage'][0]['Pool']=$new_pools;
+					array_push($group_of_cit, $cit);
+					
+					
+				}else{
+					throw new Exception('The stage in not pool type!');
+				}
+			}else{
+				throw new Exception('There is no stage in this class of tournament!'); 
+			}
+			
+			
+			
+			
+		}
+		
+		if(count($group_of_cit)>0){
+			return $group_of_cit;
+		}else{
+			null;
+		}
+	
+	}
+	
+	
+	
 	public function savePoolAgenda($playerList,
 				   						$t_stage,
 				   						$pool_opt_select,
@@ -93,7 +189,7 @@ class Pool extends AppModel {
   		$a_rating=intval($a_player['RatingRow']['rating']);
   		$b_rating=intval($b_player['RatingRow']['rating']);
   		if ( $a_rating == $b_rating) return 0;
-  		return ($a_rating > $b_rating) ? 1 : -1;
+  		return ($a_rating > $b_rating) ? -1 : 1;
   	}
 	
 	public function generatePoolAgenda($playerList,
@@ -170,9 +266,6 @@ class Pool extends AppModel {
 				$this->minimize_game_same_club($pools);
 			}
 			
-			if($minimize_same_player==1){
-				//....
-			}
 			
 			
 			
@@ -208,7 +301,7 @@ class Pool extends AppModel {
 		return null;
 	}
 	
-	protected function minimize_game_same_player($pools){
+	protected function minimize_game_same_player($list_of_class_in_tournament){
 	
 	
 	
@@ -225,7 +318,7 @@ class Pool extends AppModel {
 		$t_p=array();
 		$t_p['name']=chr(ord('A')+$i);
 		$t_p['type']='P';
-		$t_p['stage_id']=$t_stage['Stage']['id'];
+		$t_p['stage_id']=$t_stage['id'];
 		$t_p['pool_players']=array();
 		
 		return $t_p;

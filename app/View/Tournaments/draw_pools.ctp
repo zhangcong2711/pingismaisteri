@@ -47,7 +47,7 @@ echo $this->Form->create('PoolForm');
 				$cname = $class['TournamentClass']['name'];
 				$pool_num = $class['pool_num'];
 				$stage_type = $class['stage_type'];
-				$registeredNum=999;
+				$registeredNum=count($class['Registration']);
 				
 				$is_drawed=false;
 				$is_result_input=true;

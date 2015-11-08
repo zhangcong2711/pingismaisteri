@@ -53,7 +53,15 @@ class Player extends AppModel {
 					'className' => 'PlayerInPool',
 					'foreignKey' => 'player_id',
 					'dependent' => true 
-			) 
+			),
+			'Game' => array(
+		        'className'   => 'Game',
+		        'foreignKey'  => false,
+		        'finderQuery' => 'SELECT *
+		                            FROM `pingis2_games` as `Game`
+		                           WHERE `Game`.`a_player_id` = {$__cakeID__$}
+		                              OR `Game`.`b_player_id` = {$__cakeID__$}'
+		    )
 	);
    
 	public $hasAndBelongsToMany = array(

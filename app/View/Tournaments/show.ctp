@@ -103,7 +103,7 @@
                      'label' => __("value_po"), 
                      'controller' => 'tournaments', 
                      'action' => 'drawPools', 
-                     'params' => array($tournament['Tournament']['id'],10), 
+                     'params' => array($tournament['Tournament']['id']), 
                      'class' => 'btn btn-primary'
                   )
                );

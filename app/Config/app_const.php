@@ -1,7 +1,7 @@
 <?php
 
-// const POOL_OPTION_ONE = '1';
-// const POOL_OPTION_TWO = '2';
+const POOL_OPTION_ONE = '1';
+const POOL_OPTION_TWO = '2';
 
 const STAGE_POOL = 'P';
 const STAGE_CUP = 'C';
