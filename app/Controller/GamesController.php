@@ -4,7 +4,8 @@ class GamesController extends AppController {
 
    public $helpers = array('Html', 'Form');
    
-   public $uses = array( 'Tournament', 'TournamentClass', 'Registration', 'TournamentClasses', 'ClassInTournament', 'Rating', 'RatingRow', 'Player', 'Pool', 'PlayerInPool', 'Stage' ,'Game', 'Set');
+   public $uses = array( 'Tournament', 'TournamentClass', 'Registration', 'TournamentClasses', 
+   						'ClassInTournament', 'Rating', 'RatingRow', 'Player', 'Pool', 'PlayerInPool', 'Stage' ,'Game', 'Set', 'A_Player', 'B_Player');
    
 
    
@@ -107,22 +108,52 @@ class GamesController extends AppController {
 	}
 	
 	public function result($pool_id) {
+		if (!$pool_id) {
+			throw new NotFoundException(__('Invalid post'));
+		}
+		$pools = $this->Pool->find('first',array(
+				'conditions' => array('Pool.id' => $pool_id
+				),
+				'contain' => array(
+							'Game' => array(
+									'Set',
+									'A_Player',
+									'B_Player'
+							)
+						)				
+					)
+		);
+		if (!$pools) {
+			throw new NotFoundException(__('Invalid post'));
+		}
 		
-		//.....................
+		$this->set('pools', $pools);
+		//$this->set('game_id', $pools['Game']['id']);
 	}
 	
 	
 	
 	
-   public function add() {
-   		
+   public function add($game_id) {
+   	if ($this->request->is('post')) {
+   		$this->Set->create();
+   		if ($this->Set->save($this->request->data)) {
+   			//$this->Flash->success(__('Your result has been added.'));
+   			$poolid = $this->Game->find('first', array('condition' => array('Game.id' => $game_id)));
+   			return $this->redirect('/result/'.$poolid['pool_id']);
+   		}
+   		//$this->Flash->error(__('Unable to add your post.'));
+   	}
       	
-      	
+     $this->set('gameId', $game_id); 	
    }
    
-   public function delete()
+   public function deleteR($id)
    {
-      
+   	$this->Set->delete($id);
+   	
+   	return $this->redirect($this->referer());
+   	
       
    }
    
