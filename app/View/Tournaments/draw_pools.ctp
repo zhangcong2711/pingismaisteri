@@ -63,6 +63,18 @@ echo $this->Form->create('PoolForm');
 						if(!isset($p['Game']) || count($p['Game'])<=0){
 							$is_result_input=false;
 							break;
+						}else{
+							$has_set=true;
+							foreach ($p['Game'] as &$t_g){
+								if (!isset($t_g['Set']) || count($t_g['Set'])<=0){
+									$has_set=false;
+									break;
+								}
+							}
+							if(!$has_set){
+								$is_result_input=false;
+								break;
+							}
 						}
 					}
 				}
@@ -119,7 +131,14 @@ echo $this->Form->create('PoolForm');
 						?>
 					</td>
 					<td>
-						
+						<?php 
+						if($is_drawed){
+							
+							echo $this->Html->image("download_32px.png", array(
+									'url' => array('controller' => 'tournaments', 'action' => 'downloadPoolInfo', $class['id'])
+							));
+						}
+						?>
 					</td>
 				</tr>
 

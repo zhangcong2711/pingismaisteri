@@ -102,6 +102,8 @@ class Pool extends AppModel {
 							$minimize_same_club,
 							$minimize_same_player,
 							0,0);
+				
+					
 					$cit['Stage'][0]['Pool']=$new_pools;
 					array_push($group_of_cit, $cit);
 					
@@ -119,52 +121,65 @@ class Pool extends AppModel {
 		}
 		
 		if(count($group_of_cit)>0){
+			
+			if($minimize_same_player==1){
+				$group_of_cit=$this->minimize_game_same_player($group_of_cit);
+			}
+			
+			foreach ($group_of_cit as &$t_cit){
+				$this->savePoolAgenda($t_cit);
+			}
+			
 			return $group_of_cit;
 		}else{
-			null;
+			return null;
 		}
 	
 	}
 	
 	
 	
-	public function savePoolAgenda($playerList,
-				   						$t_stage,
-				   						$pool_opt_select,
-										$pool_num,
-										$minimize_same_club,
-										$minimize_same_player,
-										$fp_size,
-										$np_size){
+	public function savePoolAgenda($cit){
+		
+		
 			//transaction start
 			$dataSource = $this->getDataSource();
 			$dataSource->begin();
 			
 			
+			
+			$t_stage=$cit['Stage'][0];
+			//get the drawed pools and their players
+			$new_pools=$t_stage['Pool'];
+			
 			try {
 				//delete all pools associated with the stage
-				$this->deleteAll(array('Stage.id' => $t_stage['Stage']['id']), true);
+				$this->deleteAll(array('Stage.id' => $t_stage['id']), true);
 				
-				//get the drawed pools and their players
-				$new_pools=$this->generatePoolAgenda($playerList,
-						$t_stage,
-						$pool_opt_select,
-						$pool_num,
-						$minimize_same_club,
-						$minimize_same_player,
-						$fp_size,
-						$np_size);
-					
+				
 					
 				//persistent pools and association with player
 				if(isset($new_pools)){
 					foreach ($new_pools as &$t_pool) {
-						$t_pool_id=$this->savePool($t_pool, $t_stage['Stage']['id']);
+						
+						//save pool and player association
+						$t_pool_id=$this->savePool($t_pool, $t_stage['id']);
 						$pool_players=$t_pool['pool_players'];
 						foreach ($pool_players as &$t_player) {
 							$this->savePoolPlayer($t_player, $t_pool_id);
 						}
-				
+						
+						/*
+						//generate games
+						$player_matches=AppUtil::array_combination($pool_players, 2);
+						
+						$game_seq=1;
+						foreach ($player_matches as &$player_pair) {
+							$this->saveGame($player_pair[0], $player_pair[1],$game_seq, $t_pool_id);
+							$game_seq++;
+						}
+						*/
+						
 					}
 					unset($t_player);
 					unset($t_pool);
@@ -340,5 +355,14 @@ class Pool extends AppModel {
 		$t_pool_player_id=$this->PlayerInPool->id;
 		$this->PlayerInPool->clear();
 		return $t_pool_player_id;
+	}
+	
+	protected function saveGame($a_player, $b_player,$game_seq, $pool_id){
+		$this->Game->create();
+		$data = array('a_player_id' => $a_player['Player']['id'], 'b_player_id' => $b_player['Player']['id'], 'seq_no' => $game_seq, 'pool_id' => $pool_id);
+		$this->Game->save($data);
+		$t_game_id=$this->Game->id;
+		$this->Game->clear();
+		return $t_game_id;
 	}
 }

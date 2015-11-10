@@ -539,12 +539,7 @@ class TournamentsController extends AppController {
 	   									'Stage' => array(
 	   										'Pool' => array(
 	   											'Game' => array(
-	   												'A_Player' => array(
-	   													'Game'
-	   												),
-	   												'B_Player' => array(
-	   													'Game'
-	   												)
+	   												'Set'
 	   											)
 	   										)
 	   									),
@@ -596,6 +591,7 @@ class TournamentsController extends AppController {
 			$groups_of_pools=$this->Pool->drawPools($class_id_arr,$minimize_same_club,$minimize_same_player);
 			
 			
+			
 			/*
 			$t_stage=$this->Stage->find('first',
 						array(
@@ -637,6 +633,26 @@ class TournamentsController extends AppController {
 		
    }
    
+   public function downloadPoolInfo($class_in_tournament_id){
+   	
+   		$cit = $this->ClassInTournament->find("first",
+   				array(
+   						'conditions' => array(
+   								'ClassInTournament.id' => $class_in_tournament_id
+   						),
+   						'contain' => array(
+   								'Stage'
+   						)
+   						
+   				)
+   		);
+   		
+   		return $this->exportAgendaExcel($cit['ClassInTournament']['tournament_id'],
+   										$cit['Stage'][0],
+   										$class_in_tournament_id);
+   	
+   }
+   
    protected function exportAgendaExcel($tournament_id, $t_stage, $class_in_tournament_id){
    		
    	
@@ -670,7 +686,7 @@ class TournamentsController extends AppController {
    		$pool_list=$this->Pool->find('all',
 		   				
 		   				array(
-		   					'conditions' => array('Stage.id' => $t_stage['Stage']['id']),
+		   					'conditions' => array('Stage.id' => $t_stage['id']),
 		   					'order' => array('Pool.name'),
 		   					'field' => array('Pool.*', 'PlayerInPool.*')
 		   				)
@@ -687,7 +703,7 @@ class TournamentsController extends AppController {
    		}
    		
    	
-   		if($t_stage['Stage']['type']==constant('STAGE_TYPE_POOL')){
+   		if($t_stage['type']==constant('STAGE_POOL')){
    			
    			$objPHPExcel = new PHPExcel();
    			
@@ -714,14 +730,14 @@ class TournamentsController extends AppController {
    			header('Content-Type:application/download');
    			header('Content-Type:application/force-download');
    			header('Content-Type: application/vnd.ms-excel');
-   			header('Content-Disposition: attachment;filename="Agenda_'.$t_stage['Stage']['id'].'_'.$t_stage['Stage']['type'].'_'.date("h-i-sa").'.xls"');
+   			header('Content-Disposition: attachment;filename="Agenda_'.$t_stage['id'].'_'.$t_stage['type'].'_'.date("h-i-sa").'.xls"');
    			header('Cache-Control: max-age=0');
    			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
    			$objWriter->save('php://output');
    			exit;
    			
    			
-   		}elseif($t_stage['Stage']['type']==constant('STAGE_TYPE_CUP')){
+   		}elseif($t_stage['type']==constant('STAGE_CUP')){
 				
 				
 				
@@ -929,8 +945,8 @@ EOF;
    public function newStageTypeRow($i)
    {
    	$types=array(
-   			constant("STAGE_TYPE_POOL")=>'POOL_STAGE',
-   			constant("STAGE_TYPE_CUP")=>'CUP_STAGE'
+   			constant("STAGE_POOL")=>'POOL_STAGE',
+   			constant("STAGE__CUP")=>'CUP_STAGE'
    	);
    
    	$this->set("types", $types);
