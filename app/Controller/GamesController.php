@@ -141,7 +141,15 @@ class GamesController extends AppController {
    			//$this->Flash->success(__('Your result has been added.'));
    			//$poolid = $this->Game->find('first', array('condition' => array('Game.id' => $game_id)));
    			//return $this->redirect('/result/'.$poolid['pool_id']);
-   			return $this->redirect('/result/437');
+   			
+   			$game=$this->Game->find('first',
+   					array(
+   							'conditions' => array('Game.id' => $game_id),
+   							'contain' => array( 'Pool' )
+   					)
+   						
+   			);
+   			return $this->redirect('/games/result/'.$game['Pool']['id']);
    		}
    		//$this->Flash->error(__('Unable to add your post.'));
    	}

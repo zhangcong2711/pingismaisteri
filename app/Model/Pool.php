@@ -244,6 +244,7 @@ class Pool extends AppModel {
 					}
 				}elseif($j==$pool_order_num-1){
 					
+					/*
 					if($minimize_same_club==1)
 					{
 						
@@ -276,9 +277,20 @@ class Pool extends AppModel {
 								break;
 							}
 						}
+					}*/
+					
+					//for the last order, fill the pool from the last one
+					//in order to reduce the number of games of the top one player
+					for($pool_index=$pool_num-1; $pool_index>=0; $pool_index--){
+					
+						$t_player=array_shift($playerList);
+						if(isset($t_player)){
+							$t_player['PoolOrder']=$j+1;
+							array_push($pools[$pool_index]['pool_players'], $t_player);
+						}else{
+							break;
+						}
 					}
-					
-					
 					
 					
 					
@@ -316,15 +328,6 @@ class Pool extends AppModel {
 					}
 				}
 			}
-			
-			
-			if($minimize_same_club==1){
-				//minimize the number of games between players in same clubs.
-				$this->minimize_game_same_club($pools);
-			}
-			
-			
-			
 			
 			return $pools;
 			

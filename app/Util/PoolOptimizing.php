@@ -64,7 +64,7 @@ class PoolOptimizing {
 			$tpp_pcount=count($ttp['pool_players']);
 			if($tpp_pcount==$min_pcount){
 				$tpp_NP_SC=$this->get_NP_SC($ttp, $player['Club']['id']);
-				if($tpp_NP_SC<$min_NP_SC){
+				if($tpp_NP_SC<=$min_NP_SC){
 					$min_NP_SC=$tpp_NP_SC;
 					$pool_index=array_search($ttp,$pools);
 				}

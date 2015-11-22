@@ -590,7 +590,7 @@ class TournamentsController extends AppController {
 			$class_id_arr=AppUtil::extractNewArray($selected_class,['id']);
 			$groups_of_pools=$this->Pool->drawPools($class_id_arr,$minimize_same_club,$minimize_same_player);
 			
-			
+			return $this->redirect('/tournaments/drawPools/'.$tournament_id);
 			
 			/*
 			$t_stage=$this->Stage->find('first',
