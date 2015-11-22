@@ -1,7 +1,8 @@
 <?php
+
 App::uses('AppModel', 'Model');
 
-
+App::import('Util', 'PoolOptimizing');
 
 class Pool extends AppModel {
 	
@@ -75,7 +76,7 @@ class Pool extends AppModel {
 							array(
 									'table' => 'rating_rows',
 									'alias' => 'RatingRow',
-									'type' => 'INNER',
+									'type' => 'LEFT',
 									'conditions' => array(
 											'Player.id = RatingRow.player_id',
 											'RatingRow.rating_id=1'
@@ -85,7 +86,7 @@ class Pool extends AppModel {
 					'conditions' => array(
 							'CIT.id = ' => $class_id
 					),
-					'fields' => array('Player.*', 'CIT.*', 'Registration.*', 'RatingRow.rating')));
+					'fields' => array('Player.*', 'Club.*', 'CIT.*', 'Registration.*', 'RatingRow.rating')));
 			
 			if(isset($cit['Stage']) && count($cit['Stage'])>0){
 				
@@ -169,7 +170,7 @@ class Pool extends AppModel {
 							$this->savePoolPlayer($t_player, $t_pool_id);
 						}
 						
-						/*
+						
 						//generate games
 						$player_matches=AppUtil::array_combination($pool_players, 2);
 						
@@ -178,7 +179,7 @@ class Pool extends AppModel {
 							$this->saveGame($player_pair[0], $player_pair[1],$game_seq, $t_pool_id);
 							$game_seq++;
 						}
-						*/
+						
 						
 					}
 					unset($t_player);
@@ -201,8 +202,8 @@ class Pool extends AppModel {
 	
 	private function rating_sort($a_player, $b_player)
   	{
-  		$a_rating=intval($a_player['RatingRow']['rating']);
-  		$b_rating=intval($b_player['RatingRow']['rating']);
+  		$a_rating=isset($a_player['RatingRow']['rating']) ? intval($a_player['RatingRow']['rating']) : 0;
+  		$b_rating=isset($b_player['RatingRow']['rating']) ? intval($b_player['RatingRow']['rating']) : 0;
   		if ( $a_rating == $b_rating) return 0;
   		return ($a_rating > $b_rating) ? -1 : 1;
   	}
@@ -243,35 +244,76 @@ class Pool extends AppModel {
 					}
 				}elseif($j==$pool_order_num-1){
 					
-					//for the last order, fill the pool from the last one 
-					//in order to reduce the number of games of the top one player
-					for($pool_index=$pool_num-1; $pool_index>=0; $pool_index--){
+					if($minimize_same_club==1)
+					{
 						
-						$t_player=array_shift($playerList);
-						if(isset($t_player)){
+						//最后一列若>1个， 也照样优化, （仅限于最后几组）
+						$pl_rest_count=count($playerList);
+						$sliced_pools=array_slice($pools, -$pl_rest_count);
+						$sliced_pool_num=count($sliced_pools);
+						
+						$pool_op=new PoolOptimizing;
+						
+						for($sp_idx=0; $sp_idx<$sliced_pool_num;$sp_idx++){
+							
+							$t_player=array_shift($playerList);
 							$t_player['PoolOrder']=$j+1;
-							array_push($pools[$pool_index]['pool_players'], $t_player);
-						}else{
-							break;
+							$selected_pool_index=$pool_op->shiftPool_M_NP_SC($sliced_pools, $t_player);
+							array_push($pools[$pool_num-$pl_rest_count+$selected_pool_index]['pool_players'], $t_player);
+						}
+						
+					}else 
+					{
+						//for the last order, fill the pool from the last one
+						//in order to reduce the number of games of the top one player
+						for($pool_index=$pool_num-1; $pool_index>=0; $pool_index--){
+						
+							$t_player=array_shift($playerList);
+							if(isset($t_player)){
+								$t_player['PoolOrder']=$j+1;
+								array_push($pools[$pool_index]['pool_players'], $t_player);
+							}else{
+								break;
+							}
 						}
 					}
 					
 					
+					
+					
+					
 				}else{
 					
-					//generate random order for player to be inserted into every pool
-					$random_list=AppUtil::unique_rand(1,$pool_num,$pool_num);
-
-					//for the middle, insert players by random way
-					for($pool_index=0; $pool_index<$pool_num;$pool_index++){
+					if($minimize_same_club==1)
+					{
+						//如果优化same_club, 停止随机过程
+						//提供两个方法， 1： 检测某pool的某个俱乐部队员数V_SC   
+						//				2：从几个pool中返回最小的一组（pop形式）
+						//分配进返回的组
 						
-						$t_player=array_shift($playerList);
-						$t_player['PoolOrder']=$j+1;
-						$random_order=$random_list[$pool_index];
-						array_push($pools[$random_order-1]['pool_players'], $t_player);
+						$pool_op=new PoolOptimizing;
+						
+						for($idx=0; $idx<$pool_num;$idx++){
+							
+							$t_player=array_shift($playerList);
+							$t_player['PoolOrder']=$j+1;
+							$selected_pool_index=$pool_op->shiftPool_M_NP_SC($pools, $t_player);
+							array_push($pools[$selected_pool_index]['pool_players'], $t_player);
+						}
+					}else
+					{
+						//generate random order for player to be inserted into every pool
+						$random_list=AppUtil::unique_rand(1,$pool_num,$pool_num);
+	
+						//for the middle, insert players by random way
+						for($pool_index=0; $pool_index<$pool_num;$pool_index++){
+							
+							$t_player=array_shift($playerList);
+							$t_player['PoolOrder']=$j+1;
+							$random_order=$random_list[$pool_index];
+							array_push($pools[$random_order-1]['pool_players'], $t_player);
+						}
 					}
-					
-					
 				}
 			}
 			

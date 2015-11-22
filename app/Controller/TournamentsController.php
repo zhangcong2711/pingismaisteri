@@ -813,7 +813,7 @@ SELECT
     (DATE_FORMAT(NOW(), '%Y') - DATE_FORMAT(birthday, '%Y') - (DATE_FORMAT(NOW(), '00-%m-%d') < DATE_FORMAT(birthday, '00-%m-%d'))) AS `Player__age`
 FROM
     `pingismaisteri`.`pingis2_players` AS `Player`
-        INNER JOIN
+        LEFT JOIN
     `pingismaisteri`.`pingis2_rating_rows` AS `RatingRow` ON (`Player`.`id` = `RatingRow`.`player_id`
         AND `RatingRow`.`rating_id` = 1)
         LEFT JOIN
