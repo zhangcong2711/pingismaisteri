@@ -26,6 +26,7 @@ echo $this->Form->create('PoolForm');
 				<th><?php echo __('is_result_input') ?></th>
 				<th><?php echo __('is_drawed') ?></th>
 				<th><?php echo __('downloadDraw') ?></th>
+				<th><?php echo __('downloadCup') ?></th>
 			</tr>
 			</thead>
 			<tbody>
@@ -136,6 +137,16 @@ echo $this->Form->create('PoolForm');
 							
 							echo $this->Html->image("download_32px.png", array(
 									'url' => array('controller' => 'tournaments', 'action' => 'downloadPoolInfo', $class['id'])
+							));
+						}
+						?>
+					</td>
+					<td>
+						<?php 
+						if($is_drawed){
+							
+							echo $this->Html->image("download_32px.png", array(
+									'url' => array('controller' => 'tournaments', 'action' => 'downloadCupInfo', $class['id'])
 							));
 						}
 						?>

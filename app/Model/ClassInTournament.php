@@ -39,6 +39,31 @@ class ClassInTournament extends AppModel {
    
    public function getCupAgenda($class_in_tournament){
    	
+	   	$cit = $this->find("first",
+	   			array(
+	   					'conditions' => array(
+	   							'ClassInTournament.id' => $class_in_tournament
+	   					),
+	   					'contain' => array(
+	   							'Stage' => array(
+	   									'Pool'=>array(
+	   											'Game'=>array(
+	   												'Set'
+	   											)
+	   									)
+	   							)
+	   					)
+	   			)
+	   	);
+   	
+	   	/*
+   		$pool_model=$this->Stage->Pool;
+   		$game_model=$this->Stage->Pool->Game;
+   		$set_model=$this->Stage->Pool->Game->Set;
+   		*/
+	   	
+	   	return null;
+   		
    }
 
 }

@@ -964,5 +964,13 @@ EOF;
       $Email->send('My message');
             
    }
+   
+   
+   public function downloadCupInfo($class_in_tournament_id){
+   		$cupInfo=$this->ClassInTournament->getCupAgenda($class_in_tournament_id);
+   		
+   		//.....输出excel
+   
+   }
 }
 ?>
