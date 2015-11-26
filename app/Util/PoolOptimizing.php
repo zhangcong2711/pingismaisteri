@@ -1,6 +1,42 @@
 <?php
 
 class PoolOptimizing {
+	
+	
+	var $v_sp_map=[];
+	
+	
+	public function write_V_SP(&$pool,&$player)
+	{
+			
+	}
+	
+	
+	public function get_V_SP_Map()
+	{
+		
+	}
+	
+	
+	public function get_V_SP(&$player_a, &$player_b)
+	{
+		
+	}
+	
+	//V_SP值比较函数
+	//检测对阵map，计算累计比赛数量，计算每次分配进组产生的比赛累计值的均值和累计值的最大值
+	//max_gcount 小的优先， 然后avg_gcount小的优先
+	//{pool_index, max_gcount, avg_gcount}
+	public function shiftPool_M_V_SP($idx_pool_pairs,&$player)
+	{
+		$pool_index=-1;
+		
+		
+		
+		return $pool_index;
+	}
+	
+	
 
 	/**
 	 * 
@@ -21,25 +57,21 @@ class PoolOptimizing {
 		return $count;
 	}
 	
-// 	/**
-// 	 * 
-// 	 * @param Array $pools
-// 	 * @param int $club_id
-// 	 */
-// 	public function getPool_M_NP_SC(&$pools,$club_id)
-// 	{
-// 		$min_np_p=null;
-// 		$min_np_sc_count=99999;
-// 		foreach($pools as &$t_p){
-// 			$t_p_np_sc=$this->get_NP_SC($t_p, $club_id);
-// 			if($t_p_np_sc<$min_np_sc_count){
-// 				$min_np_p=&$t_p;
-// 				$min_np_sc_count=$t_p_np_sc;
-// 			}
-// 		}
-		
-// 		return $min_np_p;
-// 	}
+	
+	/**
+	 *
+	 * @param Array $pools
+	 * @param Array $player
+	 */
+	public function shiftPoolIdxArr_M_NP_SC(&$pools,&$player)
+	{
+	
+		$pool_index_arr=[];
+	
+	
+		return $pool_index_arr;
+	}
+	
 	
 	/**
 	 * 
@@ -73,6 +105,9 @@ class PoolOptimizing {
 		
 		return $pool_index;
 	}
+	
+	
+	
 	
 	
 }

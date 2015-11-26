@@ -34,6 +34,17 @@ class Pool extends AppModel {
 	);
 	
 	
+	
+	var $pool_op;
+	
+	function __construct() {
+		
+		parent:: __construct();
+		$pool_op=new PoolOptimizing;
+		
+	}
+	
+	
 	public function drawPools($list_of_class_id,$minimize_same_club,$minimize_same_player){
 		
 		
@@ -244,40 +255,7 @@ class Pool extends AppModel {
 					}
 				}elseif($j==$pool_order_num-1){
 					
-					/*
-					if($minimize_same_club==1)
-					{
-						
-						//最后一列若>1个， 也照样优化, （仅限于最后几组）
-						$pl_rest_count=count($playerList);
-						$sliced_pools=array_slice($pools, -$pl_rest_count);
-						$sliced_pool_num=count($sliced_pools);
-						
-						$pool_op=new PoolOptimizing;
-						
-						for($sp_idx=0; $sp_idx<$sliced_pool_num;$sp_idx++){
-							
-							$t_player=array_shift($playerList);
-							$t_player['PoolOrder']=$j+1;
-							$selected_pool_index=$pool_op->shiftPool_M_NP_SC($sliced_pools, $t_player);
-							array_push($pools[$pool_num-$pl_rest_count+$selected_pool_index]['pool_players'], $t_player);
-						}
-						
-					}else 
-					{
-						//for the last order, fill the pool from the last one
-						//in order to reduce the number of games of the top one player
-						for($pool_index=$pool_num-1; $pool_index>=0; $pool_index--){
-						
-							$t_player=array_shift($playerList);
-							if(isset($t_player)){
-								$t_player['PoolOrder']=$j+1;
-								array_push($pools[$pool_index]['pool_players'], $t_player);
-							}else{
-								break;
-							}
-						}
-					}*/
+					
 					
 					//for the last order, fill the pool from the last one
 					//in order to reduce the number of games of the top one player
@@ -296,14 +274,74 @@ class Pool extends AppModel {
 					
 				}else{
 					
-					if($minimize_same_club==1)
+					//分开考虑
+					if($minimize_same_club==1 && $minimize_same_player==1)
+					{
+						//先做minimize_same_club优化，记录最小的V_SC值的数组
+						//若只有一个，无法优化
+						//若有多个，比较V_SP值，取最小的最后一个
+						//分配进组
+						
+						for($idx=0; $idx<$pool_num;$idx++){
+							
+							$selected_pool_index=-1;
+							$t_player=array_shift($playerList);
+							$t_player['PoolOrder']=$j+1;
+							
+							$pool_index_arr=$pool_op->shiftPoolIdxArr_M_NP_SC($pools, $t_player);
+							if(count($pool_index_arr)==1)
+							{
+								$selected_pool_index=$pool_index_arr[0];
+							}else
+							{
+								$idx_pool_pairs=[];
+								for($k=0;$k<count($pool_index_arr);$k++)
+								{
+									array_push($idx_pool_pairs, ['index'=>$k, 'pool'=> $pools[$pool_index_arr[k]]]);
+								}
+								$selected_pool_index=$pool_op->shiftPool_M_V_SP($idx_pool_pairs, $t_player);
+								//update V_SP after choose a pool
+								$pool_op->write_V_SP($pools[$selected_pool_index], $t_player);
+							}
+							array_push($pools[$selected_pool_index]['pool_players'], $t_player);
+						}
+						
+					}
+					elseif($minimize_same_club==0 && $minimize_same_player==1)
+					{
+						//停止随机过程
+						//计算V_SP 值，取最小的最后一个
+						//分配进组
+						
+						
+						for($idx=0; $idx<$pool_num;$idx++){
+								
+							$t_player=array_shift($playerList);
+							$t_player['PoolOrder']=$j+1;
+							$idx_pool_pairs=[];
+							for($k=0;$k<count($pools);$k++)
+							{
+								array_push($idx_pool_pairs, ['index'=>$k, 'pool'=> $pools[$k]]);
+							}
+							$selected_pool_index=$pool_op->shiftPool_M_V_SP($idx_pool_pairs, $t_player);
+							//update V_SP after choose a pool 
+							$pool_op->write_V_SP($pools[$selected_pool_index], $t_player);
+							array_push($pools[$selected_pool_index]['pool_players'], $t_player);
+							
+							
+						}
+						
+						
+						
+					}
+					elseif($minimize_same_club==1 && $minimize_same_player==0)
 					{
 						//如果优化same_club, 停止随机过程
 						//提供两个方法， 1： 检测某pool的某个俱乐部队员数V_SC   
 						//				2：从几个pool中返回最小的一组（pop形式）
 						//分配进返回的组
 						
-						$pool_op=new PoolOptimizing;
+						
 						
 						for($idx=0; $idx<$pool_num;$idx++){
 							
@@ -312,6 +350,7 @@ class Pool extends AppModel {
 							$selected_pool_index=$pool_op->shiftPool_M_NP_SC($pools, $t_player);
 							array_push($pools[$selected_pool_index]['pool_players'], $t_player);
 						}
+						
 					}else
 					{
 						//generate random order for player to be inserted into every pool

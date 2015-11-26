@@ -35,5 +35,10 @@ class ClassInTournament extends AppModel {
    		  'dependent' => true
    	  )
    );
+   
+   
+   public function getCupAgenda($class_in_tournament){
+   	
+   }
 
 }
