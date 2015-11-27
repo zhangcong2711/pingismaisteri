@@ -34,19 +34,12 @@ class Pool extends AppModel {
 	);
 	
 	
-	
-	var $pool_op;
-	
-	function __construct() {
-		
-		parent:: __construct();
-		$pool_op=new PoolOptimizing;
-		
-	}
+
 	
 	
 	public function drawPools($list_of_class_id,$minimize_same_club,$minimize_same_player){
 		
+		$GLOBALS['v_sp_map']= [];
 		
 		$group_of_cit=array();
 		
@@ -58,6 +51,7 @@ class Pool extends AppModel {
 									'ClassInTournament.id' => $class_id
 							),
 							'contain' => array(
+									'TournamentClass',
 									'Stage',
 									'Registration' => array(
 										'Player'
@@ -107,10 +101,20 @@ class Pool extends AppModel {
 				
 				if($cit['Stage'][0]['type']==constant('STAGE_POOL')){
 					
+					$pool_num=intval($cit['ClassInTournament']['pool_num']);
+					
+					if(!isset($player_list) || count($player_list)==0){
+						continue;
+					}
+					
+					if(count($player_list)<($pool_num*2)){
+						continue;
+					}
+					
 					$new_pools=$this->generatePoolAgenda($player_list,
 							$cit['Stage'][0],
 							constant('POOL_OPTION_ONE'),
-							$cit['ClassInTournament']['pool_num'],
+							$pool_num,
 							$minimize_same_club,
 							$minimize_same_player,
 							0,0);
@@ -121,10 +125,10 @@ class Pool extends AppModel {
 					
 					
 				}else{
-					throw new Exception('The stage in not pool type!');
+					throw new Exception('The stage of '.$cit['TournamentClass']['name'].' is not pool type!');
 				}
 			}else{
-				throw new Exception('There is no stage in this class of tournament!'); 
+				throw new Exception('There is no stage in '.$cit['TournamentClass']['name'].'!'); 
 			}
 			
 			
@@ -134,9 +138,6 @@ class Pool extends AppModel {
 		
 		if(count($group_of_cit)>0){
 			
-			if($minimize_same_player==1){
-				$group_of_cit=$this->minimize_game_same_player($group_of_cit);
-			}
 			
 			foreach ($group_of_cit as &$t_cit){
 				$this->savePoolAgenda($t_cit);
@@ -228,6 +229,11 @@ class Pool extends AppModel {
 			$fp_size,
 			$np_size){
 		 
+		
+		
+		
+		$pool_op=new PoolOptimizing();
+		
 		//resort the player array by rating from big to small
 		usort($playerList,array($this, "rating_sort"));
 		
@@ -297,7 +303,7 @@ class Pool extends AppModel {
 								$idx_pool_pairs=[];
 								for($k=0;$k<count($pool_index_arr);$k++)
 								{
-									array_push($idx_pool_pairs, ['index'=>$k, 'pool'=> $pools[$pool_index_arr[k]]]);
+									array_push($idx_pool_pairs, ['index'=>$pool_index_arr[$k], 'pool'=> $pools[$pool_index_arr[$k]]]);
 								}
 								$selected_pool_index=$pool_op->shiftPool_M_V_SP($idx_pool_pairs, $t_player);
 								//update V_SP after choose a pool
@@ -383,6 +389,7 @@ class Pool extends AppModel {
 		 
 	}
 	 
+	/*
 	public function generateCupAgenda($id){
 		 
 	
@@ -406,7 +413,7 @@ class Pool extends AppModel {
 	
 	
 		return null;
-	}
+	}*/
 	
 	protected function createNewPool($i,$t_stage){
 		
