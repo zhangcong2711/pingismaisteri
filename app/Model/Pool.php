@@ -60,6 +60,12 @@ class Pool extends AppModel {
 					)
 			);
 			
+			$query_sql="select * from pingismaisteri.pingis2_ratings as Rating order by date desc limit 1";
+			$db = ConnectionManager::getDataSource('default');
+			$latest_rating=$db->fetchAll(
+					$query_sql
+			);
+			
 			$player_list = $this->Stage->ClassInTournament->Registration->Player->find("all",array(
 					'joins' => array(
 							array(
@@ -84,7 +90,7 @@ class Pool extends AppModel {
 									'type' => 'LEFT',
 									'conditions' => array(
 											'Player.id = RatingRow.player_id',
-											'RatingRow.rating_id=1'
+											'RatingRow.rating_id='.$latest_rating[0]['Rating']['id']
 									)
 							)
 					),

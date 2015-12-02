@@ -369,3 +369,12 @@ msgstr "Pool num"
 
 msgid "game_result"
 msgstr "Game result"
+
+msgid "draw_set"
+msgstr "set"
+
+msgid "draw_excel_match"
+msgstr "Match"
+
+msgid "draw_excel_judge"
+msgstr "Judge"
