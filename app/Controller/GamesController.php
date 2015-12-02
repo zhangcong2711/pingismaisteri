@@ -135,6 +135,18 @@ class GamesController extends AppController {
 	
 	
    public function add($game_id) {
+   	
+   	$the_game=$this->Game->find('first',
+   			array(
+   					'conditions' => array('Game.id' => $game_id),
+   					'contain' => array( 'Pool',
+   							'A_Player',
+   							'B_Player'
+   					)
+   			)
+   				
+   	);
+   	$this->set('the_game', $the_game);
    	if ($this->request->is('post')) {
    		$this->Set->create();
    		if ($this->Set->save($this->request->data)) {
@@ -142,19 +154,13 @@ class GamesController extends AppController {
    			//$poolid = $this->Game->find('first', array('condition' => array('Game.id' => $game_id)));
    			//return $this->redirect('/result/'.$poolid['pool_id']);
    			
-   			$game=$this->Game->find('first',
-   					array(
-   							'conditions' => array('Game.id' => $game_id),
-   							'contain' => array( 'Pool' )
-   					)
-   						
-   			);
+   			
    			return $this->redirect('/games/result/'.$game['Pool']['id']);
-   		}
+   		}   		
    		//$this->Flash->error(__('Unable to add your post.'));
    	}
-      	
-     $this->set('gameId', $game_id); 	
+   	 //$this->set('gAme', $game);
+     $this->set('gameId', $game_id);     
    }
    
    public function deleteR($id)

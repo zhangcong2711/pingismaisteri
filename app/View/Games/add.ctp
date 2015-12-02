@@ -10,7 +10,7 @@
 
 
          echo $this->Form->input('a_point', array(
-             'label' => 'PlayerA Score',
+             'label' => $the_game['A_Player']['firstname'].' '.$the_game['A_Player']['lastname'].'Score',
              "class" => "form-control"
          ));
          echo $this->Form->input('b_point', array(

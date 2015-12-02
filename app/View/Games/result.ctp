@@ -10,7 +10,7 @@
 	              <strong>
 	              <?php 
 	             
-	              	 echo 'Game '.$game['id'].'&nbsp&nbsp&nbsp';
+	              	 echo 'Set '.'&nbsp&nbsp&nbsp';
 	              	 
 	              	 	$playerA_name = $game['A_Player']['firstname'].' '.$game['A_Player']['lastname'];
 	              	 	$playerB_name = $game['B_Player']['firstname'].' '.$game['B_Player']['lastname'];
