@@ -1,5 +1,5 @@
-<h2><?php echo 'Pool and Game info of '.$tournament['Tournament']['name']?></h2>
-<p>Click pool name to view and edit game result</p>
+<h2><?php echo __("game_pgi").$tournament['Tournament']['name'];?></h2>
+<p><?php echo __("game_cpnt");?></p>
 
 
 

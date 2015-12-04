@@ -10,19 +10,15 @@
 
 
          echo $this->Form->input('a_point', array(
-             'label' => $the_game['A_Player']['firstname'].' '.$the_game['A_Player']['lastname'].'Score',
+             'label' => $the_game['A_Player']['firstname'].' '.$the_game['A_Player']['lastname'].' Score',
              "class" => "form-control"
          ));
          echo $this->Form->input('b_point', array(
-             'label' => 'PlayerB Score',
+             'label' => $the_game['B_Player']['firstname'].' '.$the_game['B_Player']['lastname'].' Score',
              "class" => "form-control"
          ));
          echo $this->Form->input('seq_no', array(
              'label' => 'Set Number',
-             "class" => "form-control"
-         ));
-         echo $this->Form->input('win_status', array(
-             'label' => 'Win Status',
              "class" => "form-control"
          )).'<br/><br/><br/>';
          

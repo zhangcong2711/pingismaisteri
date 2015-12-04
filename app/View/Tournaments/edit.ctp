@@ -1,11 +1,11 @@
-   <h1>Muokkaa turnausta</h1>
+   <h1><?php echo __("tournament_edit");?></h1>
    
    <?php echo $this->Form->create('Tournament'); ?>
 
    <div class="row">
       <div class="col-md-3">
       
-         <h3>Turnauksen tiedot</h3>
+         <h3><?php echo __("tournament_info");?></h3>
 
          <?php
          
@@ -84,7 +84,7 @@
       
       <div class="col-md-9">
    
-         <h3>Turnauksen luokat</h3>
+         <h3><?php echo __("tournament_class");?></h3>
 
          <table class="table" id="tournamentClasses">
             <thead>
@@ -170,8 +170,9 @@
             <tfoot>
                <tr class="newClassRow">
                   <td colspan="4">
-                     <?php echo $this->Html->link(
-                        __("add_category"), 
+                     <?php 
+                     echo $this->Html->link(
+                        __("tournament_add_category"), 
                         "/ajax/newTournamentClassRow", 
                         array(
                            "class" => "new-row-link btn btn-primary", 

@@ -191,7 +191,7 @@ msgid "additionalinfo"
 msgstr "Additional info"
 
 msgid "date"
-msgstr "Date"
+msgstr "Date (dd.mm.yyyy)"
 
 msgid "price"
 msgstr "Price"
@@ -211,9 +211,9 @@ msgstr "Run the draw"
 msgid "update_t"
 msgstr "Update tournament details "
 
-msgid "add_category"
+msgid "tournament_add_category"
 msgstr "Add category"
-.
+
 msgid "registered"
 msgstr "Registered"
 
@@ -378,3 +378,46 @@ msgstr "Match"
 
 msgid "draw_excel_judge"
 msgstr "Judge"
+
+msgid "draw_attention"
+msgstr "Attention! Drawing will eliminate all results being input in pools. Please make sure the class you want to draw."
+
+msgid "registered_player_num"
+msgstr "Number of registered player"
+
+msgid "is_result_input"
+msgstr "Result input"
+
+msgid "is_drawed"
+msgstr "Drawed"
+
+msgid "downloadDraw"
+msgstr "Download pool info"
+
+msgid "downloadCup"
+msgstr "Download cup info"
+
+msgid "draw_pools"
+msgstr "Draw pools"
+
+msgid "user_peru_reg"
+msgstr "Peru registration"
+
+msgid "user_tournament_reg"
+msgstr "Tournament Registration: "
+
+msgid "tournament_edit"
+msgstr "Edit tournament"
+
+msgid "tournament_info"
+msgstr "Tournament info"
+
+msgid "tournament_class"
+msgstr "Tournament class"
+
+msgid "game_pgi"
+msgstr "Pool and Game info:   "
+
+msgid "game_cpnt"
+msgstr "Click pool name to view and edit game result"
+

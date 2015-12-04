@@ -119,6 +119,11 @@ class GamesController extends AppController {
 									'Set',
 									'A_Player',
 									'B_Player'
+							),
+							'Stage' => array(
+									'ClassInTournament' => array(
+											'Tournament'
+									)
 							)
 						)				
 					)
@@ -128,7 +133,6 @@ class GamesController extends AppController {
 		}
 		
 		$this->set('pools', $pools);
-		//$this->set('game_id', $pools['Game']['id']);
 	}
 	
 	
@@ -136,30 +140,94 @@ class GamesController extends AppController {
 	
    public function add($game_id) {
    	
-   	$the_game=$this->Game->find('first',
-   			array(
-   					'conditions' => array('Game.id' => $game_id),
-   					'contain' => array( 'Pool',
-   							'A_Player',
-   							'B_Player'
-   					)
-   			)
-   				
-   	);
-   	$this->set('the_game', $the_game);
+   	
+   	$querysql=<<<EOF
+SELECT 
+    `Game`.`id`,
+    `Game`.`a_player_id`,
+    `Game`.`b_player_id`,
+    `Game`.`seq_no`,
+    `Game`.`pool_id`,
+    `Game`.`result_set`,
+    `Pool`.`id`,
+    `Pool`.`class_id`,
+    `Pool`.`name`,
+    `Pool`.`type`,
+    `Pool`.`stage_id`,
+    `Pool`.`game_num`,
+    `A_Player`.`id`,
+    `A_Player`.`firstname`,
+    `A_Player`.`lastname`,
+    `A_Player`.`address`,
+    `A_Player`.`postalcode`,
+    `A_Player`.`postarea`,
+    `A_Player`.`birthday`,
+    `A_Player`.`sex`,
+    `A_Player`.`club_id`,
+    `A_Player`.`license_code`,
+    `A_Player`.`license_status`,
+    `A_Player`.`license_renewed`,
+    `A_Player`.`license_type`,
+    `A_Player`.`email`,
+    `A_Player`.`phone`,
+    `A_Player`.`created`,
+    `A_Player`.`added_by`,
+    `A_Player`.`rating_id`,
+    `A_Player`.`sptl_id`,
+   	`B_Player`.`id`,
+    `B_Player`.`firstname`,
+    `B_Player`.`lastname`,
+    `B_Player`.`address`,
+    `B_Player`.`postalcode`,
+    `B_Player`.`postarea`,
+    `B_Player`.`birthday`,
+    `B_Player`.`sex`,
+    `B_Player`.`club_id`,
+    `B_Player`.`license_code`,
+    `B_Player`.`license_status`,
+    `B_Player`.`license_renewed`,
+    `B_Player`.`license_type`,
+    `B_Player`.`email`,
+    `B_Player`.`phone`,
+    `B_Player`.`created`,
+    `B_Player`.`added_by`,
+    `B_Player`.`rating_id`,
+    `B_Player`.`sptl_id`
+FROM
+    `pingismaisteri`.`pingis2_games` AS `Game`
+        LEFT JOIN
+    `pingismaisteri`.`pingis2_pools` AS `Pool` ON (`Game`.`pool_id` = `Pool`.`id`)
+        LEFT JOIN
+    `pingismaisteri`.`pingis2_players` AS `A_Player` ON (`Game`.`a_player_id` = `A_Player`.`id`)
+        LEFT JOIN
+    `pingismaisteri`.`pingis2_players` AS `B_Player` ON (`Game`.`b_player_id` = `B_Player`.`id`)
+WHERE
+    `Game`.`id` = ?
+LIMIT 1
+EOF;
+   	
+   	$db = ConnectionManager::getDataSource ( 'default' );
+   	$the_game = $db->fetchAll ( $querysql, array (
+   			$game_id
+   	) );
+   	
+   	
+   	$this->set('the_game', $the_game[0]);
+   	
    	if ($this->request->is('post')) {
+   		$set_data=$this->request->data;
+   		$set_data['Set']['win_status']=(intval($set_data['Set']['a_point']) > intval($set_data['Set']['b_point'])) ? 1 : -1;
    		$this->Set->create();
-   		if ($this->Set->save($this->request->data)) {
+   		if ($this->Set->save($set_data)) {
    			//$this->Flash->success(__('Your result has been added.'));
    			//$poolid = $this->Game->find('first', array('condition' => array('Game.id' => $game_id)));
    			//return $this->redirect('/result/'.$poolid['pool_id']);
    			
    			
-   			return $this->redirect('/games/result/'.$game['Pool']['id']);
+   			return $this->redirect('/games/result/'.$the_game[0]['Pool']['id']);
    		}   		
    		//$this->Flash->error(__('Unable to add your post.'));
    	}
-   	 //$this->set('gAme', $game);
      $this->set('gameId', $game_id);     
    }
    

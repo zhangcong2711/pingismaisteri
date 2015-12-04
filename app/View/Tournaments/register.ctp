@@ -1,4 +1,4 @@
-<h1>Ilmoittautuminen turnaukseen: <?php echo $tournament['Tournament']['name']; ?></h1>
+<h1><?php echo __("user_tournament_reg").$tournament['Tournament']['name']; ?></h1>
 
 <?php
    echo $this->Form->create("Registration");
@@ -85,7 +85,7 @@
                      'data-toggle' => 'buttons'
                    ),
                    "before" => '<label class="btn btn-default">',
-                   'after' => 'Ilmoittaudu</label>',
+                   'after' => __("signUp2").'</label>',
                    "value" => "1",
                    "hiddenField" => false
                ));
