@@ -10,7 +10,7 @@
 	              <strong>
 	              <?php 
 	             
-	              	 echo 'Set '.'&nbsp&nbsp&nbsp';
+	              	 echo 'Game '.'&nbsp&nbsp&nbsp';
 	              	 
 	              	 	$playerA_name = $game['A_Player']['firstname'].' '.$game['A_Player']['lastname'];
 	              	 	$playerB_name = $game['B_Player']['firstname'].' '.$game['B_Player']['lastname'];
@@ -57,7 +57,7 @@
               			).'&nbsp;&nbsp;&nbsp;'.implode(', ', $player_names).'</li><br/>';
               		}
               	}*/
-              	echo '<h3>&nbsp&nbsp&nbsp'.$g_set['id'].'&nbsp&nbsp&nbsp&nbsp'.$g_set['a_point'].' - '.$g_set['b_point'].'&nbsp&nbsp&nbsp&nbsp'.
+              	echo '<h3>&nbsp&nbsp&nbsp'.$g_set['seq_no'].'&nbsp&nbsp&nbsp&nbsp'.$g_set['a_point'].' - '.$g_set['b_point'].'&nbsp&nbsp&nbsp&nbsp'.
                 	$this->element(
                				"buttonlink", 
                				array(
@@ -79,3 +79,20 @@
 </div>
 
 <?php }?>
+
+
+
+<?php 
+
+echo $this->element(
+		"buttonlink",
+		array(
+				'label' => 'Back',
+				'controller' => 'games',
+				'action' => 'show',
+				'params' => array($pools['Stage']['ClassInTournament']['Tournament']['id']),
+				'class' => 'btn btn-primary'
+		)
+);
+
+?>

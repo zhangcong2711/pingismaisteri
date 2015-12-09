@@ -61,7 +61,13 @@ class Player extends AppModel {
 		                            FROM `pingis2_games` as `Game`
 		                           WHERE `Game`.`a_player_id` = {$__cakeID__$}
 		                              OR `Game`.`b_player_id` = {$__cakeID__$}'
-		    )
+		    ),
+			'RatingRow' => array (
+					'className' => 'RatingRow',
+					'foreignKey' => 'player_id',
+					'dependent' => true
+			)
+			
 	);
    
 	public $hasAndBelongsToMany = array(

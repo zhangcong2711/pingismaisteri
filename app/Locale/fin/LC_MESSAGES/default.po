@@ -206,7 +206,7 @@ msgid "additionalinfo"
 msgstr "Lisätietoa"
 
 msgid "date"
-msgstr "Päivämäärä"
+msgstr "Päivämäärä (dd.mm.yyyy)"
 
 msgid "price"
 msgstr "Hinta"
@@ -226,7 +226,7 @@ msgstr "Suorita arvonta"
 msgid "update_t"
 msgstr "Päivitä turnauksen tiedot"
 
-msgid "add_category"
+msgid "tournament_add_category"
 msgstr "Lisää luokka"
 
 msgid "registered"
@@ -384,3 +384,54 @@ msgstr "(NT)Pool num"
 
 msgid "game_result"
 msgstr "(NT)Game result"
+
+msgid "draw_excel_set"
+msgstr "erä"
+
+msgid "draw_excel_match"
+msgstr "Ottelu"
+
+msgid "draw_excel_judge"
+msgstr "Tuomari"
+
+msgid "draw_attention"
+msgstr "(NT)Attention: Drawing will eliminate all results being input in pools. Please make sure the class you want to draw."
+
+msgid "registered_player_num"
+msgstr "(NT)Number of registered player"
+
+msgid "is_result_input"
+msgstr "(NT)Result input"
+
+msgid "is_drawed"
+msgstr "(NT)Drawed"
+
+msgid "downloadDraw"
+msgstr "(NT)Download pool info"
+
+msgid "downloadCup"
+msgstr "(NT)Download cup info"
+
+msgid "draw_pools"
+msgstr "Poolien arvonta"
+
+msgid "user_peru_reg"
+msgstr "Peru Ilmoittautuminen"
+
+msgid "user_tournament_reg"
+msgstr "Ilmoittautuminen turnaukseen: "
+
+msgid "tournament_edit"
+msgstr "Muokkaa turnausta"
+
+msgid "tournament_info"
+msgstr "Turnauksen tiedot"
+
+msgid "tournament_class"
+msgstr "Turnauksen luokat"
+
+msgid "game_pgi"
+msgstr "(NT)Pool and Game info:   "
+
+msgid "game_cpnt"
+msgstr "(NT)Click pool name to view and edit game result"

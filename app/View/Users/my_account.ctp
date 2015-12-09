@@ -53,7 +53,7 @@
                }
                else
                {
-                  echo $this->Html->link('show_all'.' ('.count($player['Registration']).') <span class="caret"></span>', "/users/listRegistrations/".$player['id'], array("data-target" => "#registrations".$player['id'] ,"class" => "btn btn-primary show-table-rows", "escape" => false) ); ?></td>
+                  echo $this->Html->link(__('show_all').' ('.count($player['Registration']).') <span class="caret"></span>', "/users/listRegistrations/".$player['id'], array("data-target" => "#registrations".$player['id'] ,"class" => "btn btn-primary show-table-rows", "escape" => false) ); ?></td>
             <?php
                }
             ?>
@@ -101,7 +101,7 @@
                      <td><?php echo $registration['ClassInTournament']['TournamentClass']['name']; ?><br /><?php 
                         $date = DateTime::createFromFormat("Y-m-d", $registration['ClassInTournament']['date']);
                         echo $date->format("d.m.Y"); ?></td>
-                     <td><?php echo $this->Html->link("Peru ilmoittautuminen", "/users/cancelRegistration/".$registration['id'] , array("class" => "btn btn-danger") ); ?></td>
+                     <td><?php echo $this->Html->link(__("user_peru_reg"), "/users/cancelRegistration/".$registration['id'] , array("class" => "btn btn-danger") ); ?></td>
                   </tr>
       <?php
             }

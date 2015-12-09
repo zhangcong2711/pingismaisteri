@@ -1,13 +1,13 @@
-<h1><?php echo __("Seurat"); ?></h1>
+<h1><?php echo __("clubs"); ?></h1>
 
 
 <table class="table">
 
    <tr>
       <th>ID</th>
-      <th><?php echo _('name')?></th>
-      <th><?php echo _('members')?></th>
-      <th><?php echo _('remove')?></th>
+      <th><?php echo __('name')?></th>
+      <th><?php echo __('members')?></th>
+      <th><?php echo __('remove')?></th>
    </tr>
 <?php
    foreach( $clubs as $club )

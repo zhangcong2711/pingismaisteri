@@ -1,7 +1,7 @@
 
 
 
-<h1>Poolien arvonta</h1>
+<h1><?php echo __("draw_pools"); ?></h1>
 
 
 <?php
@@ -185,8 +185,13 @@ echo $this->Form->create('PoolForm');
 </script>
 <?php
 
-   echo $this->Form->submit( __("go_draw"),
-   array("class" => "btn btn-primary") );
+	echo $this->Html->tag('span', __("draw_attention"), array('style' => 'color:red'));
+   echo $this->Form->submit( 
+   		__("go_draw"),
+   		array(
+   				"class" => "btn btn-primary"
+   		) 
+   	);
 
    echo $this->Form->end();
 

@@ -38,6 +38,7 @@
       echo $this->Html->script("plugins");
       echo $this->Html->script("ui");
       echo $this->Html->script('util');
+      echo $this->Html->script("bootbox");
       
       
 		echo $this->fetch('meta');
