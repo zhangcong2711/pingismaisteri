@@ -143,7 +143,7 @@ echo $this->Form->create('PoolForm');
 					</td>
 					<td>
 						<?php 
-						if($is_drawed){
+						if($is_drawed && $is_result_input){
 							
 							echo $this->Html->image("download_32px.png", array(
 									'url' => array('controller' => 'tournaments', 'action' => 'downloadCupInfo', $class['id'])

@@ -742,6 +742,71 @@ EOF;
 				$this->writeCell ( $objPHPExcel, $t_pp ['RatingRow'] ['rating'], '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 1 ) );
 				$this->writeCell ( $objPHPExcel, $t_pp ['Player'] ['firstname'] . ' ' . $t_pp ['Player'] ['lastname'], '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 2 ) );
 				$this->writeCell ( $objPHPExcel, $t_pp ['Club'] ['name'], '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 3 ) );
+				
+				$t_pp_games=$this->Game->find ( 'all', 
+					array (
+							'conditions' => array (
+									'(Game.a_player_id = '.$t_pp ['Player'] ['id'].' or Game.b_player_id='.$t_pp ['Player'] ['id'].')',
+									'Game.pool_id='.$pool_data ['Pool'] ['id']
+							),
+							'contain' => array (
+									'Set'
+							)
+					) 
+				);
+				
+				$t_win_game_num=0;
+				$t_lose_game_num=0;
+				$t_win_set_num=0;
+				$t_lose_set_num=0;
+				$t_total_win_pt=0;
+				$t_total_lose_pt=0;
+				foreach($t_pp_games as &$tppg)
+				{
+					$g_ap_id=$tppg['Game']['a_player_id'];
+					$g_bp_id=$tppg['Game']['b_player_id'];
+					
+					
+					foreach($tppg['Set'] as $tps)
+					{
+						if($t_pp ['Player'] ['id']==$g_ap_id)
+						{
+							if(1==$tps['win_status'])
+							{
+								$t_win_set_num++;
+							}else{
+								$t_lose_set_num++;
+							}
+							$t_total_win_pt+=intval($tps['a_point']);
+							$t_total_lose_pt+=intval($tps['b_point']);
+						}
+						if($t_pp ['Player'] ['id']==$g_bp_id)
+						{
+							if(1==$tps['win_status'])
+							{
+								
+								$t_lose_set_num++;
+							}else{
+								$t_win_set_num++;
+							}
+							$t_total_win_pt+=intval($tps['b_point']);
+							$t_total_lose_pt+=intval($tps['a_point']);
+						}
+					}
+					
+					if($t_win_set_num>$t_lose_set_num)
+					{
+						$t_win_game_num++;
+					}else{
+						$t_lose_game_num++;
+					}
+					
+				}
+				
+				$this->writeCell ( $objPHPExcel, $t_win_game_num, '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 4 ) );
+				$this->writeCell ( $objPHPExcel, $t_win_set_num. '-' . $t_lose_set_num, '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 5 ) );
+				$this->writeCell ( $objPHPExcel, $t_total_win_pt. '-' . $t_total_lose_pt, '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 6 ) );
+				
 			} else {
 				$this->writeCell ( $objPHPExcel, '', '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 1 ) );
 				$this->writeCell ( $objPHPExcel, '', '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 2 ) );
@@ -750,12 +815,10 @@ EOF;
 		}
 		
 		$result_x_index = $start_x_index + $pool_capacity + 2;
-		// $start_y_index + 2个字母
 		$result_y_index = chr ( ord ( strval ( $start_y_index ) ) + 2 );
 		
-		// 计算最大行数num_game+1
 		$result_row_num = count ( $pool_data ['Game'] ) + 1;
-		// 计算最大列数 最大set数量+3
+		
 		$max_num_set = 0;
 		foreach ( $pool_data ['Game'] as &$t_game ) {
 			$set_num = count ( $t_game ['Set'] );
@@ -768,7 +831,7 @@ EOF;
 		if ($result_row_num > 0 && $result_col_num > 3) {
 			$this->writeCell ( $objPHPExcel, '', '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 1 ) );
 			for($j = 0; $j < $max_num_set; $j ++) {
-				$this->writeCell ( $objPHPExcel, ($j + 1) . ' ' . __ ( 'draw_set' ), '', $result_x_index, chr ( ord ( strval ( $result_y_index ) ) + $j + 1 ) );
+				$this->writeCell ( $objPHPExcel, ($j + 1) . ' ' . __( 'draw_excel_set' ), '', $result_x_index, chr ( ord ( strval ( $result_y_index ) ) + $j + 1 ) );
 			}
 			$this->writeCell ( $objPHPExcel, __ ( 'draw_excel_match' ), '', $result_x_index, chr ( ord ( strval ( $result_y_index ) ) + $j + 1 ) );
 			$this->writeCell ( $objPHPExcel, __ ( 'draw_excel_judge' ), '', $result_x_index, chr ( ord ( strval ( $result_y_index ) ) + $j + 2 ) );
@@ -780,6 +843,18 @@ EOF;
 				$t_pg = $pool_games [$j];
 				$t_g_sets = $t_pg ['Set'];
 				
+				$t_win_set_num=0;
+				$t_lose_set_num=0;
+				foreach($t_g_sets as &$tgs)
+				{
+					if('1'==$tgs['win_status'])
+					{
+						$t_win_set_num++;
+					}else{
+						$t_lose_set_num++;
+					}
+				}
+				
 				$aplayer_no = intval ( array_search ( $t_pg ['a_player_id'], $player_ids ) ) + 1;
 				$bplayer_no = intval ( array_search ( $t_pg ['b_player_id'], $player_ids ) ) + 1;
 				$this->writeCell ( $objPHPExcel, $aplayer_no . '-' . $bplayer_no, '', $result_x_index + $j + 1, $result_y_index );
@@ -788,6 +863,8 @@ EOF;
 					$t_set = $t_g_sets [$k];
 					$this->writeCell ( $objPHPExcel, $t_set ['a_point'] . '-' . $t_set ['b_point'], '', $result_x_index + $j + 1, chr ( ord ( strval ( $result_y_index ) ) + $k + 1 ) );
 				}
+				
+				$this->writeCell ( $objPHPExcel, $t_win_set_num . '-' . $t_lose_set_num, '', $result_x_index + $j + 1, chr ( ord ( strval ( $result_y_index ) ) + $max_num_set + 1 ) );
 			}
 			
 			// Set style
@@ -795,7 +872,7 @@ EOF;
 			$result_highestRow = $result_x_index + $result_row_num - 1;
 			$objPHPExcel->getActiveSheet ()->getStyle ( $result_y_index . $result_x_index . ':' . $result_highestColumn . $result_highestRow )->applyFromArray ( $style_array, false );
 			
-			// 返回增加了result的行数
+			// return the number of lines be added
 			return $pool_capacity + 2 + $result_row_num;
 		} else {
 			return $pool_capacity + 2;
@@ -901,9 +978,322 @@ EOF;
 		$Email->send ( 'My message' );
 	}
 	public function downloadCupInfo($class_in_tournament_id) {
-		$cupInfo = $this->ClassInTournament->getCupAgenda ( $class_in_tournament_id );
 		
-		// .....输出excel
+		
+		$cit = $this->ClassInTournament->find("first",
+	   			array(
+	   					'conditions' => array(
+	   							'ClassInTournament.id' => $class_in_tournament_id
+	   					),
+	   					'contain' => array(
+	   							'Stage',
+	   							'Tournament',
+	   							'TournamentClass'
+	   							
+	   					)
+	   			)
+	   	);
+		
+		/*
+		$cupInfo = $this->ClassInTournament->getCupAgenda ( $class_in_tournament_id );
+		$cup_pairs=$this->convertCupInfo2Pairs($cupInfo);
+		*/
+		
+		
+		
+		
+		/********************* test start *********************/
+		$query_sql = <<<EOF
+SELECT
+    `Player`.*,
+    `RatingRow`.*,
+    `Club`.*,
+    (DATE_FORMAT(NOW(), '%Y') - DATE_FORMAT(birthday, '%Y') - (DATE_FORMAT(NOW(), '00-%m-%d') < DATE_FORMAT(birthday, '00-%m-%d'))) AS `Player__age`
+FROM
+    `pingismaisteri`.`pingis2_players` AS `Player`
+        LEFT JOIN
+    `pingismaisteri`.`pingis2_rating_rows` AS `RatingRow` ON (`Player`.`id` = `RatingRow`.`player_id`
+        AND `RatingRow`.`rating_id` = 1)
+        LEFT JOIN
+    `pingismaisteri`.`pingis2_clubs` AS `Club` ON (`Player`.`club_id` = `Club`.`id`)
+WHERE
+    `Player`.`id` IN ( 3,4,5,6,7,8,10,11,12,13,14,15 )
+EOF;
+		
+		$db = ConnectionManager::getDataSource ( 'default' );
+		$players = $db->fetchAll ($query_sql);
+		 
+		$cup_pairs=[];
+		
+		for($i=0;$i<4;$i++)
+		{
+			$t_pair=[];
+			$t_pair[0]=$players[$i];
+			$t_pair[1]=$players[8-$i-1];
+			array_push($cup_pairs, $t_pair);
+		}
+		
+		for($i=8;$i<12;$i++)
+		{
+			$t_pair[0]=$players[$i];
+			$t_pair[1]=constant('CUP_PLAYER_UNKNOWN');
+			array_push($cup_pairs, $t_pair);
+		}
+		
+		shuffle($cup_pairs);
+		
+		
+		
+		/********************* test end *********************/
+		
+		
+		//export cup excel
+		$objPHPExcel = new PHPExcel ();
+		
+		$objPHPExcel->getProperties ()->setCreator ( "Pingismaisteri" )->setLastModifiedBy ( "Pingismaisteri" )->setTitle ( "CupAgendaExport" )->setSubject ( "AgendaExport" )->setDescription ( "AgendaExport" )->setKeywords ( "excel" )->setCategory ( "result file" );
+		
+		$objPHPExcel->setActiveSheetIndex ( 0 );
+		
+		$this->writeTitleInExcel ( $objPHPExcel, $cit, $cit, null, 2, 'B' );
+		
+		$height_index = 6;
+		$row_index='A';
+		
+		$knockout_baselines=$this->drawKnockoutInfoTable($objPHPExcel,$height_index,$row_index,$cup_pairs);
+		
+		
+		$first_x_idx= $height_index+1;
+		$first_y_idx=chr ( ord ( strval ( $row_index ) ) + 4 );
+		$end_x_idx=$first_x_idx + count($cup_pairs)*2 - 1;
+		$end_y_idx=$first_y_idx;
+		$this->drawKnockoutLine($objPHPExcel,$knockout_baselines);
+		
+		
+		header ( 'Content-Type:application/download' );
+		header ( 'Content-Type:application/force-download' );
+		header ( 'Content-Type: application/vnd.ms-excel' );
+		header ( 'Content-Disposition: attachment;filename="CupAgenda_' . $cit['Tournament']['name'].'_'.$cit['TournamentClass']['name'] . '_' . date ( "h-i-sa" ) . '.xls"' );
+		header ( 'Cache-Control: max-age=0' );
+		$objWriter = PHPExcel_IOFactory::createWriter ( $objPHPExcel, 'Excel5' );
+		$objWriter->save ( 'php://output' );
+		exit ();
+		
 	}
+	
+	private function convertCupInfo2Pairs($cupInfo){
+		
+		return null;
+	}
+	
+	private function drawKnockoutInfoTable($objPHPExcel,$first_x_idx,$first_y_idx,$cup_pairs){
+		
+		$a_y_idx=chr ( ord ( strval ( $first_y_idx ) ) );
+		$b_y_idx=chr ( ord ( strval ( $first_y_idx ) ) + 1 );
+		$c_y_idx=chr ( ord ( strval ( $first_y_idx ) ) + 2 );
+		$d_y_idx=chr ( ord ( strval ( $first_y_idx ) ) + 3 );
+	
+		$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $a_y_idx ) . strval ( $first_x_idx ), '');
+		$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $b_y_idx ) . strval ( $first_x_idx ), 'RN');
+		$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $c_y_idx ) . strval ( $first_x_idx ), __('name'));
+		$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $d_y_idx ) . strval ( $first_x_idx ), __('clubs'));
+		
+		$knockout_baselines=[];
+		
+		for($i=1;$i<=count($cup_pairs);$i++)
+		{
+			$t_pair=$cup_pairs[$i-1];
+			$a_pla=$t_pair[0];
+			$b_pla=$t_pair[1];
+			$ax_idx=$first_x_idx+$i*2-1;
+			$bx_idx=$first_x_idx+$i*2;
+			
+			if($a_pla==constant("CUP_PLAYER_UNKNOWN"))
+			{
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $a_y_idx ) . strval ( $ax_idx ), strval($i*2-1));
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $b_y_idx ) . strval ( $ax_idx ), "");
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $c_y_idx ) . strval ( $ax_idx ), "");
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $d_y_idx ) . strval ( $ax_idx ), "");
+			}
+			else
+			{
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $a_y_idx ) . strval ( $ax_idx ), strval($i*2-1));
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $b_y_idx ) . strval ( $ax_idx ), $a_pla['RatingRow']['rating']);
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $c_y_idx ) . strval ( $ax_idx ), $a_pla['Player']['firstname'].' '.$a_pla['Player']['lastname']);
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $d_y_idx ) . strval ( $ax_idx ), $a_pla['Club']['name']);
+			}
+			
+			if($b_pla==constant("CUP_PLAYER_UNKNOWN"))
+			{
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $a_y_idx ) . strval ( $bx_idx ), strval($i*2));
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $b_y_idx ) . strval ( $bx_idx ), "");
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $c_y_idx ) . strval ( $bx_idx ), "");
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $d_y_idx ) . strval ( $bx_idx ), "");
+			}
+			else
+			{
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $a_y_idx ) . strval ( $bx_idx ), strval($i*2));
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $b_y_idx ) . strval ( $bx_idx ), $b_pla['RatingRow']['rating']);
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $c_y_idx ) . strval ( $bx_idx ), $b_pla['Player']['firstname'].' '.$b_pla['Player']['lastname']);
+				$objPHPExcel->getActiveSheet ()->setCellValue ( strval ( $d_y_idx ) . strval ( $bx_idx ), $b_pla['Club']['name']);
+			}
+			
+			
+			if(1==($i%2))
+			{
+				$objPHPExcel->getActiveSheet()->getStyle($a_y_idx.$ax_idx.':'.$d_y_idx.$bx_idx)->applyFromArray(
+						array(
+								'fill' => array(
+										'type' => PHPExcel_Style_Fill::FILL_SOLID,
+										'color' => array('rgb' => 'B8B8B8')
+								)
+						)
+				);
+			}
+			
+			$t_kn_baseline=[];
+			$t_kn_baseline['x_index']=$ax_idx;
+			$t_kn_baseline['y_index']=chr ( ord ( strval ( $first_y_idx ) ) + 4 );
+			array_push($knockout_baselines, $t_kn_baseline);
+			
+			
+		}
+		
+		$style_array = array (
+				'borders' => array (
+						'top' => array (
+								'style' => PHPExcel_Style_Border::BORDER_THIN
+						),
+						'left' => array (
+								'style' => PHPExcel_Style_Border::BORDER_THIN
+						),
+						'bottom' => array (
+								'style' => PHPExcel_Style_Border::BORDER_THIN
+						),
+						'right' => array (
+								'style' => PHPExcel_Style_Border::BORDER_THIN
+						)
+				),
+				'font' => array (
+						'name' => 'Arial',
+						'size' => '11'
+				)
+		)
+		;
+		$highestColumn = chr ( ord ( strval ( $first_y_idx ) ) + 3 );
+		$highestRow = $first_x_idx + count($cup_pairs)*2;
+		$objPHPExcel->getActiveSheet ()->getStyle ( $first_y_idx . $first_x_idx . ':' . $highestColumn . $highestRow )->applyFromArray ( $style_array, false );
+		
+		
+		return $knockout_baselines;
+		
+	}
+	
+	private function drawKnockoutLine($objPHPExcel,$knockout_baselines){
+		
+		$count=count($knockout_baselines)/2;
+		
+		if(count($knockout_baselines)==1)
+		{
+			$t_kbl=$knockout_baselines[0];
+			$this->setKnockoutLineStyle_UpLine($objPHPExcel,$t_kbl['x_index'],$t_kbl['y_index']);
+			$objPHPExcel->getActiveSheet()->getColumnDimension($t_kbl['y_index'])->setAutoSize(false);
+			$objPHPExcel->getActiveSheet()->getColumnDimension($t_kbl['y_index'])->setWidth(20);
+			return;
+		}
+		else
+		{
+			$sub_level_knockout_baselines=[];
+			for($i=0;$i<$count;$i++)
+			{
+				$up_baseline=array_shift($knockout_baselines);
+				$down_baseline=array_shift($knockout_baselines);
+				$this->setKnockoutLineStyle_UpLine($objPHPExcel,$up_baseline['x_index'],$up_baseline['y_index']);
+				$this->setKnockoutLineStyle_DownLine($objPHPExcel,$down_baseline['x_index'],$down_baseline['y_index']);
+					
+				$gap_up_down=$down_baseline['x_index'] -$up_baseline['x_index'] ;
+					
+				$this->setKnockoutLineStyle_RightVerticalLine($objPHPExcel,$up_baseline['x_index']+1,$up_baseline['y_index'],$up_baseline['x_index']+$gap_up_down,$up_baseline['y_index']);
+					
+				$sub_levev_tkb=[];
+				$sub_levev_tkb['x_index']=$up_baseline['x_index']+ceil(($gap_up_down)/2);
+				$sub_levev_tkb['y_index']=chr ( ord ( strval ( $up_baseline['y_index'] ) ) + 1 );
+					
+				array_push($sub_level_knockout_baselines, $sub_levev_tkb);
+			}
+			
+			$objPHPExcel->getActiveSheet()->getColumnDimension($up_baseline['y_index'])->setAutoSize(false);
+			$objPHPExcel->getActiveSheet()->getColumnDimension($up_baseline['y_index'])->setWidth(20);
+			
+			$this->drawKnockoutLine($objPHPExcel,$sub_level_knockout_baselines);
+			
+		}
+		
+		
+		
+	}
+	
+	private function setKnockoutLineStyle_UpLine($objPHPExcel,$start_x_index,$start_y_index)
+	{
+		
+		// modify styles of cell by range
+		$style_array = array (
+				'borders' => array (
+						'bottom' => array (
+								'style' => PHPExcel_Style_Border::BORDER_THIN
+						)
+				),
+				'font' => array (
+						'name' => 'Arial',
+						'size' => '11'
+				)
+		);
+		
+		$objPHPExcel->getActiveSheet()->getStyle(strval($start_y_index).strval($start_x_index))->applyFromArray ( $style_array, false );
+		
+	}
+	
+	private function setKnockoutLineStyle_DownLine($objPHPExcel,$start_x_index,$start_y_index)
+	{
+	
+		// modify styles of cell by range
+		$style_array = array (
+				'borders' => array (
+						'bottom' => array (
+								'style' => PHPExcel_Style_Border::BORDER_THIN
+						),
+						'right' => array (
+								'style' => PHPExcel_Style_Border::BORDER_THIN
+						)
+				),
+				'font' => array (
+						'name' => 'Arial',
+						'size' => '11'
+				)
+		);
+	
+		$objPHPExcel->getActiveSheet()->getStyle(strval($start_y_index).strval($start_x_index))->applyFromArray ( $style_array, false );
+	
+	}
+	
+	private function setKnockoutLineStyle_RightVerticalLine($objPHPExcel,$start_x_index,$start_y_index, $end_x_index,$end_y_index)
+	{
+	
+		// modify styles of cell by range
+		$style_array = array (
+				'borders' => array (
+						'right' => array (
+								'style' => PHPExcel_Style_Border::BORDER_THIN
+						)
+				),
+				'font' => array (
+						'name' => 'Arial',
+						'size' => '11'
+				)
+		);
+	
+		$objPHPExcel->getActiveSheet()->getStyle($start_y_index . $start_x_index . ':' . $end_y_index . $end_x_index)->applyFromArray ( $style_array, false );
+	}
+	
+	
 }
 ?>

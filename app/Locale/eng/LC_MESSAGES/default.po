@@ -77,22 +77,22 @@ msgid "minimize_same_player"
 msgstr "Minimize games between same players"
 
 msgid "pool_xls_col_p"
-msgstr "(NT)Pooli"
+msgstr "Pool"
 
 msgid "pool_xls_col_s"
-msgstr "(NT)Seura"
+msgstr "Club"
 
 msgid "pool_xls_col_v"
-msgstr "(NT)Voitot"
+msgstr "Win"
 
 msgid "pool_xls_col_e"
-msgstr "(NT)Erät"
+msgstr "Sets"
 
 msgid "pool_xls_col_pi"
-msgstr "(NT)Pisteet"
+msgstr "Points"
 
 msgid "pool_xls_col_si"
-msgstr "(NT)Sija"
+msgstr "Place"
 
 msgid "signUp2"
 msgstr "Register"
@@ -370,7 +370,7 @@ msgstr "Pool num"
 msgid "game_result"
 msgstr "Game result"
 
-msgid "draw_set"
+msgid "draw_excel_set"
 msgstr "set"
 
 msgid "draw_excel_match"

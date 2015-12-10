@@ -10,3 +10,6 @@ const STAGE_TYPE_POOLS = 'pools';
 const STAGE_TYPE_CUP = 'cup';
 const STAGE_TYPE_POOLS_CUP = 'pools_cup';
 const STAGE_TYPE_POOLS_POOLS = 'pools_pools';
+
+
+const CUP_PLAYER_UNKNOWN = 'cupPlayerUnknown';
