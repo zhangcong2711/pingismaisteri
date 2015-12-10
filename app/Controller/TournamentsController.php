@@ -3,6 +3,7 @@ App::uses ( 'CakeEmail', 'Network/Email' );
 
 App::import ( 'Config', 'app_const' );
 App::import ( 'Vendor', 'PHPExcel/Classes/PHPExcel' );
+App::import('Util', 'AppUtil');
 class TournamentsController extends AppController {
 	public $helpers = array (
 			'Html',
@@ -735,6 +736,14 @@ EOF;
 				"pool_order_sort" 
 		) );
 		
+		
+		$orderedPlayers=$this->ClassInTournament->getOrderdPlayer($pool_data);
+		$orderedPIds=AppUtil::extractNewArray ( $orderedPlayers, [
+				'Player',
+				'id'
+		] );
+		
+		
 		for($i = 0; $i < $pool_capacity; $i ++) {
 			
 			$t_pp = array_shift ( $pool_players );
@@ -806,6 +815,9 @@ EOF;
 				$this->writeCell ( $objPHPExcel, $t_win_game_num, '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 4 ) );
 				$this->writeCell ( $objPHPExcel, $t_win_set_num. '-' . $t_lose_set_num, '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 5 ) );
 				$this->writeCell ( $objPHPExcel, $t_total_win_pt. '-' . $t_total_lose_pt, '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 6 ) );
+				
+				$porder=(array_search($t_pp ['Player'] ['id'], $orderedPIds))+1;
+				$this->writeCell ( $objPHPExcel, $porder, '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 7 ) );
 				
 			} else {
 				$this->writeCell ( $objPHPExcel, '', '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 1 ) );
@@ -994,58 +1006,10 @@ EOF;
 	   			)
 	   	);
 		
-		/*
+		
 		$cupInfo = $this->ClassInTournament->getCupAgenda ( $class_in_tournament_id );
 		$cup_pairs=$this->convertCupInfo2Pairs($cupInfo);
-		*/
-		
-		
-		
-		
-		/********************* test start *********************/
-		$query_sql = <<<EOF
-SELECT
-    `Player`.*,
-    `RatingRow`.*,
-    `Club`.*,
-    (DATE_FORMAT(NOW(), '%Y') - DATE_FORMAT(birthday, '%Y') - (DATE_FORMAT(NOW(), '00-%m-%d') < DATE_FORMAT(birthday, '00-%m-%d'))) AS `Player__age`
-FROM
-    `pingismaisteri`.`pingis2_players` AS `Player`
-        LEFT JOIN
-    `pingismaisteri`.`pingis2_rating_rows` AS `RatingRow` ON (`Player`.`id` = `RatingRow`.`player_id`
-        AND `RatingRow`.`rating_id` = 1)
-        LEFT JOIN
-    `pingismaisteri`.`pingis2_clubs` AS `Club` ON (`Player`.`club_id` = `Club`.`id`)
-WHERE
-    `Player`.`id` IN ( 3,4,5,6,7,8,10,11,12,13,14,15 )
-EOF;
-		
-		$db = ConnectionManager::getDataSource ( 'default' );
-		$players = $db->fetchAll ($query_sql);
-		 
-		$cup_pairs=[];
-		
-		for($i=0;$i<4;$i++)
-		{
-			$t_pair=[];
-			$t_pair[0]=$players[$i];
-			$t_pair[1]=$players[8-$i-1];
-			array_push($cup_pairs, $t_pair);
-		}
-		
-		for($i=8;$i<12;$i++)
-		{
-			$t_pair[0]=$players[$i];
-			$t_pair[1]=constant('CUP_PLAYER_UNKNOWN');
-			array_push($cup_pairs, $t_pair);
-		}
-		
 		shuffle($cup_pairs);
-		
-		
-		
-		/********************* test end *********************/
-		
 		
 		//export cup excel
 		$objPHPExcel = new PHPExcel ();
@@ -1082,7 +1046,55 @@ EOF;
 	
 	private function convertCupInfo2Pairs($cupInfo){
 		
-		return null;
+		
+		$cup_pairs=[];
+		
+		foreach ($cupInfo as &$pair){
+			
+			
+			
+			$player_ids=AppUtil::extractNewArray($pair, ['Player','id']);
+			
+			$query_sql = <<<EOF
+SELECT
+    `Player`.*,
+    `RatingRow`.*,
+    `Club`.*,
+    (DATE_FORMAT(NOW(), '%Y') - DATE_FORMAT(birthday, '%Y') - (DATE_FORMAT(NOW(), '00-%m-%d') < DATE_FORMAT(birthday, '00-%m-%d'))) AS `age`
+FROM
+    `pingismaisteri`.`pingis2_players` AS `Player`
+        LEFT JOIN
+    `pingismaisteri`.`pingis2_rating_rows` AS `RatingRow` ON (`Player`.`id` = `RatingRow`.`player_id`
+        AND `RatingRow`.`rating_id` = 1)
+        LEFT JOIN
+    `pingismaisteri`.`pingis2_clubs` AS `Club` ON (`Player`.`club_id` = `Club`.`id`)
+WHERE
+    `Player`.`id` IN (
+EOF;
+		
+			$query_sql = $query_sql . implode ( ',', $player_ids ) . ')';
+			$db = ConnectionManager::getDataSource ( 'default' );
+			$players = $db->fetchAll ($query_sql);
+			
+			if(count($players)==2){
+				$t_pair=[];
+				$t_pair[0]=$players[0];
+				$t_pair[1]=$players[1];
+				array_push($cup_pairs, $t_pair);
+			}
+			if(count($players)==1){
+				$t_pair=[];
+				$t_pair[0]=$players[0];;
+				$t_pair[1]=constant('CUP_PLAYER_UNKNOWN');
+				array_push($cup_pairs, $t_pair);
+			}
+			
+		
+		}
+		
+		return $cup_pairs;
+		
+	
 	}
 	
 	private function drawKnockoutInfoTable($objPHPExcel,$first_x_idx,$first_y_idx,$cup_pairs){
