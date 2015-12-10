@@ -737,11 +737,29 @@ EOF;
 		) );
 		
 		
-		$orderedPlayers=$this->ClassInTournament->getOrderdPlayer($pool_data);
-		$orderedPIds=AppUtil::extractNewArray ( $orderedPlayers, [
-				'Player',
-				'id'
-		] );
+		$is_result_input=true;
+		if(!isset($pool_data['Game']) || count($pool_data['Game'])<=0){
+			$is_result_input=false;
+		}else{
+			$has_set=true;
+			foreach ($pool_data['Game'] as &$t_g){
+				if (!isset($t_g['Set']) || count($t_g['Set'])<=0){
+					$has_set=false;
+					break;
+				}
+			}
+			if(!$has_set){
+				$is_result_input=false;
+			}
+		}
+		if($is_result_input){
+			$orderedPlayers=$this->ClassInTournament->getOrderdPlayer($pool_data);
+			$orderedPIds=AppUtil::extractNewArray ( $orderedPlayers, [
+					'Player',
+					'id'
+			] );
+		}
+		
 		
 		
 		for($i = 0; $i < $pool_capacity; $i ++) {
@@ -816,8 +834,11 @@ EOF;
 				$this->writeCell ( $objPHPExcel, $t_win_set_num. '-' . $t_lose_set_num, '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 5 ) );
 				$this->writeCell ( $objPHPExcel, $t_total_win_pt. '-' . $t_total_lose_pt, '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 6 ) );
 				
-				$porder=(array_search($t_pp ['Player'] ['id'], $orderedPIds))+1;
-				$this->writeCell ( $objPHPExcel, $porder, '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 7 ) );
+				if($is_result_input){
+					$porder=(array_search($t_pp ['Player'] ['id'], $orderedPIds))+1;
+					$this->writeCell ( $objPHPExcel, $porder, '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 7 ) );
+				}
+				
 				
 			} else {
 				$this->writeCell ( $objPHPExcel, '', '', $start_x_index + $i + 1, chr ( ord ( strval ( $start_y_index ) ) + 1 ) );
