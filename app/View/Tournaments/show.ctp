@@ -84,6 +84,7 @@
                
                echo " ";
             
+               /*
                echo $this->element(
                   "buttonlink", 
                   array(
@@ -95,7 +96,7 @@
                   )
                );
                
-               echo " ";
+               echo " ";*/
                
                echo $this->element(
                   "buttonlink", 

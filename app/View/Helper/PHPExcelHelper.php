@@ -6,7 +6,7 @@ App::uses('AppHelper', 'Helper');
  * PHPExcel has to be in the vendors directory.
  */
 
-class PhpExcelHelper extends AppHelper {
+class PHPExcelHelper extends AppHelper {
 	/**
 	 * Instance of PHPExcel class
 	 * @var object

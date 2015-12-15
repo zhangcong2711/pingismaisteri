@@ -101,7 +101,7 @@
                <tr class="newClassRow">
                   <td colspan="4">
                      <?php echo $this->Html->link(
-                        "Lisää luokka", 
+                        __("tournament_add_category"), 
                         "/ajax/newTournamentClassRow", 
                         array(
                            "class" => "new-row-link btn btn-primary", 
